@@ -62,11 +62,43 @@
 
 
 
+### Custom git flow
 
+***main branch에는 직접적으로 접근할 수 없다.\***
+
+- 마지막 주차 전까지 QA/Frontend, BE/Backend 본인의 브랜치 (ex. FE feat/login) 만들어 커밋/푸시하고, 기본 브랜치인 develop branch에 머지 합니다. 
+
+  ex) master > develop > QA/frontend > feature/layout
+
+  ex) master > develop > QA/backend > feature/login
+
+  ex) master > develop > imageserver
+
+- 마지막 주차에는 master branch로 병합합니다.
+
+  
+
+1. **main**: 배포되었거나 배포될 소스가 저장되는 브랜치
+
+2. **develop**: 다음 배포를 위해서 개발을 진행하는 브랜치, 개발 최신 상태를 항상 유지하도록 한다.
+
+3. **hotfix**: 배포버전(main)에 생긴 문제로 긴급한 troubleshooting이 필요할 때 개발이 진행되는 브랜치
+
+4. **feat**: 기능 단위 개발이 진행되는 브랜치
+
+5. **fix**: 기능 개발이 끝난 후, 일어나는 이슈에 대한 처리가 진행되는 브랜치
+
+   
+
+- feat와 fix는 기능별로 depth를 타고 내려간다.
+
+- 즉, feat와 fix branch를 만들 때는, <br> 1) **/** 뒤에 백엔드인지 프론트엔드 작업인지 정의한다. <br> 2) 그 다음 depth로 **/** 뒤에 처리하는 기능의 요약을 붙이도록 한다. <br>ex) feat/BE/signup , fix/FE/signup
+
+- feat 와 fix branch에서 개발이 완료되면 parent인 develop branch로 merge된다.
+
+  
 
 ### **Git convention**
-
-- ***main branch에는 직접적으로 접근할 수 없다.\***
 
 #### 1. Commit Message Format
 
