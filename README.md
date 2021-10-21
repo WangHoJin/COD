@@ -8,6 +8,8 @@
 
 다른 유저들과 코디를 공유하며 "옷은 많은데 입을게 없네", "어떻게 입고 나갈까?" "새로운 스타일은 없나" 문제를 해결 해줍니다.
 
+
+
 ### **2. Functions**
 
 - 옷 등록하기
@@ -49,6 +51,8 @@
   상세 정보(옷, 코디 등)를 확인할 수 있습니다.
 
   마음에 드는 코디는 하트 버튼을 눌러 좋아요를 표시할 수 있습니다.
+  
+  
 
 ### **3. Tech Stack**
 
@@ -56,11 +60,15 @@
 - FE: Vue.js
 - DB: MySQL
 
+
+
+
+
 ### **Git convention**
 
 - ***main branch에는 직접적으로 접근할 수 없다.\***
 
-### **1. Commit Message Format**
+#### 1. Commit Message Format
 
 - 모든 커밋 메시지는 다음과 같은 형식을 **반드시** 따르도록 한다.
 
@@ -69,23 +77,46 @@
 ```
 
 - ex. [BE] feat: Add user login api (S05P21B205-0)
+
 - ex. [FE] fix: Update bug to can't login using google login (S05P21B205-0)
+
 - ex. docs: Update [README.md](http://README.md)
 
-### **2. BE / FE**
+  
 
-[Untitled](https://www.notion.so/19d6c9b1114748ccbf27f5c9f876d36a)
+#### 2. BE / FE
 
-### **3. Type**
+|         type          |                 description                 |
+| :-------------------: | :-----------------------------------------: |
+|          BE           |         Backend 코드와 관련된 커밋          |
+|          FE           |         Frontend 코드와 관련된 커밋         |
+| X(아무것도 적지 않음) | Backend/Frontend와 관련없는 커밋 (ex. docs) |
 
-[Untitled](https://www.notion.so/7f589f57e8c6479c9a4e8c6906b8bc13)
 
-### **4. Message**
+
+#### 3. Type
+
+|   type   |                         description                          |
+| :------: | :----------------------------------------------------------: |
+|   feat   |                 새로운 기능 구현에 대한 커밋                 |
+|   fix    |             수정 사항에 대한 커밋(ex. bug, typo)             |
+|   docs   |           문서 작성에 대한 커밋(ex. 주석, README)            |
+|  style   | 간단한 수정 사항에 대한 커밋(ex. 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우) |
+| refactor |                  코드 리펙토링에 대한 커밋                   |
+|   test   |                  테스트 작성과 관련된 커밋                   |
+|  chore   | 위의 상황에 해당하지 않는 커밋(ex. 빌드 업무 수정, 패키지 매니저 수정) |
+
+
+
+#### **4. Message**
 
 - 커밋 메시지는 명령문으로 작성한다.
+
 - 첫 글자는 대문자가 되도록 한다.
 
-### **5. Issue number**
+  
+
+#### **5. Issue number**
 
 - 커밋과 관련된 이슈는 커밋 메시지 마지막에 **반드시** 연결하도록 한다.
 - 지라에 등록된 이슈와 연동되도록 한다.
