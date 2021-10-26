@@ -5,6 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.*;
@@ -35,7 +37,7 @@ public class User {
     private String nickname;
 
     @Column(name = "birth", nullable = false)
-    private Date birth;
+    private LocalDate birth;
 
     @Column(name = "gender", nullable = false, length = 5)
     private String gender;
@@ -49,14 +51,14 @@ public class User {
     /**
      * 소개글
      */
-    @Column(name = "introduction", length = 45)
+    @Column(name = "introduction", length = 200)
     private String introduction;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Date created_at;
+    private LocalDateTime created_at;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private Date updated_at;
+    private LocalDateTime  updated_at;
 }
