@@ -7,7 +7,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -17,16 +16,16 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "codi")
-public class Codi {
+@Table(name = "codiwood_codi")
+public class CodiwoodCodi {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    @JoinColumn(name="codiwood_id", nullable = false)
+    private Codiwood codiwood;
 
     @Column(name = "name", nullable = false, length = 45)
     private String name;

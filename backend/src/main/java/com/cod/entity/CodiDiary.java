@@ -6,6 +6,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -28,7 +30,7 @@ public class CodiDiary {
     private User user;
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "thumbnail", nullable = false, columnDefinition = "TEXT")
     private String thumbnail;
@@ -38,9 +40,9 @@ public class CodiDiary {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Date created_at;
+    private LocalDateTime created_at;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private Date updated_at;
+    private LocalDateTime updated_at;
 }
