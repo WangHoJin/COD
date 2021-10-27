@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 public class CreateCodiInput {
-    private int userId;
     private String name;
     private String tag;
     private String description;

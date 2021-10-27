@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 public interface CodiService {
     ResponseEntity<Response<Object>> createCodi(CreateCodiInput createCodiInput);
     ResponseEntity<Response<SelectCodiOutput>> selectCodi(int codiId);
-//    ResponseEntity<PageResponse<SelectCodiOutput>> selectCodiList(SelectCodiInput selectCodiInput);
+    ResponseEntity<PageResponse<SelectCodiOutput>> selectCodiList(SelectCodiInput selectCodiInput);
 //    ResponseEntity<PageResponse<SelectCommentOutput>> selectCodi(SelectCommentInput selectCommentInput);
 //    ResponseEntity<Response<Object>> updateComment(UpdateCommentInput updateReviewInput, int commentId);
 //    ResponseEntity<Response<Object>> deleteComment(int commentId);

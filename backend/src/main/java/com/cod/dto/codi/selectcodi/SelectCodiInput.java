@@ -12,4 +12,6 @@ public class SelectCodiInput {
     private String name;
     private String tag;
     private String description;
+    private int page;
+    private int size;
 }

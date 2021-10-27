@@ -3,6 +3,7 @@ package com.cod.controller;
 import com.cod.dto.codi.createcodi.CreateCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
+import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.service.CodiService;
 import lombok.RequiredArgsConstructor;
@@ -46,18 +47,17 @@ public class CodiController {
         return codiService.selectCodi(id);
     }
 
-
-//    /**
-//     * 댓글 조회 API
-//     * [GET] /api/codies?codiId={codiId}
-//     * @return ResponseEntity<PageResponse<SelectCommentOutput>>
-//     */
-//    // Params
-//    @GetMapping
-//    public ResponseEntity<PageResponse<SelectCommentOutput>> getCommentList(SelectCommentInput selectCommentInput) {
-//        log.info("[GET] /api/codies?codiId=&page=&size=");
-//        return commentService.selectComment(selectCommentInput);
-//    }
+    /**
+     * 코디 리스트 조회 API
+     * [GET] /api/codies?codiId=&...&page=&size=
+     * @return ResponseEntity<PageResponse<SelectCommentOutput>>
+     */
+    // Params
+    @GetMapping
+    public ResponseEntity<PageResponse<SelectCodiOutput>> getCommentList(SelectCodiInput selectCommentInput) {
+        log.info("[GET] /api/codies?codiId=&...&page=&size=");
+        return codiService.selectCodiList(selectCommentInput);
+    }
 //
 //    /**
 //     * 댓글 수정 API

@@ -81,6 +81,10 @@ public class CommentServiceImpl implements CommentService {
         if (selectCommentInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new PageResponse<>(NO_VALUES));
+        if (!ValidationCheck.isValidPage(selectCommentInput.getPage())
+                || !ValidationCheck.isValidId(selectCommentInput.getSize()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
 
         // 2. 댓글 조회
         Pageable pageable = PageRequest.of(selectCommentInput.getPage() - 1, selectCommentInput.getSize());

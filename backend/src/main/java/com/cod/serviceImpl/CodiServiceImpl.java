@@ -50,10 +50,6 @@ public class CodiServiceImpl implements CodiService {
         if (createCodiInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
-        if (!ValidationCheck.isValidId(createCodiInput.getUserId())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new Response<>(BAD_ID_VALUE));
-        }
         if (!ValidationCheck.isValid(createCodiInput.getName())
                 || !ValidationCheck.isValid(createCodiInput.getCoordinate())
                 || !ValidationCheck.isValid(createCodiInput.getThumbnail()))
@@ -63,9 +59,15 @@ public class CodiServiceImpl implements CodiService {
         // 2. 코디 생성
         Codi codi;
         try {
+//            User loginUser = jwtService.getUser();
+            User loginUser = User.builder().id(1).build();
+            if (loginUser == null)  {
+                log.error("[GET]/codies NOT FOUND LOGIN USER error");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
+            }
             codi = Codi.builder()
-                    .user(User.builder().id(1).name("민정").build())
-//                    .user(jwtService.getUser())
+                    .user(loginUser)
                     .name(createCodiInput.getName())
                     .thumbnail(createCodiInput.getThumbnail())
                     .coordinate(createCodiInput.getCoordinate())
@@ -103,7 +105,7 @@ public class CodiServiceImpl implements CodiService {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(NOT_FOUND_CODI));
         } catch (Exception e) {
-            log.error("[comments/get] database error", e);
+            log.error("[codies/get] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new Response<>(DATABASE_ERROR));
         }
@@ -126,46 +128,32 @@ public class CodiServiceImpl implements CodiService {
                 .body(new Response<>(selectCodiOutput, SUCCESS_SELECT_CODI));
     }
 
-//    @Override
-//    public ResponseEntity<PageResponse<SelectCodiOutput>> selectCodiList(SelectCodiInput selectCodiInput) {
-//        // 1. 값 형식 체크
-//        if (selectCommentInput == null)
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body(new PageResponse<>(NO_VALUES));
-//
-//        // 2. 댓글 조회
-//        Pageable pageable = PageRequest.of(selectCommentInput.getPage() - 1, selectCommentInput.getSize());
-//        Page<SelectCommentOutput> responseList;
-//        Page<Comment> commentList;
-//        try {
-//            Codi codi = codiRepository.findById(selectCommentInput.getCodiId()).orElse(null);
-//            if(codi==null)
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body(new PageResponse<>(NOT_FOUND_CODI));
-//           commentList = codiRepository.findById(codi, pageable);
-//
-//
-//        } catch (Exception e) {
-//            log.error("[comments/get] database error", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new PageResponse<>(DATABASE_ERROR));
-//        }
-//
-//        // 최종 출력값 정리
-//        responseList = commentList.map(comment -> {
-//            return SelectCommentOutput.builder()
-//                    .codiId(comment.getCodi().getId())
-//                    .userId(comment.getUser().getId())
-//                    .commentContent(comment.getContent())
-//                    .commentCreatedAt(comment.getCreated_at())
-//                    .commentUpdatedAt(comment.getUpdated_at())
-//                    .build();
-//        });
-//
-//        // 3. 결과 return
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(new PageResponse<>(responseList, SUCCESS_SELECT_COMMENT));
-//    }
+    @Override
+    public ResponseEntity<PageResponse<SelectCodiOutput>> selectCodiList(SelectCodiInput selectCodiInput) {
+        // 1. 값 형식 체크
+        if (selectCodiInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+        if (!ValidationCheck.isValidPage(selectCodiInput.getPage())
+                || !ValidationCheck.isValidId(selectCodiInput.getSize()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+
+        // 2. 코디 조회
+        Pageable pageable = PageRequest.of(selectCodiInput.getPage() - 1, selectCodiInput.getSize());
+        Page<SelectCodiOutput> selectCodiOutputs;
+        try {
+            selectCodiOutputs = codiRepository.findByDynamicQuery(selectCodiInput, pageable);
+        } catch (Exception e) {
+            log.error("[codies/get] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new PageResponse<>(DATABASE_ERROR));
+        }
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PageResponse<>(selectCodiOutputs, SUCCESS_SELECT_CODI));
+    }
 //
 //    @Override
 //    @Transactional
