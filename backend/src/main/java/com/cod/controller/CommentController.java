@@ -26,7 +26,7 @@ public class CommentController {
     private final CommentService commentService;
 
     /**
-     * 댓글 작성 API [POST] /api/comment
+     * 댓글 등록 API [POST] /api/comment
      *
      * @return ResponseEntity<Response<Object>>
      */
