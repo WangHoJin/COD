@@ -16,7 +16,9 @@ public enum  ResponseStatus {
     SUCCESS(200, 200, "요청에 성공하였습니다."),
     SUCCESS_SIGN_IN(200, 201, "로그인에 성공하였습니다."),
     SUCCESS_SELECT_COMMENT(200, 202, "댓글 조회에 성공하였습니다."),
-    SUCCESS_SELECT_CODI(200, 203, "코디 조회에 성공하였습니다."),
+    SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
+    SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
+
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
@@ -33,6 +35,8 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_COMMENT(204, 202, "댓글 삭제에 성공하였습니다."),
     SUCCESS_UPDATE_CODI(204, 203, "코디 수정에 성공하였습니다."),
     SUCCESS_DELETE_CODI(204, 204, "코디 삭제에 성공하였습니다."),
+    SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
+    SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
 
     /*
      4XX Client errors
@@ -50,6 +54,9 @@ public enum  ResponseStatus {
     BAD_PASSWORD_VALUE(400, 414, "올바른 비밀번호를 입력해주세요."),
     BAD_NAME_VALUE(400, 415, "올바른 이름을 입력해주세요."),
     BAD_ID_VALUE(400, 416, "올바른 아이디를 입력해주세요."),
+    BAD_NICKNAME_VALUE(400,417,"올바른 닉네임을 입력해주세요."),
+    BAD_GENDER_VALUE(400,418,"올바른 성별을 입력해주세요."),
+    BAD_BIRTH_VALUE(400,419,"올바른 생년월일을 입력해주세요."),
 
     // 401 Unauthorized - 클라이언트가 권한이 없기 때문에 작업을 진행할 수 없는 경우
     UNAUTHORIZED(401, 400, "권한이 없습니다."),

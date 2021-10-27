@@ -66,8 +66,7 @@ public class CodiServiceImpl implements CodiService {
         // 2. 코디 생성
         Codi codi;
         try {
-//            User loginUser = jwtService.getUser();
-            User loginUser = User.builder().id(1).build();
+            User loginUser = jwtService.getUser();
             if (loginUser == null)  {
                 log.error("[GET]/codies NOT FOUND LOGIN USER error");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -271,8 +270,7 @@ public class CodiServiceImpl implements CodiService {
         Pageable pageable = PageRequest.of(getFollowingUserCodiInput.getPage() - 1, getFollowingUserCodiInput.getSize());
         Page<SelectCodiOutput> selectCodiOutputs;
         try {
-//            User loginUser = jwtService.getUser();
-            User loginUser = User.builder().id(1).build();
+            User loginUser = jwtService.getUser();
             if (loginUser == null)  {
                 log.error("[GET]/codies NOT FOUND LOGIN USER error");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)

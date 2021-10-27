@@ -1,21 +1,23 @@
-package com.cod.dto.user.signup;
+package com.cod.dto.user.profile;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
-@Getter @Setter
-public class SignUpInput {
+@Getter
+@Setter
+@Builder
+public class ProfileOutput {
     private String email;
-    private String password;
     private String name;
     private String nickname;
-    private LocalDate birth;
     private String gender;
+    private LocalDate birth;
     private String profile;
     private String introduction;
-    private String oauth;
+
 }

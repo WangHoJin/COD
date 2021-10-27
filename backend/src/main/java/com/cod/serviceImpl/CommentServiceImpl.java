@@ -56,8 +56,7 @@ public class CommentServiceImpl implements CommentService {
         try {
             Codi codi = codiRepository.findById(createCommentInput.getCodiId()).orElse(null);
             comment = Comment.builder()
-                    .user(User.builder().id(1).name("민정").build())
-//                    .user(jwtService.getUser())
+                    .user(jwtService.getUser())
                     .codi(codi)
                     .content(createCommentInput.getContent())
                     .build();
