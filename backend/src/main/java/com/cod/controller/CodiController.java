@@ -3,6 +3,7 @@ package com.cod.controller;
 import com.cod.dto.codi.createcodi.CreateCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
+import com.cod.dto.codi.updatecodi.UpdateCodiInput;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.service.CodiService;
@@ -54,34 +55,34 @@ public class CodiController {
      */
     // Params
     @GetMapping
-    public ResponseEntity<PageResponse<SelectCodiOutput>> getCommentList(SelectCodiInput selectCommentInput) {
+    public ResponseEntity<PageResponse<SelectCodiOutput>> getCodiList(SelectCodiInput selectCommentInput) {
         log.info("[GET] /api/codies?codiId=&...&page=&size=");
         return codiService.selectCodiList(selectCommentInput);
     }
-//
-//    /**
-//     * 댓글 수정 API
-//     * [PATCH] /api/codies/{id}
-//     * @return ResponseEntity<Response<Object>>
-//     */
-//    // Body
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<Response<Object>> updateComment(@PathVariable("id") int id, @RequestBody UpdateCommentInput updateCommentInput) {
-//        log.info("[PATCH] /api/codies/" + id);
-//        return commentService.updateComment(updateCommentInput, id);
-//    }
-//
-//    /**
-//     * 댓글 삭제 API
-//     * [DELETE] /api/comments/{id}
-//     * @return ResponseEntity<Response<Object>>
-//     */
-//    // Path-Variable
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Response<Object>> deleteComment(@PathVariable("id") int id) {
-//        log.info("[DELETE] /api/codies/" + id);
-//        return commentService.deleteComment(id);
-//    }
+
+    /**
+     * 코디 수정 API
+     * [PATCH] /api/codies/{id}
+     * @return ResponseEntity<Response<Object>>
+     */
+    // Body
+    @PatchMapping("/{id}")
+    public ResponseEntity<Response<Object>> updateCodi(@PathVariable("id") int id, @RequestBody UpdateCodiInput updateCodiInput) {
+        log.info("[PATCH] /api/codies/" + id);
+        return codiService.updateCodi(updateCodiInput, id);
+    }
+
+    /**
+     * 코디 삭제 API
+     * [DELETE] /api/codies/{id}
+     * @return ResponseEntity<Response<Object>>
+     */
+    // Path-Variable
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response<Object>> deleteCodi(@PathVariable("id") int id) {
+        log.info("[DELETE] /api/codies/" + id);
+        return codiService.deleteCodi(id);
+    }
 
 }
 

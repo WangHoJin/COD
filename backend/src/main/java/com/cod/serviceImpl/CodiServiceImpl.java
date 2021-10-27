@@ -7,6 +7,7 @@ import com.cod.dao.CommentRepository;
 import com.cod.dto.codi.createcodi.CreateCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
+import com.cod.dto.codi.updatecodi.UpdateCodiInput;
 import com.cod.dto.comment.createcomment.CreateCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentOutput;
@@ -154,55 +155,61 @@ public class CodiServiceImpl implements CodiService {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PageResponse<>(selectCodiOutputs, SUCCESS_SELECT_CODI));
     }
-//
-//    @Override
-//    @Transactional
-//    public ResponseEntity<Response<Object>> updateComment(UpdateCommentInput updateCommentInput, int commentId) {
-//        try {
-//            // 1. 댓글 조회
-//            Comment comment = commentRepository.findById(commentId).orElse(null);
-//
-//            // 2. 댓글 수정
-//            if (comment == null)
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body(new Response<>(BAD_ID_VALUE));
-//            if (StringUtils.isBlank(updateCommentInput.getContent()))
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body(new Response<>(NO_CONTENTS));
-//            comment.setContent(updateCommentInput.getContent());
-//            commentRepository.save(comment);
-//        } catch (Exception e) {
-//            log.error("[comments/patch] database error", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new Response<>(DATABASE_ERROR));
-//        }
-//        // 3. 결과 return
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(new Response<>(null, SUCCESS_UPDATE_COMMENT));
-//    }
-//
-//    @Override
-//    @Transactional
-//    public ResponseEntity<Response<Object>> deleteComment(int commentId) {
-//        try {
-//            // 1. 댓글 조회
-//            Comment comment = commentRepository.findById(commentId).orElse(null);
-//
-//            // 2. 댓글 삭제
-//            if (comment == null)
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body(new Response<>(BAD_ID_VALUE));
-//
-//            commentRepository.delete(comment);
-//
-//        } catch (Exception e) {
-//            log.error("[comments/delete] database error", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new Response<>(DATABASE_ERROR));
-//        }
-//
-//        // 3. 결과 return
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(new Response<>(null, SUCCESS_DELETE_COMMENT));
-//    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<Response<Object>> updateCodi(UpdateCodiInput updateCodiInput, int codiId) {
+        try {
+            // 1. 코디 조회
+            Codi codi = codiRepository.findById(codiId).orElse(null);
+
+            // 2. 댓글 수정
+            if (codi == null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(BAD_ID_VALUE));
+            if (StringUtils.isNoneBlank(updateCodiInput.getName()))
+                codi.setName(updateCodiInput.getName());
+            if (StringUtils.isNoneBlank(updateCodiInput.getTag()))
+                codi.setTag(updateCodiInput.getTag());
+            if (StringUtils.isNoneBlank(updateCodiInput.getDescription()))
+                codi.setDescription(updateCodiInput.getDescription());
+            if (StringUtils.isNoneBlank(updateCodiInput.getThumbnail()))
+                codi.setThumbnail(updateCodiInput.getThumbnail());
+            if (StringUtils.isNoneBlank(updateCodiInput.getCoordinate()))
+                codi.setCoordinate(updateCodiInput.getCoordinate());
+            codiRepository.save(codi);
+        } catch (Exception e) {
+            log.error("[codies/patch] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Response<>(DATABASE_ERROR));
+        }
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(null, SUCCESS_UPDATE_CODI));
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<Response<Object>> deleteCodi(int codiId) {
+        try {
+            // 1. 코디 조회
+            Codi codi = codiRepository.findById(codiId).orElse(null);
+
+            // 2. 코디 삭제
+            if (codi == null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(BAD_ID_VALUE));
+
+            codiRepository.delete(codi);
+
+        } catch (Exception e) {
+            log.error("[codies/delete] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Response<>(DATABASE_ERROR));
+        }
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(null, SUCCESS_DELETE_CODI));
+    }
 }

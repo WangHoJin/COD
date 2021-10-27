@@ -31,6 +31,8 @@ public enum  ResponseStatus {
     NO_CONTENT(204, 200, "요청에 성공하였습니다."),
     SUCCESS_UPDATE_COMMENT(204, 201, "댓글 수정에 성공하였습니다."),
     SUCCESS_DELETE_COMMENT(204, 202, "댓글 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_CODI(204, 203, "코디 수정에 성공하였습니다."),
+    SUCCESS_DELETE_CODI(204, 204, "코디 삭제에 성공하였습니다."),
 
     /*
      4XX Client errors
