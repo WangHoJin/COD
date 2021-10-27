@@ -16,9 +16,9 @@ public enum  ResponseStatus {
     SUCCESS(200, 200, "요청에 성공하였습니다."),
     SUCCESS_SIGN_IN(200, 201, "로그인에 성공하였습니다."),
     SUCCESS_SELECT_COMMENT(200, 202, "댓글 조회에 성공하였습니다."),
+    SUCCESS_SELECT_CODI(200, 203, "코디 검색에 성공하였습니다."),
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
-
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
@@ -47,6 +47,7 @@ public enum  ResponseStatus {
     FAILED_TO_CREATE_TOKEN(400, 402, "토큰 생성에 실패하였습니다."),
     FAILED_TO_SIGN_IN(400, 403, "로그인에 실패하였습니다."),
     EXISTS_EMAIL(400, 404, "이미 존재하는 이메일입니다."),
+    EXISTS_NICKNAME(400, 405, "이미 존재하는 닉네임입니다."),
     NO_VALUES(400, 410, "입력되지 않은 값이 존재합니다."),
     NO_CONTENTS(400, 411, "내용을 입력해주세요."),
     BAD_ACCESS_TOKEN_VALUE(400, 412, "accessToken을 입력해주세요."),
