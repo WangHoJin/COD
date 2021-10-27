@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.*;
@@ -15,7 +16,7 @@ import static javax.persistence.GenerationType.*;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "userDB")
 public class UserDB {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
@@ -33,9 +34,9 @@ public class UserDB {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Date created_at;
+    private LocalDateTime created_at;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private Date updated_at;
+    private LocalDateTime updated_at;
 }

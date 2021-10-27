@@ -1,5 +1,6 @@
 package com.cod.controller;
 
+import com.cod.configuration.ValidationCheck;
 import com.cod.dto.user.jwt.JwtOutput;
 import com.cod.dto.user.profile.ProfileOutput;
 import com.cod.dto.user.profile.ProfileUpdate;
@@ -116,13 +117,7 @@ public class UserController {
     // Params
     @GetMapping
     public PageResponse<UserSearchOutput> getUserByNickName(UserSearchInput userSearchInput) {
-        if (userSearchInput.getNickname() == null) {
-            log.info("[GET] /users?NO_VALID_STATUS");
-            return new PageResponse<>(ResponseStatus.BAD_REQUEST);
-        } else {
-            log.info("[GET] /users?name=" + userSearchInput.getNickname());
             return userService.getUser(userSearchInput);
-        }
     }
 
 }

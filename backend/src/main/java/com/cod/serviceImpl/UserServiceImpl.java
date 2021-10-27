@@ -19,6 +19,7 @@ import com.cod.dto.user.signup.SignUpOutput;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,13 +51,11 @@ public class UserServiceImpl implements UserService {
         try {
             String email = signInInput.getEmail();
             String password = signInInput.getPassword();
-            List<User> users = userRepository.findByEmail(email);
-            if (users.size() == 0) {
+            user = userRepository.findByEmail(email).orElse(null);
+            if (user==null) {
                 return new Response<>(ResponseStatus.NOT_FOUND_USER);
-            } else if (!users.get(0).getPassword().equals(password)) {
+            } else if (!user.getPassword().equals(password)) {
                 return new Response<>(ResponseStatus.FAILED_TO_SIGN_IN);
-            } else {
-                user = users.get(0);
             }
         } catch (Exception e) {
             return new Response<>(ResponseStatus.DATABASE_ERROR);
@@ -103,8 +102,8 @@ public class UserServiceImpl implements UserService {
 
         try {
             String email = signUpInput.getEmail();
-            List<User> existUsers = userRepository.findByEmail(email);
-            if (existUsers.size() > 0) {
+            User existUser = userRepository.findByEmail(email).orElse(null);
+            if (existUser != null) {
                 return new Response<>(ResponseStatus.EXISTS_EMAIL);
             } else {
                 userRepository.save(user);
@@ -201,12 +200,13 @@ public class UserServiceImpl implements UserService {
             user.setProfile(profile);
             user.setIntroduction(introduction);
 
-            List<User> existUsers = userRepository.findByNickname(nickname);
-            if (existUsers.size() > 0) {
-                return new Response<>(ResponseStatus.EXISTS_EMAIL);
-            } else {
-                userRepository.save(user);
+            if(StringUtils.isNoneBlank(profileUpdate.getNickname())){
+                User existUser = userRepository.findByNickname(nickname).orElse(null);
+                if (existUser != null)
+                    return new Response<>(ResponseStatus.EXISTS_NICKNAME);
             }
+
+            userRepository.save(user);
 
         } catch (Exception e){
             log.error("[user/profile] database error",e);
@@ -218,20 +218,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResponse<UserSearchOutput> getUser(UserSearchInput userSearchInput) {
-        // 1. 유저 정보 가져오기
+        // 1. 값 형식 체크
+        if (userSearchInput.getNickname() == null
+                || !ValidationCheck.isValidPage(userSearchInput.getPage())
+                || !ValidationCheck.isValidId(userSearchInput.getSize())) {
+            log.info("[GET] /users?NO_VALID_STATUS");
+            return new PageResponse<>(ResponseStatus.NO_VALUES);
+        } else {
+            log.info("[GET] /users?name=" + userSearchInput.getNickname());
+        }
+        // 2. 유저 정보 가져오기
         Page<UserSearchOutput> userSearchOutput;
         try {
-            User loginUser = jwtService.getUser();
-            if (loginUser == null) {
-                log.error("[users/get] NOT FOUND LOGIN USER error");
-                return new PageResponse<>(ResponseStatus.NOT_FOUND_USER);
-            }
-
-            Pageable paging = PageRequest.of(userSearchInput.getPage(), userSearchInput.getSize(), Sort.Direction.ASC, "nickname");
+            Pageable paging = PageRequest.of(userSearchInput.getPage()-1, userSearchInput.getSize(), Sort.Direction.ASC, "nickname");
             Page<User> userList;
             userList = userRepository.findByNicknameContaining(userSearchInput.getNickname(), paging);
 
-            // 2. 유저 리스트에 필요한 최종 결과 가공
+            // 3. 유저 리스트에 필요한 최종 결과 가공
             userSearchOutput = userList.map(user -> {
                 return UserSearchOutput.builder()
                         .userId(user.getId())

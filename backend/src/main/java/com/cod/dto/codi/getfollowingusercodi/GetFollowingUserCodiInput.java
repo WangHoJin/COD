@@ -1,14 +1,15 @@
-package com.cod.dto.comment.selectcomment;
+package com.cod.dto.codi.getfollowingusercodi;
 
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
-public class SelectCommentInput {
-    private Integer codiId;
+public class GetFollowingUserCodiInput {
     private int page;
     private int size;
 }

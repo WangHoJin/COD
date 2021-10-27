@@ -24,7 +24,8 @@ public enum  ResponseStatus {
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
     CREATED_USER(201, 201, "회원가입에 성공하였습니다."),
     CREATED_COMMENT(201, 202, "댓글 등록에 성공하였습니다."),
-    
+    CREATED_CODI(201, 203, "코디 등록에 성공하였습니다."),
+
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
 
@@ -32,6 +33,8 @@ public enum  ResponseStatus {
     NO_CONTENT(204, 200, "요청에 성공하였습니다."),
     SUCCESS_UPDATE_COMMENT(204, 201, "댓글 수정에 성공하였습니다."),
     SUCCESS_DELETE_COMMENT(204, 202, "댓글 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_CODI(204, 203, "코디 수정에 성공하였습니다."),
+    SUCCESS_DELETE_CODI(204, 204, "코디 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
 

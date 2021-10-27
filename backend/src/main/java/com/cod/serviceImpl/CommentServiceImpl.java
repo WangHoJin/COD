@@ -56,8 +56,7 @@ public class CommentServiceImpl implements CommentService {
         try {
             Codi codi = codiRepository.findById(createCommentInput.getCodiId()).orElse(null);
             comment = Comment.builder()
-                    .user(User.builder().id(1).name("민정").build())
-//                    .user(jwtService.getUser())
+                    .user(jwtService.getUser())
                     .codi(codi)
                     .content(createCommentInput.getContent())
                     .build();
@@ -79,6 +78,10 @@ public class CommentServiceImpl implements CommentService {
     public ResponseEntity<PageResponse<SelectCommentOutput>> selectComment(SelectCommentInput selectCommentInput) {
         // 1. 값 형식 체크
         if (selectCommentInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+        if (!ValidationCheck.isValidPage(selectCommentInput.getPage())
+                || !ValidationCheck.isValidId(selectCommentInput.getSize()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new PageResponse<>(NO_VALUES));
 
