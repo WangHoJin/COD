@@ -1,6 +1,8 @@
 package com.cod.service;
 
 import com.cod.dto.codi.createcodi.CreateCodiInput;
+import com.cod.dto.codi.getfollowingusercodi.GetFollowingUserCodiInput;
+import com.cod.dto.codi.getpopularcodi.GetPopularCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.dto.codi.updatecodi.UpdateCodiInput;
@@ -20,4 +22,6 @@ public interface CodiService {
     ResponseEntity<PageResponse<SelectCodiOutput>> selectCodiList(SelectCodiInput selectCodiInput);
     ResponseEntity<Response<Object>> updateCodi(UpdateCodiInput updateCodiInput, int codiId);
     ResponseEntity<Response<Object>> deleteCodi(int codiId);
+    ResponseEntity<PageResponse<SelectCodiOutput>> getPopularCodi(GetPopularCodiInput getPopularCodiInput);
+    ResponseEntity<PageResponse<SelectCodiOutput>> getFollowingUserCodi(GetFollowingUserCodiInput getFollowingUserCodiInput);
 }

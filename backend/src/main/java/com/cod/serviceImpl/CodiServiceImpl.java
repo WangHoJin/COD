@@ -5,6 +5,8 @@ import com.cod.dao.CodiLikedRepository;
 import com.cod.dao.CodiRepository;
 import com.cod.dao.CommentRepository;
 import com.cod.dto.codi.createcodi.CreateCodiInput;
+import com.cod.dto.codi.getfollowingusercodi.GetFollowingUserCodiInput;
+import com.cod.dto.codi.getpopularcodi.GetPopularCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.dto.codi.updatecodi.UpdateCodiInput;
@@ -32,6 +34,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.cod.response.ResponseStatus.*;
 
@@ -211,5 +217,76 @@ public class CodiServiceImpl implements CodiService {
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new Response<>(null, SUCCESS_DELETE_CODI));
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<SelectCodiOutput>> getPopularCodi(GetPopularCodiInput getPopularCodiInput) {
+        // 포맷터
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // 문자열 -> Date
+        LocalDateTime start = LocalDate.parse(getPopularCodiInput.getStartDate(), formatter).atStartOfDay();
+        LocalDateTime end = LocalDate.parse(getPopularCodiInput.getEndDate(), formatter)
+                .atStartOfDay()
+                .plusDays(1)
+                .minusSeconds(1);
+        System.out.println(start+"\n"+end);
+
+        // 1. 값 형식 체크
+        if (getPopularCodiInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+        if (!ValidationCheck.isValidPage(getPopularCodiInput.getPage())
+                || !ValidationCheck.isValidId(getPopularCodiInput.getSize()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+
+        // 2. 코디 조회
+        Pageable pageable = PageRequest.of(getPopularCodiInput.getPage() - 1, getPopularCodiInput.getSize());
+        Page<SelectCodiOutput> selectCodiOutputs;
+        try {
+            selectCodiOutputs = codiRepository.getPopularCodi(start, end, pageable);
+        } catch (Exception e) {
+            log.error("[codies/get] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new PageResponse<>(DATABASE_ERROR));
+        }
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PageResponse<>(selectCodiOutputs, SUCCESS_SELECT_CODI));
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<SelectCodiOutput>> getFollowingUserCodi(GetFollowingUserCodiInput getFollowingUserCodiInput) {
+        // 1. 값 형식 체크
+        if (getFollowingUserCodiInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+        if (!ValidationCheck.isValidPage(getFollowingUserCodiInput.getPage())
+                || !ValidationCheck.isValidId(getFollowingUserCodiInput.getSize()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+
+        // 2. 코디 조회
+        Pageable pageable = PageRequest.of(getFollowingUserCodiInput.getPage() - 1, getFollowingUserCodiInput.getSize());
+        Page<SelectCodiOutput> selectCodiOutputs;
+        try {
+//            User loginUser = jwtService.getUser();
+            User loginUser = User.builder().id(1).build();
+            if (loginUser == null)  {
+                log.error("[GET]/codies NOT FOUND LOGIN USER error");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new PageResponse<>(NOT_FOUND_USER));
+            }
+            selectCodiOutputs = codiRepository.getFollowingUserCodi(loginUser.getId(), pageable);
+        } catch (Exception e) {
+            log.error("[codies/get] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new PageResponse<>(DATABASE_ERROR));
+        }
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PageResponse<>(selectCodiOutputs, SUCCESS_SELECT_CODI));
     }
 }

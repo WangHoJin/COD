@@ -1,6 +1,8 @@
 package com.cod.controller;
 
 import com.cod.dto.codi.createcodi.CreateCodiInput;
+import com.cod.dto.codi.getfollowingusercodi.GetFollowingUserCodiInput;
+import com.cod.dto.codi.getpopularcodi.GetPopularCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.dto.codi.updatecodi.UpdateCodiInput;
@@ -82,6 +84,32 @@ public class CodiController {
     public ResponseEntity<Response<Object>> deleteCodi(@PathVariable("id") int id) {
         log.info("[DELETE] /api/codies/" + id);
         return codiService.deleteCodi(id);
+    }
+
+
+    /**
+     * 인기있는 코디 리스트 조회 API
+     * startDate와 endDate 사이의 코디를 좋아요가 많은 순서대로 반환한다.
+     * [GET] /api/codies?startDate=&endDate=&page=$size=
+     * @return ResponseEntity<PageResponse<SelectCommentOutput>>
+     */
+    // Params
+    @GetMapping("/popular")
+    public ResponseEntity<PageResponse<SelectCodiOutput>> getPopularCodi(GetPopularCodiInput getPopularCodiInput) {
+        log.info("[GET] /api/codies?startDate=&endDate=&page=$size=");
+        return codiService.getPopularCodi(getPopularCodiInput);
+    }
+
+    /**
+     * 팔로우한 유저들의 코디 리스트 조회 API
+     * [GET] /api/codies?page=&size=
+     * @return ResponseEntity<PageResponse<SelectCommentOutput>>
+     */
+    // Params
+    @GetMapping("/following")
+    public ResponseEntity<PageResponse<SelectCodiOutput>> getFollowingUserCodi(GetFollowingUserCodiInput getFollowingUserCodiInput) {
+        log.info("[GET] /api/codies?page=&size=");
+        return codiService.getFollowingUserCodi(getFollowingUserCodiInput);
     }
 
 }

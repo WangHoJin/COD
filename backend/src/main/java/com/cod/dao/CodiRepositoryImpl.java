@@ -5,16 +5,21 @@ import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.entity.QCodi;
 import com.cod.entity.QCodiLiked;
+import com.cod.entity.QFollow;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,6 +28,7 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
 
     QCodi qCodi = QCodi.codi;
     QCodiLiked qCodiLiked = QCodiLiked.codiLiked;
+    QFollow qFollow = QFollow.follow;
 
     @Override
     public Page<SelectCodiOutput> findByDynamicQuery(SelectCodiInput selectCodiInput, Pageable pageable) {
@@ -42,6 +48,62 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                 ))
                 .from(qCodi)
                 .where(eqTag(selectCodiInput.getTag()), eqDescription(selectCodiInput.getDescription()), eqName(selectCodiInput.getName()), eqUserId(selectCodiInput.getUserId()))
+                .orderBy(qCodi.created_at.desc())
+                .offset(pageable.getOffset()).limit(pageable.getPageSize())
+                .fetchResults();
+        long totalCount = queryResult.getTotal();
+        List<SelectCodiOutput> content = queryResult.getResults();
+
+        return new PageImpl<>(content, pageable, totalCount);
+    }
+
+    @Override
+    public Page<SelectCodiOutput> getPopularCodi(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
+        QueryResults<SelectCodiOutput> queryResult = queryFactory
+                .select(new QSelectCodiOutput(
+                        qCodi.user.id,
+                        qCodi.name,
+                        qCodi.tag,
+                        qCodi.description,
+                        qCodi.thumbnail,
+                        qCodi.coordinate,
+                        qCodi.created_at,
+                        qCodi.updated_at,
+                        //liked
+                        Expressions.as(JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
+                                .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked")
+                ))
+                .from(qCodi)
+                .where(qCodi.created_at.between(startDate,endDate))
+                .orderBy(Expressions.stringPath("liked").desc())
+                .offset(pageable.getOffset()).limit(pageable.getPageSize())
+                .fetchResults();
+        long totalCount = queryResult.getTotal();
+        List<SelectCodiOutput> content = queryResult.getResults();
+
+        return new PageImpl<>(content, pageable, totalCount);
+    }
+
+    @Override
+    public Page<SelectCodiOutput> getFollowingUserCodi(int userId, Pageable pageable) {
+        QueryResults<SelectCodiOutput> queryResult = queryFactory
+                .select(new QSelectCodiOutput(
+                        qCodi.user.id,
+                        qCodi.name,
+                        qCodi.tag,
+                        qCodi.description,
+                        qCodi.thumbnail,
+                        qCodi.coordinate,
+                        qCodi.created_at,
+                        qCodi.updated_at,
+                        //liked
+                        Expressions.as(JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
+                                .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked")
+                ))
+                .from(qCodi)
+                .join(qFollow)
+                .on(qFollow.followUser.id.eq(qCodi.user.id))
+                .where(qFollow.user.id.eq(userId))
                 .orderBy(qCodi.created_at.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetchResults();
