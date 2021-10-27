@@ -15,18 +15,23 @@ public enum  ResponseStatus {
     // 200 OK - 클라이언트의 요청을 서버가 정상적으로 처리했다.
     SUCCESS(200, 200, "요청에 성공하였습니다."),
     SUCCESS_SIGN_IN(200, 201, "로그인에 성공하였습니다."),
+    SUCCESS_SELECT_COMMENT(200, 202, "댓글 조회에 성공하였습니다."),
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
+
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
     CREATED_USER(201, 201, "회원가입에 성공하였습니다."),
-
+    CREATED_COMMENT(201, 202, "댓글 등록에 성공하였습니다."),
+    
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
 
     // 204 No Content - 클라이언트의 요청은 정상적이다. 하지만 컨텐츠를 제공하지 않는다.
     NO_CONTENT(204, 200, "요청에 성공하였습니다."),
+    SUCCESS_UPDATE_COMMENT(204, 201, "댓글 수정에 성공하였습니다."),
+    SUCCESS_DELETE_COMMENT(204, 202, "댓글 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
 
@@ -40,13 +45,15 @@ public enum  ResponseStatus {
     FAILED_TO_SIGN_IN(400, 403, "로그인에 실패하였습니다."),
     EXISTS_EMAIL(400, 404, "이미 존재하는 이메일입니다."),
     NO_VALUES(400, 410, "입력되지 않은 값이 존재합니다."),
-    BAD_ACCESS_TOKEN_VALUE(400, 411, "accessToken을 입력해주세요."),
-    BAD_EMAIL_VALUE(400, 412, "올바른 이메일을 입력해주세요."),
-    BAD_PASSWORD_VALUE(400, 413, "올바른 비밀번호를 입력해주세요."),
-    BAD_NAME_VALUE(400, 414, "올바른 이름을 입력해주세요."),
-    BAD_NICKNAME_VALUE(400,415,"올바른 닉네임을 입력해주세요."),
-    BAD_GENDER_VALUE(400,416,"올바른 성별을 입력해주세요."),
-    BAD_BIRTH_VALUE(400,417,"올바른 생년월일을 입력해주세요."),
+    NO_CONTENTS(400, 411, "내용을 입력해주세요."),
+    BAD_ACCESS_TOKEN_VALUE(400, 412, "accessToken을 입력해주세요."),
+    BAD_EMAIL_VALUE(400, 413, "올바른 이메일을 입력해주세요."),
+    BAD_PASSWORD_VALUE(400, 414, "올바른 비밀번호를 입력해주세요."),
+    BAD_NAME_VALUE(400, 415, "올바른 이름을 입력해주세요."),
+    BAD_ID_VALUE(400, 416, "올바른 아이디를 입력해주세요."),
+    BAD_NICKNAME_VALUE(400,417,"올바른 닉네임을 입력해주세요."),
+    BAD_GENDER_VALUE(400,418,"올바른 성별을 입력해주세요."),
+    BAD_BIRTH_VALUE(400,419,"올바른 생년월일을 입력해주세요."),
 
     // 401 Unauthorized - 클라이언트가 권한이 없기 때문에 작업을 진행할 수 없는 경우
     UNAUTHORIZED(401, 400, "권한이 없습니다."),
@@ -59,6 +66,7 @@ public enum  ResponseStatus {
     // 404 Not Found - 클라이언트가 요청한 자원이 존재하지 않다.
     NOT_FOUND(404, 400, "NOT FOUND"),
     NOT_FOUND_USER(404, 405, "사용자 정보가 존재하지 않습니다."),
+    NOT_FOUND_CODI(404, 406, "코디 정보가 존재하지 않습니다."),
 
     // 405 Method Not Allowed - 클라이언트의 요청이 허용되지 않는 메소드인 경우
     METHOD_NOT_ALLOWED(405, 400, "허용되지 않는 HTTP Method 입니다."),
