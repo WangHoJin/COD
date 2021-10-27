@@ -1,14 +1,18 @@
 package com.cod.serviceImpl;
 
 import com.cod.configuration.ValidationCheck;
+import com.cod.dao.CodiLikedRepository;
 import com.cod.dao.CodiRepository;
 import com.cod.dao.CommentRepository;
 import com.cod.dto.codi.createcodi.CreateCodiInput;
+import com.cod.dto.codi.selectcodi.SelectCodiInput;
+import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.dto.comment.createcomment.CreateCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentOutput;
 import com.cod.dto.comment.updatecomment.UpdateCommentInput;
 import com.cod.entity.Codi;
+import com.cod.entity.CodiLiked;
 import com.cod.entity.Comment;
 import com.cod.entity.User;
 import com.cod.response.PageResponse;
@@ -30,12 +34,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.cod.response.ResponseStatus.*;
 
-@Service("CommentService")
+@Service("CodiService")
 @RequiredArgsConstructor
 @Slf4j
 public class CodiServiceImpl implements CodiService {
 
     private final CodiRepository codiRepository;
+    private final CodiLikedRepository codiLikedRepository;
     private final JwtService jwtService;
 
     @Override
@@ -45,7 +50,7 @@ public class CodiServiceImpl implements CodiService {
         if (createCodiInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
-        if (!ValidationCheck.isValidId(createCodiInput.getUser_id())) {
+        if (!ValidationCheck.isValidId(createCodiInput.getUserId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(BAD_ID_VALUE));
         }
@@ -81,8 +86,48 @@ public class CodiServiceImpl implements CodiService {
                 .body(new Response<>(null, CREATED_CODI));
     }
 
+
+    @Override
+    public ResponseEntity<Response<SelectCodiOutput>> selectCodi(int codiId) {
+        // 1. 값 형식 체크
+        if (!ValidationCheck.isValidId(codiId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_ID_VALUE));
+        }
+        // 2. 코디 조회
+        Codi codi;
+        SelectCodiOutput selectCodiOutput;
+        try {
+            codi = codiRepository.findById(codiId).orElse(null);
+            if(codi==null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_CODI));
+        } catch (Exception e) {
+            log.error("[comments/get] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Response<>(DATABASE_ERROR));
+        }
+
+        // 최종 출력값 정리
+        selectCodiOutput = SelectCodiOutput.builder()
+                .userId(codi.getUser().getId())
+                .codiName(codi.getName())
+                .codiTag(codi.getTag())
+                .codiThumbnail(codi.getThumbnail())
+                .codiCoordinate(codi.getCoordinate())
+                .codiDescription(codi.getDescription())
+                .codiCreatedAt(codi.getCreated_at())
+                .codiUpdatedAt(codi.getUpdated_at())
+                .liked(codiLikedRepository.countByCodi(codi))
+                .build();
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(selectCodiOutput, SUCCESS_SELECT_CODI));
+    }
+
 //    @Override
-//    public ResponseEntity<PageResponse<SelectCommentOutput>> selectComment(SelectCommentInput selectCommentInput) {
+//    public ResponseEntity<PageResponse<SelectCodiOutput>> selectCodiList(SelectCodiInput selectCodiInput) {
 //        // 1. 값 형식 체크
 //        if (selectCommentInput == null)
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -97,7 +142,7 @@ public class CodiServiceImpl implements CodiService {
 //            if(codi==null)
 //                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 //                        .body(new PageResponse<>(NOT_FOUND_CODI));
-//           commentList = commentRepository.findByCodi(codi, pageable);
+//           commentList = codiRepository.findById(codi, pageable);
 //
 //
 //        } catch (Exception e) {

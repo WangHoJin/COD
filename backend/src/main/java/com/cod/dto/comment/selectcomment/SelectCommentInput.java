@@ -7,7 +7,6 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-
 public class SelectCommentInput {
     private Integer codiId;
     private int page;

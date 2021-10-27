@@ -1,6 +1,8 @@
 package com.cod.controller;
 
 import com.cod.dto.codi.createcodi.CreateCodiInput;
+import com.cod.dto.codi.selectcodi.SelectCodiInput;
+import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.response.Response;
 import com.cod.service.CodiService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,19 @@ public class CodiController {
         log.info("[POST] /api/codies");
         return codiService.createCodi(createCodiInput);
     }
+
+    /**
+     * 코디 상세 조회 API
+     * [GET] /api/codies/{id}
+     * @return ResponseEntity<Response<SelectCommentOutput>>
+     */
+    // Params
+    @GetMapping("/{id}")
+    public ResponseEntity<Response<SelectCodiOutput>> getCodi(@PathVariable int id) {
+        log.info("[GET] /api/codies/{id}");
+        return codiService.selectCodi(id);
+    }
+
 
 //    /**
 //     * 댓글 조회 API
