@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "codiwood_codi_liked")
+@Table(name = "wood_codi_liked")
 public class WoodCodiLiked {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
