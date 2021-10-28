@@ -24,7 +24,7 @@ public class User {
     @GeneratedValue(strategy = IDENTITY)
     private int id;
 
-    @Column(name = "email", nullable = false, length = 45)
+    @Column(name = "email", nullable = false, length = 45, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false, length = 45)
@@ -33,7 +33,7 @@ public class User {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @Column(name = "nickname", nullable = false, length = 45)
+    @Column(name = "nickname", nullable = false, length = 45, unique = true)
     private String nickname;
 
     @Column(name = "birth", nullable = false)
