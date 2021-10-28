@@ -25,8 +25,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String token = jwtService.getAccessToken();
         if (token != null && !token.equals("")) { // token 검증
-            Authentication auth = jwtService.getAuthentication(token); // 인증 객체 생성
-            SecurityContextHolder.getContext().setAuthentication(auth); // SecurityContextHolder에 인증 객체 저장
+            try{ //토큰이 유효함
+                Authentication auth = jwtService.getAuthentication(token); // 인증 객체 생성
+                SecurityContextHolder.getContext().setAuthentication(auth); // SecurityContextHolder에 인증 객체 저장
+            }catch (Exception e){}
         }
         chain.doFilter(request, response);
     }
