@@ -125,12 +125,19 @@ public class UserServiceImpl implements UserService {
 
         User user;
         try {
-            // 2. 이메일 중복 체크
+            // 2-1. 이메일 중복 체크
             String email = signUpInput.getEmail();
             User existUser = userRepository.findByEmail(email).orElse(null);
             if (existUser != null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(EXISTS_EMAIL));
+
+            // 2-2. 닉네임 중복 체크
+            String nickname = signUpInput.getNickname();
+            User existNickNameUser = userRepository.findByNickname(nickname).orElse(null);
+            if (existNickNameUser != null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(EXISTS_NICKNAME));
 
             // 3. 유저 생성
             String password = new AES128(USER_INFO_PASSWORD_KEY).encrypt(signUpInput.getPassword());
