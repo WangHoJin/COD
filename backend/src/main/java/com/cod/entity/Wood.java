@@ -1,11 +1,11 @@
 package com.cod.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -22,8 +22,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "codi_wood")
-public class Codiwood {
+@Table(name = "wood")
+public class Wood {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
@@ -33,6 +33,7 @@ public class Codiwood {
      * 코디나무를 등록한 사람
      */
     @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 

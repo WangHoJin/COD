@@ -168,7 +168,7 @@ public class CodiServiceImpl implements CodiService {
             // 1. 코디 조회
             Codi codi = codiRepository.findById(codiId).orElse(null);
 
-            // 2. 댓글 수정
+            // 2. 코디 수정
             if (codi == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(BAD_ID_VALUE));
