@@ -11,6 +11,7 @@ import lombok.Setter;
 @Builder
 public class ProfileUpdate {
     private String profile;
+    private String password;
     private String introduction;
     private String nickname;
 }

@@ -1,6 +1,5 @@
 package com.cod.controller;
 
-import com.cod.configuration.ValidationCheck;
 import com.cod.dto.user.jwt.JwtOutput;
 import com.cod.dto.user.profile.ProfileOutput;
 import com.cod.dto.user.profile.ProfileUpdate;
@@ -17,6 +16,7 @@ import com.cod.service.UserService;
 import com.cod.response.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,7 +35,7 @@ public class UserController {
      */
     // Body
     @PostMapping("/signup")
-    public Response<SignUpOutput> signUp(@RequestBody SignUpInput signUpInput) {
+    public ResponseEntity<Response<SignUpOutput>> signUp(@RequestBody SignUpInput signUpInput) {
         System.out.println("[POST] /users/signup");
         return userService.signUp(signUpInput);
     }
@@ -48,7 +48,7 @@ public class UserController {
      */
     // Body
     @PostMapping("/signin")
-    public Response<SignInOutput> signIn(@RequestBody SignInInput signInInput) {
+    public ResponseEntity<Response<SignInOutput>> signIn(@RequestBody SignInInput signInInput) {
         log.info("[POST] /user/signin");
         return userService.signIn(signInInput);
     }
@@ -77,7 +77,7 @@ public class UserController {
      * @return Response<Object>
      */
     @DeleteMapping("/deactivate")
-    public Response<Object> deactivate() {
+    public ResponseEntity<Response<Object>> deactivate() {
         log.info("[DELETE] /users/deactivate");
         return userService.deactivate();
     }
@@ -90,7 +90,7 @@ public class UserController {
      */
     // Body
     @GetMapping("/profile")
-    public Response<ProfileOutput> getProfile() {
+    public ResponseEntity<Response<ProfileOutput>   > getProfile() {
         log.info("[POST] /users/profile");
         return userService.getProfile();
     }
@@ -103,7 +103,7 @@ public class UserController {
      */
     // Body
     @PatchMapping("/profile")
-    public Response<Object> updateProfile(@RequestBody ProfileUpdate profileUpdate) {
+    public ResponseEntity<Response<Object>> updateProfile(@RequestBody ProfileUpdate profileUpdate) {
         log.info("[PATCH] /users/");
         return userService.updateProfile(profileUpdate);
     }
@@ -116,8 +116,8 @@ public class UserController {
      */
     // Params
     @GetMapping
-    public PageResponse<UserSearchOutput> getUserByNickName(UserSearchInput userSearchInput) {
-            return userService.getUser(userSearchInput);
+    public ResponseEntity<PageResponse<UserSearchOutput>> getUserByNickName(UserSearchInput userSearchInput) {
+            return userService.findUserByNickname(userSearchInput);
     }
 
 }

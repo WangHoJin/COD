@@ -3,6 +3,8 @@ package com.cod.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -35,10 +37,12 @@ public class Notice {
     private String message;
 
     @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="receive_user_id", nullable = false)
     private User receiveUser;
 
     @ManyToOne
+    @OnDelete(action=OnDeleteAction.CASCADE)
     @JoinColumn(name="send_user_id", nullable = false)
     private User sendUser;
 
@@ -53,6 +57,7 @@ public class Notice {
      * 좋아요나 댓글이 달린 코디
      */
     @ManyToOne
+    @OnDelete(action=OnDeleteAction.CASCADE)
     @JoinColumn(name="codi_id")
     private Codi codi;
 

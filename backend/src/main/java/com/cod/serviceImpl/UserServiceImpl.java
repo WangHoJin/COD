@@ -1,5 +1,6 @@
 package com.cod.serviceImpl;
 
+import com.cod.configuration.AES128;
 import com.cod.configuration.ValidationCheck;
 import com.cod.dto.user.profile.ProfileOutput;
 import com.cod.dto.user.profile.ProfileUpdate;
@@ -21,15 +22,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.jni.Local;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.cod.response.ResponseStatus.*;
 
 @Service("UserService")
 @RequiredArgsConstructor
@@ -39,26 +45,38 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+    @Value("${custom.constant.user.info.password.key}")
+    private String USER_INFO_PASSWORD_KEY;
+
     @Override
-    public Response<SignInOutput> signIn(SignInInput signInInput) {
+    public ResponseEntity<Response<SignInOutput>> signIn(SignInInput signInInput) {
         // 1. 값 형식 체크
-        if (signInInput == null) return new Response<>(ResponseStatus.NO_VALUES);
-        if (!ValidationCheck.isValid(signInInput.getEmail()))    return new Response<>(ResponseStatus.BAD_EMAIL_VALUE);
-        if (!ValidationCheck.isValid(signInInput.getPassword())) return new Response<>(ResponseStatus.BAD_PASSWORD_VALUE);
+        if (signInInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(NO_VALUES));
+        if (!ValidationCheck.isValid(signInInput.getEmail()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new Response<>(BAD_EMAIL_VALUE));
+        if (!ValidationCheck.isValid(signInInput.getPassword()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_PASSWORD_VALUE));
 
         // 2. user 정보 가져오기
         User user;
         try {
             String email = signInInput.getEmail();
-            String password = signInInput.getPassword();
+            String password = new AES128(USER_INFO_PASSWORD_KEY).encrypt(signInInput.getPassword());
             user = userRepository.findByEmail(email).orElse(null);
             if (user==null) {
-                return new Response<>(ResponseStatus.NOT_FOUND_USER);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
             } else if (!user.getPassword().equals(password)) {
-                return new Response<>(ResponseStatus.FAILED_TO_SIGN_IN);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(FAILED_TO_SIGN_IN));
             }
         } catch (Exception e) {
-            return new Response<>(ResponseStatus.DATABASE_ERROR);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(DATABASE_ERROR));
         }
 
         // 3. access token 생성
@@ -66,50 +84,72 @@ public class UserServiceImpl implements UserService {
         try{
             accessToken = jwtService.createAccessToken(user.getId());
             if (accessToken.isEmpty()) {
-                return new Response<>(ResponseStatus.FAILED_TO_CREATE_TOKEN);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(FAILED_TO_CREATE_TOKEN));
             }
         } catch (Exception e) {
-            return new Response<>(ResponseStatus.FAILED_TO_CREATE_TOKEN);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(FAILED_TO_CREATE_TOKEN));
         }
 
         // 4. 결과 return
         SignInOutput signInOutput = new SignInOutput(user.getId(), accessToken);
-        return new Response<>(signInOutput, ResponseStatus.SUCCESS_SIGN_IN);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(signInOutput, SUCCESS_SIGN_IN));
     }
 
     @Override
-    public Response<SignUpOutput> signUp(SignUpInput signUpInput) {
+    public ResponseEntity<Response<SignUpOutput>> signUp(SignUpInput signUpInput) {
         // 1. 값 형식 체크
-        if (signUpInput == null) return new Response<>(ResponseStatus.NO_VALUES);
-        if (!ValidationCheck.isValid(signUpInput.getEmail()))    return new Response<>(ResponseStatus.BAD_EMAIL_VALUE);
-        if (!ValidationCheck.isValid(signUpInput.getPassword())) return new Response<>(ResponseStatus.BAD_PASSWORD_VALUE);
-        if (!ValidationCheck.isValid(signUpInput.getName())) return new Response<>(ResponseStatus.BAD_NAME_VALUE);
-        if (!ValidationCheck.isValid(signUpInput.getNickname()))     return new Response<>(ResponseStatus.BAD_NICKNAME_VALUE);
-        if (!ValidationCheck.isValidDate(Date.valueOf(signUpInput.getBirth()))) return new Response<>(ResponseStatus.BAD_BIRTH_VALUE);
-        if (!ValidationCheck.isValid(signUpInput.getGender())) return new Response<>(ResponseStatus.BAD_GENDER_VALUE);
+        if (signUpInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(NO_VALUES));
+        if (!ValidationCheck.isValid(signUpInput.getEmail()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_EMAIL_VALUE));
+        if (!ValidationCheck.isValid(signUpInput.getPassword()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_PASSWORD_VALUE));
+        if (!ValidationCheck.isValid(signUpInput.getName()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_NAME_VALUE));
+        if (!ValidationCheck.isValid(signUpInput.getNickname()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_NICKNAME_VALUE));
+        if (!ValidationCheck.isValidDate(Date.valueOf(signUpInput.getBirth())))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_BIRTH_VALUE));
+        if (!ValidationCheck.isValid(signUpInput.getGender()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_GENDER_VALUE));
 
-        // 2. 유저 생성
-        User user = User.builder()
-                .email(signUpInput.getEmail())
-                .password(signUpInput.getPassword())
-                .name(signUpInput.getName())
-                .nickname(signUpInput.getNickname())
-                .birth(signUpInput.getBirth())
-                .gender(signUpInput.getGender())
-                .profile(signUpInput.getProfile())
-                .introduction(signUpInput.getIntroduction())
-                .build();
-
+        User user;
         try {
+            // 2. 이메일 중복 체크
             String email = signUpInput.getEmail();
             User existUser = userRepository.findByEmail(email).orElse(null);
-            if (existUser != null) {
-                return new Response<>(ResponseStatus.EXISTS_EMAIL);
-            } else {
-                userRepository.save(user);
-            }
+            if (existUser != null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(EXISTS_EMAIL));
+
+            // 3. 유저 생성
+            String password = new AES128(USER_INFO_PASSWORD_KEY).encrypt(signUpInput.getPassword());
+            user = User.builder()
+                    .email(signUpInput.getEmail())
+                    .password(password)
+                    .name(signUpInput.getName())
+                    .nickname(signUpInput.getNickname())
+                    .birth(signUpInput.getBirth())
+                    .gender(signUpInput.getGender())
+                    .profile(signUpInput.getProfile())
+                    .introduction(signUpInput.getIntroduction())
+                    .build();
+
+            userRepository.save(user);
+
         } catch (Exception e) {
-            return new Response<>(ResponseStatus.DATABASE_ERROR);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(DATABASE_ERROR));
         }
 
         // 3. 토큰 생성
@@ -117,42 +157,49 @@ public class UserServiceImpl implements UserService {
         try {
             accessToken = jwtService.createAccessToken(user.getId());
             if (accessToken.isEmpty()) {
-                return new Response<>(ResponseStatus.FAILED_TO_CREATE_TOKEN);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(FAILED_TO_CREATE_TOKEN));
             }
         } catch (Exception exception) {
-            return new Response<>(ResponseStatus.FAILED_TO_CREATE_TOKEN);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(FAILED_TO_CREATE_TOKEN));
         }
 
         // 4. 결과 return
         SignUpOutput signUpOutput = new SignUpOutput(user.getId(), accessToken);
-        return new Response<>(signUpOutput, ResponseStatus.CREATED_USER);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(signUpOutput,CREATED_USER));
     }
 
     @Override
-    public Response<Object> deactivate() {
+    public ResponseEntity<Response<Object>> deactivate() {
         try{
             // 1. 유저 삭제
             int loginUserId = jwtService.getUserId();
-            if (loginUserId <= 0) {
+            if (!ValidationCheck.isValidId(loginUserId)) {
                 log.error("[users/delete] NOT FOUND LOGIN USER error");
-                return new Response<>(ResponseStatus.NOT_FOUND_USER);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
             }
             userRepository.deleteById(loginUserId);
         } catch (Exception e){
             log.error("[users/deactivate/delete] database error" , e);
-            return new Response<>(ResponseStatus.DATABASE_ERROR);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(DATABASE_ERROR));
         }
-        return new Response<>(null,ResponseStatus.SUCCESS_DELETE_USER);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(null,SUCCESS_DELETE_USER));
     }
 
     @Override
-    public Response<ProfileOutput> getProfile() {
+    public ResponseEntity<Response<ProfileOutput>> getProfile() {
         ProfileOutput profileOutput;
         try {
             User user = jwtService.getUser();
             if (user == null) {
                 log.error("[users/get] NOT FOUND LOGIN USER error");
-                return new Response<>(ResponseStatus.NOT_FOUND_USER);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
             }
 
             profileOutput = ProfileOutput.builder()
@@ -167,63 +214,60 @@ public class UserServiceImpl implements UserService {
 
         } catch (Exception e){
             log.error("[users/profile] database error",e);
-            return new Response<>(ResponseStatus.DATABASE_ERROR);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(DATABASE_ERROR));
         }
-
-        return new Response<>(profileOutput, ResponseStatus.SUCCESS_GET_PROFILE);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(profileOutput,SUCCESS_GET_PROFILE));
     }
 
     @Override
-    public Response<Object> updateProfile(ProfileUpdate profileUpdate) {
+    public ResponseEntity<Response<Object>> updateProfile(ProfileUpdate profileUpdate) {
         try {
             User user = jwtService.getUser();
             if (user == null) {
                 log.error("[users/get] NOT FOUND LOGIN USER error");
-                return new Response<>(ResponseStatus.NOT_FOUND_USER);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
             }
 
-            String email = user.getEmail();
-            String password = user.getPassword();
-            String name= user.getName();
-            LocalDate birth=user.getBirth();
-            String gender=user.getGender();
-            String nickname = profileUpdate.getNickname() == null ? user.getNickname() : profileUpdate.getNickname();
-            String profile = profileUpdate.getProfile() == null ? user.getProfile() : profileUpdate.getProfile();
-            String introduction = profileUpdate.getIntroduction() == null ? user.getIntroduction() : profileUpdate.getIntroduction();
-
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setName(name);
-            user.setNickname(nickname);
-            user.setBirth(birth);
-            user.setGender(gender);
-            user.setProfile(profile);
-            user.setIntroduction(introduction);
-
+            if(StringUtils.isNoneBlank(profileUpdate.getProfile()))
+                user.setProfile(profileUpdate.getProfile());
             if(StringUtils.isNoneBlank(profileUpdate.getNickname())){
-                User existUser = userRepository.findByNickname(nickname).orElse(null);
+                User existUser = userRepository.findByNickname(profileUpdate.getNickname()).orElse(null);
                 if (existUser != null)
-                    return new Response<>(ResponseStatus.EXISTS_NICKNAME);
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new Response<>(EXISTS_NICKNAME));
+                user.setProfile(profileUpdate.getNickname());
+            }
+            if(StringUtils.isNoneBlank(profileUpdate.getIntroduction()))
+                user.setProfile(profileUpdate.getIntroduction());
+            if(StringUtils.isNoneBlank(profileUpdate.getPassword())){
+                String newPassword = new AES128(USER_INFO_PASSWORD_KEY).encrypt(profileUpdate.getPassword());
+                user.setProfile(newPassword);
             }
 
             userRepository.save(user);
 
         } catch (Exception e){
             log.error("[user/profile] database error",e);
-            return new Response<>(ResponseStatus.DATABASE_ERROR);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(DATABASE_ERROR));
         }
 
-        return new Response<>(null, ResponseStatus.SUCCESS_UPDATE_PROFILE);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(null,SUCCESS_UPDATE_PROFILE));
     }
 
     @Override
-    public PageResponse<UserSearchOutput> getUser(UserSearchInput userSearchInput) {
+    public ResponseEntity<PageResponse<UserSearchOutput>> findUserByNickname(UserSearchInput userSearchInput) {
         // 1. 값 형식 체크
         if (userSearchInput.getNickname() == null
                 || !ValidationCheck.isValidPage(userSearchInput.getPage())
                 || !ValidationCheck.isValidId(userSearchInput.getSize())) {
             log.info("[GET] /users?NO_VALID_STATUS");
-            return new PageResponse<>(ResponseStatus.NO_VALUES);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
         } else {
             log.info("[GET] /users?name=" + userSearchInput.getNickname());
         }
@@ -244,9 +288,11 @@ public class UserServiceImpl implements UserService {
             });
         } catch (Exception e) {
             log.error("[users?search/get] database error", e);
-            return new PageResponse<>(ResponseStatus.DATABASE_ERROR);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(DATABASE_ERROR));
         }
         // 3. 결과 return
-        return new PageResponse<>(userSearchOutput, ResponseStatus.SUCCESS_GET_USER_LIST);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PageResponse<>(userSearchOutput,SUCCESS_GET_USER_LIST));
     }
 }

@@ -8,16 +8,23 @@ import io.jsonwebtoken.*;
 import com.cod.configuration.ValidationCheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.event.AuthenticationFailureServiceExceptionEvent;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.security.auth.message.AuthException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 import static com.cod.configuration.ConstantConfig.*;
+import static com.cod.response.ResponseStatus.UNAUTHORIZED_TOKEN;
 
 @Slf4j
 @Service("JwtService")
@@ -84,9 +91,13 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     // 인증 성공시 SecurityContextHolder에 저장할 Authentication 객체 생성
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(this.getUser().getEmail());
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    public Authentication getAuthentication(String token) throws AuthenticationException{
+        try{
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(this.getUser().getEmail());
+            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        }catch (Exception e){
+            throw new AuthenticationCredentialsNotFoundException(UNAUTHORIZED_TOKEN.getMessage());
+        }
     }
 
     @Override
