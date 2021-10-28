@@ -17,6 +17,7 @@ public enum  ResponseStatus {
     SUCCESS_SIGN_IN(200, 201, "로그인에 성공하였습니다."),
     SUCCESS_SELECT_COMMENT(200, 202, "댓글 조회에 성공하였습니다."),
     SUCCESS_SELECT_CODI(200, 203, "코디 검색에 성공하였습니다."),
+    SUCCESS_SELECT_WOOD_CODI(200, 203, "코디나무의 코디 검색에 성공하였습니다."),
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
     SUCCESS_SELECT_WOOD(200, 203, "코디나무 조회에 성공하였습니다."),
@@ -27,6 +28,7 @@ public enum  ResponseStatus {
     CREATED_COMMENT(201, 202, "댓글 등록에 성공하였습니다."),
     CREATED_CODI(201, 203, "코디 등록에 성공하였습니다."),
     CREATED_WOOD(201, 203, "코디나무 등록에 성공하였습니다."),
+    CREATED_WOOD_CODI(201, 203, "코디나무에 코디 등록에 성공하였습니다."),
 
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
@@ -37,6 +39,8 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_COMMENT(204, 202, "댓글 삭제에 성공하였습니다."),
     SUCCESS_UPDATE_CODI(204, 203, "코디 수정에 성공하였습니다."),
     SUCCESS_DELETE_CODI(204, 204, "코디 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_WOOD_CODI(204, 203, "코디나무의 코디 수정에 성공하였습니다."),
+    SUCCESS_DELETE_WOOD_CODI(204, 204, "코디나무의 코디 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
 
@@ -73,6 +77,8 @@ public enum  ResponseStatus {
     NOT_FOUND(404, 400, "NOT FOUND"),
     NOT_FOUND_USER(404, 405, "사용자 정보가 존재하지 않습니다."),
     NOT_FOUND_CODI(404, 406, "코디 정보가 존재하지 않습니다."),
+    NOT_FOUND_WOOD(404, 407, "코디나무 정보가 존재하지 않습니다."),
+    NOT_FOUND_WOOD_CODI(404, 407, "코디나무의 코디 정보가 존재하지 않습니다."),
 
     // 405 Method Not Allowed - 클라이언트의 요청이 허용되지 않는 메소드인 경우
     METHOD_NOT_ALLOWED(405, 400, "허용되지 않는 HTTP Method 입니다."),

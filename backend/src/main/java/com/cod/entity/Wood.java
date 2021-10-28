@@ -33,6 +33,7 @@ public class Wood {
      * 코디나무를 등록한 사람
      */
     @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable = false)
     @OnDelete(action= OnDeleteAction.CASCADE)
     private User user;
