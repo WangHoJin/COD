@@ -14,10 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 댓글 CRUD API
- * 기웃기옷(피드)에 보이는 코디에 댓글을 작성할 수 있다.
- */
 @RestController
 @RequestMapping("/codies")
 @RequiredArgsConstructor
@@ -41,7 +37,7 @@ public class CodiController {
     /**
      * 코디 상세 조회 API
      * [GET] /api/codies/{id}
-     * @return ResponseEntity<Response<SelectCommentOutput>>
+     * @return ResponseEntity<Response<SelectCodiOutput>>
      */
     // Params
     @GetMapping("/{id}")
@@ -53,13 +49,13 @@ public class CodiController {
     /**
      * 코디 리스트 조회 API
      * [GET] /api/codies?codiId=&...&page=&size=
-     * @return ResponseEntity<PageResponse<SelectCommentOutput>>
+     * @return ResponseEntity<PageResponse<SelectCodiOutput>>
      */
     // Params
     @GetMapping
-    public ResponseEntity<PageResponse<SelectCodiOutput>> getCodiList(SelectCodiInput selectCommentInput) {
+    public ResponseEntity<PageResponse<SelectCodiOutput>> getCodiList(SelectCodiInput selectCodiInput) {
         log.info("[GET] /api/codies?codiId=&...&page=&size=");
-        return codiService.selectCodiList(selectCommentInput);
+        return codiService.selectCodiList(selectCodiInput);
     }
 
     /**
@@ -91,7 +87,7 @@ public class CodiController {
      * 인기있는 코디 리스트 조회 API
      * startDate와 endDate 사이의 코디를 좋아요가 많은 순서대로 반환한다.
      * [GET] /api/codies?startDate=&endDate=&page=$size=
-     * @return ResponseEntity<PageResponse<SelectCommentOutput>>
+     * @return ResponseEntity<PageResponse<SelectCodiOutput>>
      */
     // Params
     @GetMapping("/popular")
@@ -103,7 +99,7 @@ public class CodiController {
     /**
      * 팔로우한 유저들의 코디 리스트 조회 API
      * [GET] /api/codies?page=&size=
-     * @return ResponseEntity<PageResponse<SelectCommentOutput>>
+     * @return ResponseEntity<PageResponse<SelectCodiOutput>>
      */
     // Params
     @GetMapping("/following")

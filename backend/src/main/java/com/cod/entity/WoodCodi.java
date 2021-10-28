@@ -16,8 +16,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "codiwood_codi")
-public class CodiwoodCodi {
+@Table(name = "wood_codi")
+public class WoodCodi {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
@@ -25,8 +25,13 @@ public class CodiwoodCodi {
 
     @ManyToOne
     @OnDelete(action= OnDeleteAction.CASCADE)
-    @JoinColumn(name="codiwood_id", nullable = false)
-    private Codiwood codiwood;
+    @JoinColumn(name="wood_id", nullable = false)
+    private Wood wood;
+
+    @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 
     @Column(name = "name", nullable = false, length = 45)
     private String name;

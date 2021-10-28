@@ -16,7 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter @Setter
 @Entity
 @Table(name = "codiwood_codi_liked")
-public class CodiwoodCodiLiked {
+public class WoodCodiLiked {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
@@ -24,8 +24,8 @@ public class CodiwoodCodiLiked {
 
     @ManyToOne
     @OnDelete(action= OnDeleteAction.CASCADE)
-    @JoinColumn(name="codiwood_codi_id", nullable = false)
-    private CodiwoodCodi codiwoodCodi;
+    @JoinColumn(name="wood_codi_id", nullable = false)
+    private WoodCodi woodCodi;
 
     @ManyToOne
     @OnDelete(action=OnDeleteAction.CASCADE)

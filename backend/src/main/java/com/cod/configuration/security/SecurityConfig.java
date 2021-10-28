@@ -51,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/codies").permitAll()
                 .antMatchers("/codies/popular").permitAll()
                 .antMatchers(HttpMethod.GET,"/comments").permitAll() ///댓글 조회하기
+                .antMatchers(HttpMethod.GET,"/wood-codies/{id}").permitAll()
+                .antMatchers(HttpMethod.GET,"/wood-codies").permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint()).and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
