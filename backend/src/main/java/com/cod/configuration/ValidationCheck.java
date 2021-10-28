@@ -2,6 +2,7 @@ package com.cod.configuration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class ValidationCheck {
 
     public static boolean isValidPage(int page) { return (page >= 0); }
 
+    public static boolean isValidLocalDate(LocalDate localDate) { return (localDate != null); }
+    
     public static boolean isValidDate(Date date) { return (date != null); }
 
     public static boolean isValidDate(int date) { return (date > 0) && isValidDate(String.valueOf(date)); }
