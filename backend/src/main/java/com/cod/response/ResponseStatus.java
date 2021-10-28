@@ -19,6 +19,7 @@ public enum  ResponseStatus {
     SUCCESS_SELECT_CODI(200, 203, "코디 검색에 성공하였습니다."),
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
+    SUCCESS_SELECT_WOOD(200, 203, "코디나무 조회에 성공하였습니다."),
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
