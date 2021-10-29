@@ -43,6 +43,8 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_WOOD_CODI(204, 204, "코디나무의 코디 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
+    SUCCESS_UPDATE_WOOD(204, 203, "코디나무 수정에 성공하였습니다."),
+    SUCCESS_DELETE_WOOD(204, 204, "코디나무 삭제에 성공하였습니다."),
 
     /*
      4XX Client errors
