@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 public interface WoodService {
     ResponseEntity<Response<Object>> createWood(CreateWoodInput createWoodInput);
     ResponseEntity<PageResponse<SelectWoodListOutput>> selectWoodList(SelectWoodInput selectWoodInput);
-    ResponseEntity<Response<SelectWoodOutput>> selectWood(int woodId);
     ResponseEntity<Response<Object>> updateWood(int woodId, UpdateWoodInput updateWoodInput);
     ResponseEntity<Response<Object>> deleteWood(int woodId);
 }
