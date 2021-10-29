@@ -20,6 +20,7 @@ public enum  ResponseStatus {
     SUCCESS_SELECT_WOOD_CODI(200, 203, "코디나무의 코디 검색에 성공하였습니다."),
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
+    SUCCESS_SELECT_WOOD(200, 203, "코디나무 조회에 성공하였습니다."),
     SUCCESS_SELECT_NOTICE(200, 212, "알림 조회에 성공하였습니다."),
     SUCCESS_GET_FOLLOW_LIST(200, 213, "팔로우 관계 조회에 성공하였습니다."),
     SUCCESS_CHECK_NOTICE(201, 214, "새로운 알림 조회에 성공하였습니다."),
@@ -29,9 +30,10 @@ public enum  ResponseStatus {
     CREATED_USER(201, 201, "회원가입에 성공하였습니다."),
     CREATED_COMMENT(201, 202, "댓글 등록에 성공하였습니다."),
     CREATED_CODI(201, 203, "코디 등록에 성공하였습니다."),
-    CREATED_WOOD_CODI(201, 203, "코디나무에 코디 등록에 성공하였습니다."),
-    CREATED_NOTICE(201, 204, "알림 등록에 성공하였습니다."),
-    CREATED_FOLLOW(201, 205, "팔로우 관계 등록에 성공하였습니다."),
+    CREATED_WOOD(201, 203, "코디나무 등록에 성공하였습니다."),
+    CREATED_WOOD_CODI(201, 204, "코디나무에 코디 등록에 성공하였습니다."),
+    CREATED_NOTICE(201, 205, "알림 등록에 성공하였습니다."),
+    CREATED_FOLLOW(201, 206, "팔로우 관계 등록에 성공하였습니다."),
 
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
@@ -46,9 +48,11 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_WOOD_CODI(204, 204, "코디나무의 코디 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
-    SUCCESS_UPDATE_NOTICE(204, 207, "알림 정보 수정에 성공하였습니다."),
-    SUCCESS_DELETE_NOTICE(204, 208, "알림 삭제에 성공하였습니다."),
-    SUCCESS_DELETE_FOLLOW(204, 209, "팔로우 관계 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_WOOD(204, 207, "코디나무 수정에 성공하였습니다."),
+    SUCCESS_DELETE_WOOD(204, 208, "코디나무 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_NOTICE(204, 209, "알림 정보 수정에 성공하였습니다."),
+    SUCCESS_DELETE_NOTICE(204, 210, "알림 삭제에 성공하였습니다."),
+    SUCCESS_DELETE_FOLLOW(204, 211, "팔로우 관계 삭제에 성공하였습니다."),
 
     /*
      4XX Client errors

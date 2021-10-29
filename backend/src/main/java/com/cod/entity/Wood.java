@@ -33,9 +33,12 @@ public class Wood {
      * 코디나무를 등록한 사람
      */
     @ManyToOne
-    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable = false)
+    @OnDelete(action= OnDeleteAction.CASCADE)
     private User user;
+
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "content", nullable = false)
     private String content;
@@ -45,5 +48,5 @@ public class Wood {
     private LocalDate createdAt;
 
     @Column(name = "terminated_at", nullable = false)
-    private LocalDate updatedAt;
+    private LocalDate terminatedAt;
 }
