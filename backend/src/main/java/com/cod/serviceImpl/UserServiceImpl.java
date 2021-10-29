@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
         if (!ValidationCheck.isValid(signUpInput.getNickname()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(BAD_NICKNAME_VALUE));
-        if (!ValidationCheck.isValidDate(Date.valueOf(signUpInput.getBirth())))
+        if (!ValidationCheck.isValidLocalDate(signUpInput.getBirth()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(BAD_BIRTH_VALUE));
         if (!ValidationCheck.isValid(signUpInput.getGender()))
