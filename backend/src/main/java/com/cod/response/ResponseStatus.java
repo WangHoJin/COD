@@ -21,6 +21,9 @@ public enum  ResponseStatus {
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
     SUCCESS_SELECT_WOOD(200, 203, "코디나무 조회에 성공하였습니다."),
+    SUCCESS_SELECT_NOTICE(200, 212, "알림 조회에 성공하였습니다."),
+    SUCCESS_GET_FOLLOW_LIST(200, 213, "팔로우 관계 조회에 성공하였습니다."),
+    SUCCESS_CHECK_NOTICE(201, 214, "새로운 알림 조회에 성공하였습니다."),
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
@@ -28,7 +31,9 @@ public enum  ResponseStatus {
     CREATED_COMMENT(201, 202, "댓글 등록에 성공하였습니다."),
     CREATED_CODI(201, 203, "코디 등록에 성공하였습니다."),
     CREATED_WOOD(201, 203, "코디나무 등록에 성공하였습니다."),
-    CREATED_WOOD_CODI(201, 203, "코디나무에 코디 등록에 성공하였습니다."),
+    CREATED_WOOD_CODI(201, 204, "코디나무에 코디 등록에 성공하였습니다."),
+    CREATED_NOTICE(201, 205, "알림 등록에 성공하였습니다."),
+    CREATED_FOLLOW(201, 206, "팔로우 관계 등록에 성공하였습니다."),
 
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
@@ -43,8 +48,11 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_WOOD_CODI(204, 204, "코디나무의 코디 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
-    SUCCESS_UPDATE_WOOD(204, 203, "코디나무 수정에 성공하였습니다."),
-    SUCCESS_DELETE_WOOD(204, 204, "코디나무 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_WOOD(204, 207, "코디나무 수정에 성공하였습니다."),
+    SUCCESS_DELETE_WOOD(204, 208, "코디나무 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_NOTICE(204, 209, "알림 정보 수정에 성공하였습니다."),
+    SUCCESS_DELETE_NOTICE(204, 210, "알림 삭제에 성공하였습니다."),
+    SUCCESS_DELETE_FOLLOW(204, 211, "팔로우 관계 삭제에 성공하였습니다."),
 
     /*
      4XX Client errors
@@ -56,6 +64,7 @@ public enum  ResponseStatus {
     FAILED_TO_SIGN_IN(400, 403, "로그인에 실패하였습니다."),
     EXISTS_EMAIL(400, 404, "이미 존재하는 이메일입니다."),
     EXISTS_NICKNAME(400, 405, "이미 존재하는 닉네임입니다."),
+    EXISTS_FOLLOW(400, 406, "이미 존재하는 팔로우 관계입니다."),
     NO_VALUES(400, 410, "입력되지 않은 값이 존재합니다."),
     NO_CONTENTS(400, 411, "내용을 입력해주세요."),
     BAD_ACCESS_TOKEN_VALUE(400, 412, "accessToken을 입력해주세요."),
@@ -66,6 +75,8 @@ public enum  ResponseStatus {
     BAD_NICKNAME_VALUE(400,417,"올바른 닉네임을 입력해주세요."),
     BAD_GENDER_VALUE(400,418,"올바른 성별을 입력해주세요."),
     BAD_BIRTH_VALUE(400,419,"올바른 생년월일을 입력해주세요."),
+    BAD_NOTICE_TYPE_VALUE(400, 420, "올바른 알림 타입 입력해주세요."),
+    BAD_VALUES(400, 421, "올바르지 않은 값이 존재합니다."),
 
     // 401 Unauthorized - 클라이언트가 권한이 없기 때문에 작업을 진행할 수 없는 경우
     UNAUTHORIZED(401, 400, "권한이 없습니다."),
@@ -80,7 +91,8 @@ public enum  ResponseStatus {
     NOT_FOUND_USER(404, 405, "사용자 정보가 존재하지 않습니다."),
     NOT_FOUND_CODI(404, 406, "코디 정보가 존재하지 않습니다."),
     NOT_FOUND_WOOD(404, 407, "코디나무 정보가 존재하지 않습니다."),
-    NOT_FOUND_WOOD_CODI(404, 407, "코디나무의 코디 정보가 존재하지 않습니다."),
+    NOT_FOUND_WOOD_CODI(404, 408, "코디나무의 코디 정보가 존재하지 않습니다."),
+    NOT_FOUND_FOLLOW(404, 409, "해당 팔로우 관계가 존재하지 않습니다."),
 
     // 405 Method Not Allowed - 클라이언트의 요청이 허용되지 않는 메소드인 경우
     METHOD_NOT_ALLOWED(405, 400, "허용되지 않는 HTTP Method 입니다."),

@@ -45,8 +45,8 @@ public class Wood {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDate created_at;
+    private LocalDate createdAt;
 
     @Column(name = "terminated_at", nullable = false)
-    private LocalDate terminated_at;
+    private LocalDate terminatedAt;
 }

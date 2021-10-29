@@ -1,5 +1,8 @@
 package com.cod.configuration;
 
+import com.cod.dto.notice.NoticeType;
+import org.apache.commons.lang3.EnumUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -37,6 +40,13 @@ public class ValidationCheck {
             return  false;
         }
     }
+
+    public static boolean isValidNoticeType(String type) {
+        if(!isValid(type)) return false;
+        if(!EnumUtils.isValidEnum(NoticeType.class,type)) return  false;
+        return true;
+    }
+
 
     public static boolean isValidTime(String time) {
         if (!isValid(time)) return false;
