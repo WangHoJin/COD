@@ -22,13 +22,11 @@ public class ValidationCheck {
 
     public static boolean isValidPage(int page) { return (page >= 0); }
 
-    public static boolean isValidLocalDate(LocalDate localDate) { return (localDate != null); }
-    
-    public static boolean isValidDate(Date date) { return (date != null); }
+    public static boolean isValidLocalDate(LocalDate date) { return (date != null); }
 
-    public static boolean isValidDate(int date) { return (date > 0) && isValidDate(String.valueOf(date)); }
+    public static boolean isValidLocalDate(int date) { return (date > 0) && isValidLocalDate(String.valueOf(date)); }
 
-    public static boolean isValidDate(String date) {
+    public static boolean isValidLocalDate(String date) {
         if (!isValid(date)) return false;
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
