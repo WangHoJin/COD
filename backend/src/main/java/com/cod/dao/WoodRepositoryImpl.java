@@ -28,11 +28,11 @@ public class WoodRepositoryImpl implements WoodRepositoryCustom {
                         qWood.user.id,
                         qWood.title,
                         qWood.content,
-                        qWood.terminated_at
+                        qWood.terminatedAt
                 ))
                 .from(qWood)
                 .where(eqUserId(selectWoodInput.getUserId()))
-                .orderBy(qWood.created_at.desc())
+                .orderBy(qWood.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetchResults();
 
