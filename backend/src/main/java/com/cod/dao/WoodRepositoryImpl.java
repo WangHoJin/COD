@@ -1,8 +1,8 @@
 package com.cod.dao;
 
-import com.cod.dto.wood.selectwood.QSelectWoodOutput;
+import com.cod.dto.wood.selectwood.QSelectWoodListOutput;
 import com.cod.dto.wood.selectwood.SelectWoodInput;
-import com.cod.dto.wood.selectwood.SelectWoodOutput;
+import com.cod.dto.wood.selectwood.SelectWoodListOutput;
 import com.cod.entity.QWood;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -22,9 +22,9 @@ public class WoodRepositoryImpl implements WoodRepositoryCustom {
     QWood qWood = QWood.wood;
 
     @Override
-    public Page<SelectWoodOutput> findByDynamicQuery(SelectWoodInput selectWoodInput, Pageable pageable) {
-        QueryResults<SelectWoodOutput> queryResult = queryFactory
-                .select(new QSelectWoodOutput(
+    public Page<SelectWoodListOutput> findByDynamicQuery(SelectWoodInput selectWoodInput, Pageable pageable) {
+        QueryResults<SelectWoodListOutput> queryResult = queryFactory
+                .select(new QSelectWoodListOutput(
                         qWood.user.id,
                         qWood.title,
                         qWood.content,
@@ -37,7 +37,7 @@ public class WoodRepositoryImpl implements WoodRepositoryCustom {
                 .fetchResults();
 
         long totalCount = queryResult.getTotal();
-        List<SelectWoodOutput> list = queryResult.getResults();
+        List<SelectWoodListOutput> list = queryResult.getResults();
 
         return new PageImpl<>(list, pageable, totalCount);
     }

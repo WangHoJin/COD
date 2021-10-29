@@ -2,7 +2,7 @@ package com.cod.controller;
 
 import com.cod.dto.wood.createwood.CreateWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodInput;
-import com.cod.dto.wood.selectwood.SelectWoodOutput;
+import com.cod.dto.wood.selectwood.SelectWoodListOutput;
 import com.cod.dto.wood.updatewood.UpdateWoodInput;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
@@ -39,11 +39,11 @@ public class WoodController {
     /**
      * 코디나무 리스트 조회 API
      * [GET] /api/woods?userId=&page=&size=
-     * @return ResponseEntity<PageResponse<SelectWoodOutput>>
+     * @return ResponseEntity<PageResponse<SelectWoodListOutput>>
      */
     // Params
     @GetMapping
-    public ResponseEntity<PageResponse<SelectWoodOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
+    public ResponseEntity<PageResponse<SelectWoodListOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
         log.info("[GET] /api/woods?userId=&page=&size=");
         return woodService.selectWoodList(selectWoodInput);
     }

@@ -1,13 +1,17 @@
 package com.cod.serviceImpl;
 
 import com.cod.configuration.ValidationCheck;
+import com.cod.dao.WoodCodiRepository;
 import com.cod.dao.WoodRepository;
 import com.cod.dto.wood.createwood.CreateWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodInput;
+import com.cod.dto.wood.selectwood.SelectWoodListOutput;
 import com.cod.dto.wood.selectwood.SelectWoodOutput;
 import com.cod.dto.wood.updatewood.UpdateWoodInput;
+import com.cod.dto.woodcodi.selectwoodcodi.SelectWoodCodiOutput;
 import com.cod.entity.User;
 import com.cod.entity.Wood;
+import com.cod.entity.WoodCodi;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.response.ResponseStatus;
@@ -25,6 +29,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static com.cod.response.ResponseStatus.*;
 
@@ -34,6 +41,7 @@ import static com.cod.response.ResponseStatus.*;
 public class WoodServiceImpl implements WoodService {
 
     private final WoodRepository woodRepository;
+    private final WoodCodiRepository woodCodiRepository;
     private final JwtService jwtService;
 
     @Override
@@ -77,7 +85,7 @@ public class WoodServiceImpl implements WoodService {
     }
 
     @Override
-    public ResponseEntity<PageResponse<SelectWoodOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
+    public ResponseEntity<PageResponse<SelectWoodListOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
         // 1. 값 형식 체크
         if (selectWoodInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -89,7 +97,7 @@ public class WoodServiceImpl implements WoodService {
 
         // 2. 코디나무 조회
         Pageable pageable = PageRequest.of(selectWoodInput.getPage() - 1, selectWoodInput.getSize());
-        Page<SelectWoodOutput> woodList;
+        Page<SelectWoodListOutput> woodList;
 
         try {
             woodList = woodRepository.findByDynamicQuery(selectWoodInput, pageable);
