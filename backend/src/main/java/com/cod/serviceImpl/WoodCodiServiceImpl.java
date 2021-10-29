@@ -4,17 +4,10 @@ import com.cod.configuration.ValidationCheck;
 import com.cod.dao.WoodCodiLikedRepository;
 import com.cod.dao.WoodCodiRepository;
 import com.cod.dao.WoodRepository;
-import com.cod.dto.codi.getfollowingusercodi.GetFollowingUserCodiInput;
-import com.cod.dto.codi.getpopularcodi.GetPopularCodiInput;
-import com.cod.dto.codi.selectcodi.SelectCodiInput;
-import com.cod.dto.codi.selectcodi.SelectCodiOutput;
-import com.cod.dto.codi.updatecodi.UpdateCodiInput;
-import com.cod.dto.user.search.UserSearchOutput;
 import com.cod.dto.woodcodi.createwoodcodi.CreateWoodCodiInput;
 import com.cod.dto.woodcodi.selectwoodcodi.SelectWoodCodiInput;
 import com.cod.dto.woodcodi.selectwoodcodi.SelectWoodCodiOutput;
 import com.cod.dto.woodcodi.updatewoodcodi.UpdateWoodCodiInput;
-import com.cod.entity.Codi;
 import com.cod.entity.User;
 import com.cod.entity.Wood;
 import com.cod.entity.WoodCodi;
@@ -32,10 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static com.cod.response.ResponseStatus.*;
 
@@ -136,8 +125,8 @@ public class WoodCodiServiceImpl implements WoodCodiService {
                 .codiThumbnail(woodCodi.getThumbnail())
                 .codiCoordinate(woodCodi.getCoordinate())
                 .codiDescription(woodCodi.getDescription())
-                .codiCreatedAt(woodCodi.getCreated_at())
-                .codiUpdatedAt(woodCodi.getUpdated_at())
+                .codiCreatedAt(woodCodi.getCreatedAt())
+                .codiUpdatedAt(woodCodi.getUpdatedAt())
                 .liked(woodCodiLikedRepository.countByWoodCodi(woodCodi))
                 .build();
 
@@ -186,8 +175,8 @@ public class WoodCodiServiceImpl implements WoodCodiService {
                     .codiThumbnail(woodCodi.getThumbnail())
                     .codiCoordinate(woodCodi.getCoordinate())
                     .codiDescription(woodCodi.getDescription())
-                    .codiCreatedAt(woodCodi.getCreated_at())
-                    .codiUpdatedAt(woodCodi.getUpdated_at())
+                    .codiCreatedAt(woodCodi.getCreatedAt())
+                    .codiUpdatedAt(woodCodi.getUpdatedAt())
                     .liked(woodCodiLikedRepository.countByWoodCodi(woodCodi))
                     .build();
         });
