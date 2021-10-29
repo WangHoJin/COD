@@ -59,5 +59,17 @@ public class WoodController {
         log.info("[PATCH] /api/woods/{id}");
         return woodService.updateWood(id, updateWoodInput);
     }
+
+    /**
+     * 코디나무 삭제 API
+     * [DELETE] /api/woods/{id}
+     * @return ResponseEntity<Response<Object>>
+     */
+    // PathVariable
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response<Object>> deleteWood(@PathVariable("id") int id) {
+        log.info("[DELETE] /api/woods/{id}");
+        return woodService.deleteWood(id);
+    }
 }
 

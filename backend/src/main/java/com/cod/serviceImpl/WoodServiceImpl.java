@@ -136,4 +136,29 @@ public class WoodServiceImpl implements WoodService {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new Response<>(null, SUCCESS_UPDATE_WOOD));
     }
+
+    @Override
+    @Transactional
+    public ResponseEntity<Response<Object>> deleteWood(int woodId) {
+        try {
+            // 1. 코디나무 조회
+            Wood wood = woodRepository.findById(woodId).orElse(null);
+
+            // 2. 코디나무 삭제
+            if (wood == null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(BAD_ID_VALUE));
+
+            woodRepository.delete(wood);
+
+        } catch (Exception e) {
+            log.error("[woods/delete] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Response<>(DATABASE_ERROR));
+        }
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(null, SUCCESS_DELETE_CODI));
+    }
 }

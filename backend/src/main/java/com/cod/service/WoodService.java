@@ -12,4 +12,5 @@ public interface WoodService {
     ResponseEntity<Response<Object>> createWood(CreateWoodInput createWoodInput);
     ResponseEntity<PageResponse<SelectWoodOutput>> selectWoodList(SelectWoodInput selectWoodInput);
     ResponseEntity<Response<Object>> updateWood(int woodId, UpdateWoodInput updateWoodInput);
+    ResponseEntity<Response<Object>> deleteWood(int woodId);
 }
