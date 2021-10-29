@@ -11,6 +11,8 @@ import lombok.Setter;
 @Builder
 public class UserSearchOutput {
     private int userId;
+    private String profile;
+    private String email;
     private String nickname;
     private String introduction;
 }
