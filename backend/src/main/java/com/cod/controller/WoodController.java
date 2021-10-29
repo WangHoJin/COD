@@ -3,6 +3,7 @@ package com.cod.controller;
 import com.cod.dto.wood.createwood.CreateWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodOutput;
+import com.cod.dto.wood.updatewood.UpdateWoodInput;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.service.WoodService;
@@ -32,7 +33,6 @@ public class WoodController {
     @PostMapping
     public ResponseEntity<Response<Object>> createWood(@RequestBody CreateWoodInput createWoodInput) {
         log.info("[POST] /api/woods");
-        System.out.println(createWoodInput.getTerminated_at());
         return woodService.createWood(createWoodInput);
     }
 
@@ -46,6 +46,18 @@ public class WoodController {
     public ResponseEntity<PageResponse<SelectWoodOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
         log.info("[GET] /api/woods?userId=&page=&size=");
         return woodService.selectWoodList(selectWoodInput);
+    }
+
+    /**
+     * 코디나무 수정 API
+     * [PATCH] /api/woods/{id}
+     * @return ResponseEntity<Response<Object>>
+     */
+    // Body
+    @PatchMapping("/{id}")
+    public ResponseEntity<Response<Object>> updateWood(@PathVariable("id") int id, @RequestBody UpdateWoodInput updateWoodInput) {
+        log.info("[PATCH] /api/woods/{id}");
+        return woodService.updateWood(id, updateWoodInput);
     }
 }
 

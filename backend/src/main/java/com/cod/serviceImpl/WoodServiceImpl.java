@@ -5,6 +5,7 @@ import com.cod.dao.WoodRepository;
 import com.cod.dto.wood.createwood.CreateWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodOutput;
+import com.cod.dto.wood.updatewood.UpdateWoodInput;
 import com.cod.entity.User;
 import com.cod.entity.Wood;
 import com.cod.response.PageResponse;
@@ -14,6 +15,7 @@ import com.cod.service.JwtService;
 import com.cod.service.WoodService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,9 +40,9 @@ public class WoodServiceImpl implements WoodService {
     @Transactional
     public ResponseEntity<Response<Object>> createWood(CreateWoodInput createWoodInput) {
         // 1. 값 형식 체크
-        if(createWoodInput == null)
+        if (createWoodInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(ResponseStatus.NO_VALUES));
-        if(!ValidationCheck.isValid(createWoodInput.getTitle())
+        if (!ValidationCheck.isValid(createWoodInput.getTitle())
                 || !ValidationCheck.isValidLocalDate(createWoodInput.getTerminated_at())
                 || !ValidationCheck.isValid(createWoodInput.getContent()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(ResponseStatus.NO_VALUES));
@@ -71,7 +73,7 @@ public class WoodServiceImpl implements WoodService {
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new Response<>(null,CREATED_WOOD));
+                .body(new Response<>(null, CREATED_WOOD));
     }
 
     @Override
@@ -90,7 +92,7 @@ public class WoodServiceImpl implements WoodService {
         Page<SelectWoodOutput> woodList;
 
         try {
-            woodList = woodRepository.findByDynamicQuery(selectWoodInput,pageable);
+            woodList = woodRepository.findByDynamicQuery(selectWoodInput, pageable);
         } catch (Exception e) {
             log.error("[woods/get] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -100,5 +102,38 @@ public class WoodServiceImpl implements WoodService {
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PageResponse<>(woodList, SUCCESS_SELECT_WOOD_CODI));
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<Response<Object>> updateWood(int woodId, UpdateWoodInput updateWoodInput) {
+        try {
+            // 1. 코디나무 조회
+            Wood wood = woodRepository.findById(woodId).orElse(null);
+
+            // 2. 코디나무 수정
+            if (wood == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_WOOD));
+            }
+
+            if (StringUtils.isNoneBlank(updateWoodInput.getTitle()))
+                wood.setTitle(updateWoodInput.getTitle());
+            if (StringUtils.isNoneBlank(updateWoodInput.getContent()))
+                wood.setContent(updateWoodInput.getContent());
+            if (StringUtils.isNoneBlank(updateWoodInput.getTerminated_at().toString())){
+                wood.setTerminated_at(updateWoodInput.getTerminated_at());
+            }
+
+            woodRepository.save(wood);
+        } catch (Exception e) {
+            log.error("[woods/patch] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Response<>(DATABASE_ERROR));
+        }
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(null, SUCCESS_UPDATE_WOOD));
     }
 }
