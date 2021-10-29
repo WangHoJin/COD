@@ -20,12 +20,14 @@ public enum  ResponseStatus {
     SUCCESS_SELECT_WOOD_CODI(200, 203, "코디나무의 코디 검색에 성공하였습니다."),
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
+    SUCCESS_SELECT_WOOD(200, 203, "코디나무 조회에 성공하였습니다."),
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
     CREATED_USER(201, 201, "회원가입에 성공하였습니다."),
     CREATED_COMMENT(201, 202, "댓글 등록에 성공하였습니다."),
     CREATED_CODI(201, 203, "코디 등록에 성공하였습니다."),
+    CREATED_WOOD(201, 203, "코디나무 등록에 성공하였습니다."),
     CREATED_WOOD_CODI(201, 203, "코디나무에 코디 등록에 성공하였습니다."),
 
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
@@ -41,6 +43,8 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_WOOD_CODI(204, 204, "코디나무의 코디 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
+    SUCCESS_UPDATE_WOOD(204, 203, "코디나무 수정에 성공하였습니다."),
+    SUCCESS_DELETE_WOOD(204, 204, "코디나무 삭제에 성공하였습니다."),
 
     /*
      4XX Client errors
