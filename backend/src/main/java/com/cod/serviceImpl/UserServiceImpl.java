@@ -289,6 +289,8 @@ public class UserServiceImpl implements UserService {
             userSearchOutput = userList.map(user -> {
                 return UserSearchOutput.builder()
                         .userId(user.getId())
+                        .profile(user.getProfile())
+                        .email(user.getEmail())
                         .nickname(user.getNickname())
                         .introduction(user.getIntroduction())
                         .build();
