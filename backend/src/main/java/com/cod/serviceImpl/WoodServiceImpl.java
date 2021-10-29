@@ -3,14 +3,20 @@ package com.cod.serviceImpl;
 import com.cod.configuration.ValidationCheck;
 import com.cod.dao.WoodRepository;
 import com.cod.dto.wood.createwood.CreateWoodInput;
+import com.cod.dto.wood.selectwood.SelectWoodInput;
+import com.cod.dto.wood.selectwood.SelectWoodOutput;
 import com.cod.entity.User;
 import com.cod.entity.Wood;
+import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.response.ResponseStatus;
 import com.cod.service.JwtService;
 import com.cod.service.WoodService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -66,5 +72,33 @@ public class WoodServiceImpl implements WoodService {
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new Response<>(null,CREATED_WOOD));
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<SelectWoodOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
+        // 1. 값 형식 체크
+        if (selectWoodInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+        if (!ValidationCheck.isValidPage(selectWoodInput.getPage())
+                || !ValidationCheck.isValidId(selectWoodInput.getSize()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+
+        // 2. 코디나무 조회
+        Pageable pageable = PageRequest.of(selectWoodInput.getPage() - 1, selectWoodInput.getSize());
+        Page<SelectWoodOutput> woodList;
+
+        try {
+            woodList = woodRepository.findByDynamicQuery(selectWoodInput,pageable);
+        } catch (Exception e) {
+            log.error("[woods/get] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new PageResponse<>(DATABASE_ERROR));
+        }
+
+        // 3. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PageResponse<>(woodList, SUCCESS_SELECT_WOOD_CODI));
     }
 }

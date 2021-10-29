@@ -1,6 +1,9 @@
 package com.cod.controller;
 
 import com.cod.dto.wood.createwood.CreateWoodInput;
+import com.cod.dto.wood.selectwood.SelectWoodInput;
+import com.cod.dto.wood.selectwood.SelectWoodOutput;
+import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.service.WoodService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,18 @@ public class WoodController {
         log.info("[POST] /api/woods");
         System.out.println(createWoodInput.getTerminated_at());
         return woodService.createWood(createWoodInput);
+    }
+
+    /**
+     * 코디나무 리스트 조회 API
+     * [GET] /api/woods?userId=&page=&size=
+     * @return ResponseEntity<PageResponse<SelectWoodOutput>>
+     */
+    // Params
+    @GetMapping
+    public ResponseEntity<PageResponse<SelectWoodOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
+        log.info("[GET] /api/woods?userId=&page=&size=");
+        return woodService.selectWoodList(selectWoodInput);
     }
 }
 
