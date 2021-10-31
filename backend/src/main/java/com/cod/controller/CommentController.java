@@ -1,6 +1,5 @@
 package com.cod.controller;
 
-import com.cod.configuration.ValidationCheck;
 import com.cod.dto.comment.createcomment.CreateCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentOutput;
@@ -46,7 +45,7 @@ public class CommentController {
     @GetMapping
     public ResponseEntity<PageResponse<SelectCommentOutput>> getCommentList(SelectCommentInput selectCommentInput) {
         log.info("[GET] /api/comments?codiId=&page=&size=");
-        return commentService.selectComment(selectCommentInput);
+        return commentService.selectCommentList(selectCommentInput);
     }
 
     /**

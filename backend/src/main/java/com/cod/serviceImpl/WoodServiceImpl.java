@@ -68,7 +68,7 @@ public class WoodServiceImpl implements WoodService {
                     .user(loginUser)
                     .title(createWoodInput.getTitle())
                     .content(createWoodInput.getContent())
-                    .terminated_at(createWoodInput.getTerminated_at())
+                    .terminatedAt(createWoodInput.getTerminated_at())
                     .build();
 
             woodRepository.save(wood);
@@ -131,7 +131,7 @@ public class WoodServiceImpl implements WoodService {
             if (StringUtils.isNoneBlank(updateWoodInput.getContent()))
                 wood.setContent(updateWoodInput.getContent());
             if (StringUtils.isNoneBlank(updateWoodInput.getTerminated_at().toString())){
-                wood.setTerminated_at(updateWoodInput.getTerminated_at());
+                wood.setTerminatedAt(updateWoodInput.getTerminated_at());
             }
 
             woodRepository.save(wood);

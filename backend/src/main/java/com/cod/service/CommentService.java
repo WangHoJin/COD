@@ -9,8 +9,8 @@ import com.cod.response.Response;
 import org.springframework.http.ResponseEntity;
 
 public interface CommentService {
-    ResponseEntity<Response<Object>> createComment(CreateCommentInput createReviewInput);
-    ResponseEntity<PageResponse<SelectCommentOutput>> selectComment(SelectCommentInput selectCommentInput);
-    ResponseEntity<Response<Object>> updateComment(UpdateCommentInput updateReviewInput, int commentId);
+    ResponseEntity<Response<Object>> createComment(CreateCommentInput createCommentInput);
+    ResponseEntity<PageResponse<SelectCommentOutput>> selectCommentList(SelectCommentInput selectCommentInput);
+    ResponseEntity<Response<Object>> updateComment(UpdateCommentInput updateCommentInput, int commentId);
     ResponseEntity<Response<Object>> deleteComment(int commentId);
 }
