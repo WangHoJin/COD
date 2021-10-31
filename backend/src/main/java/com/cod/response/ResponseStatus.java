@@ -21,6 +21,7 @@ public enum  ResponseStatus {
     SUCCESS_GET_PROFILE(200, 210, "프로필 조회에 성공하였습니다."),
     SUCCESS_GET_USER_LIST(200, 211, "유저 검색에 성공하였습니다."),
     SUCCESS_SELECT_WOOD(200, 203, "코디나무 조회에 성공하였습니다."),
+    SUCCESS_SELECT_GRADE(200, 203, "업적 조회에 성공하였습니다."),
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
@@ -45,6 +46,7 @@ public enum  ResponseStatus {
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
     SUCCESS_UPDATE_WOOD(204, 203, "코디나무 수정에 성공하였습니다."),
     SUCCESS_DELETE_WOOD(204, 204, "코디나무 삭제에 성공하였습니다."),
+    SUCCESS_UPDATE_GRADE(204, 203, "업적 수정에 성공하였습니다."),
 
     /*
      4XX Client errors
@@ -81,6 +83,7 @@ public enum  ResponseStatus {
     NOT_FOUND_CODI(404, 406, "코디 정보가 존재하지 않습니다."),
     NOT_FOUND_WOOD(404, 407, "코디나무 정보가 존재하지 않습니다."),
     NOT_FOUND_WOOD_CODI(404, 407, "코디나무의 코디 정보가 존재하지 않습니다."),
+    NOT_FOUND_GRADE(404, 407, "업적이 존재하지 않습니다."),
 
     // 405 Method Not Allowed - 클라이언트의 요청이 허용되지 않는 메소드인 경우
     METHOD_NOT_ALLOWED(405, 400, "허용되지 않는 HTTP Method 입니다."),
