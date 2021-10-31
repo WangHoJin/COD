@@ -3,6 +3,7 @@ package com.cod.controller;
 import com.cod.dto.wood.createwood.CreateWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodListOutput;
+import com.cod.dto.wood.selectwood.SelectWoodOutput;
 import com.cod.dto.wood.updatewood.UpdateWoodInput;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
@@ -27,7 +28,8 @@ public class WoodController {
     /**
      * 코디나무 등록 API
      * [POST] /api/woods
-     * @return ResponseEntity<Response<Object>>
+     *
+     * @return ResponseEntity<Response < Object>>
      */
     // Body
     @PostMapping
@@ -37,9 +39,23 @@ public class WoodController {
     }
 
     /**
+     * 코디나무 상세 조회 API
+     * [GET] /api/woods/{id}
+     *
+     * @return ResponseEntity<Response < SelectWoodOutput>>
+     */
+    // PathVariable
+    @GetMapping("/{id}")
+    public ResponseEntity<Response<SelectWoodOutput>> selectWood(@PathVariable("id") int id) {
+        log.info("[GET] /api/woods/{id}");
+        return woodService.selectWood(id);
+    }
+
+    /**
      * 코디나무 리스트 조회 API
      * [GET] /api/woods?userId=&page=&size=
-     * @return ResponseEntity<PageResponse<SelectWoodListOutput>>
+     *
+     * @return ResponseEntity<PageResponse < SelectWoodListOutput>>
      */
     // Params
     @GetMapping
@@ -51,7 +67,8 @@ public class WoodController {
     /**
      * 코디나무 수정 API
      * [PATCH] /api/woods/{id}
-     * @return ResponseEntity<Response<Object>>
+     *
+     * @return ResponseEntity<Response < Object>>
      */
     // Body
     @PatchMapping("/{id}")
@@ -63,7 +80,8 @@ public class WoodController {
     /**
      * 코디나무 삭제 API
      * [DELETE] /api/woods/{id}
-     * @return ResponseEntity<Response<Object>>
+     *
+     * @return ResponseEntity<Response < Object>>
      */
     // PathVariable
     @DeleteMapping("/{id}")

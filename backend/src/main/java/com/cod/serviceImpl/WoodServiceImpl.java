@@ -8,10 +8,8 @@ import com.cod.dto.wood.selectwood.SelectWoodInput;
 import com.cod.dto.wood.selectwood.SelectWoodListOutput;
 import com.cod.dto.wood.selectwood.SelectWoodOutput;
 import com.cod.dto.wood.updatewood.UpdateWoodInput;
-import com.cod.dto.woodcodi.selectwoodcodi.SelectWoodCodiOutput;
 import com.cod.entity.User;
 import com.cod.entity.Wood;
-import com.cod.entity.WoodCodi;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.response.ResponseStatus;
@@ -27,11 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import static com.cod.response.ResponseStatus.*;
 
@@ -85,6 +78,40 @@ public class WoodServiceImpl implements WoodService {
     }
 
     @Override
+    public ResponseEntity<Response<SelectWoodOutput>> selectWood(int woodId) {
+        // 1. 값 형식 체크
+        if (!ValidationCheck.isValidId(woodId))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(BAD_ID_VALUE));
+
+        // 2. 코디나무 상세 조회
+        Wood wood;
+        SelectWoodOutput selectWoodOutput;
+
+        try {
+            wood = woodRepository.findById(woodId).orElse(null);
+            if (wood == null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_WOOD));
+        } catch (Exception e) {
+            log.error("[woods/get] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Response<>(DATABASE_ERROR));
+        }
+        // 3. 출력값 정리
+        selectWoodOutput = SelectWoodOutput.builder()
+                .userId(wood.getUser().getId())
+                .woodTitle(wood.getTitle())
+                .woodContent(wood.getContent())
+                .WoodTerminatedAt(wood.getTerminatedAt())
+                .build();
+
+        // 4. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(selectWoodOutput, SUCCESS_SELECT_WOOD));
+    }
+
+    @Override
     public ResponseEntity<PageResponse<SelectWoodListOutput>> selectWoodList(SelectWoodInput selectWoodInput) {
         // 1. 값 형식 체크
         if (selectWoodInput == null)
@@ -130,7 +157,7 @@ public class WoodServiceImpl implements WoodService {
                 wood.setTitle(updateWoodInput.getTitle());
             if (StringUtils.isNoneBlank(updateWoodInput.getContent()))
                 wood.setContent(updateWoodInput.getContent());
-            if (StringUtils.isNoneBlank(updateWoodInput.getTerminated_at().toString())){
+            if (StringUtils.isNoneBlank(updateWoodInput.getTerminated_at().toString())) {
                 wood.setTerminatedAt(updateWoodInput.getTerminated_at());
             }
 
