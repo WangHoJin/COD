@@ -25,6 +25,7 @@ public enum  ResponseStatus {
     SUCCESS_GET_FOLLOW_LIST(200, 213, "팔로우 관계 조회에 성공하였습니다."),
     SUCCESS_CHECK_NOTICE(201, 214, "새로운 알림 조회에 성공하였습니다."),
     SUCCESS_SELECT_GRADE(200, 203, "업적 조회에 성공하였습니다."),
+    SUCCESS_SELECT_CODI_LIKED(200,215,"좋아요 누른 코디 조회에 성공하였습니다."),
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
@@ -35,6 +36,7 @@ public enum  ResponseStatus {
     CREATED_WOOD_CODI(201, 204, "코디나무에 코디 등록에 성공하였습니다."),
     CREATED_NOTICE(201, 205, "알림 등록에 성공하였습니다."),
     CREATED_FOLLOW(201, 206, "팔로우 관계 등록에 성공하였습니다."),
+    CREATED_CODI_LIKED(201,207, "코디 좋아요 등록에 성공하였습니다."),
 
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
@@ -55,6 +57,8 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_NOTICE(204, 210, "알림 삭제에 성공하였습니다."),
     SUCCESS_DELETE_FOLLOW(204, 211, "팔로우 관계 삭제에 성공하였습니다."),
     SUCCESS_UPDATE_GRADE(204, 203, "업적 수정에 성공하였습니다."),
+    SUCCESS_DELETE_CODI_LIKED(204,207,"코디 좋아요 취소에 성공하였습니다."),
+
 
     /*
      4XX Client errors
@@ -67,6 +71,7 @@ public enum  ResponseStatus {
     EXISTS_EMAIL(400, 404, "이미 존재하는 이메일입니다."),
     EXISTS_NICKNAME(400, 405, "이미 존재하는 닉네임입니다."),
     EXISTS_FOLLOW(400, 406, "이미 존재하는 팔로우 관계입니다."),
+    EXISTS_CODI_LIKE(400,407,"이미 좋아요를 눌렀습니다."),
     NO_VALUES(400, 410, "입력되지 않은 값이 존재합니다."),
     NO_CONTENTS(400, 411, "내용을 입력해주세요."),
     BAD_ACCESS_TOKEN_VALUE(400, 412, "accessToken을 입력해주세요."),
