@@ -109,6 +109,7 @@ public class CodiServiceImpl implements CodiService {
 
         // 최종 출력값 정리
         selectCodiOutput = SelectCodiOutput.builder()
+                .codiId(codi.getId())
                 .userId(codi.getUser().getId())
                 .codiName(codi.getName())
                 .codiTag(codi.getTag())

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class SelectCodiOutput {
+    private int codiId;
     private int userId;
     private String codiName;
     private String codiTag;
@@ -21,7 +22,8 @@ public class SelectCodiOutput {
     private int liked;
 
     @QueryProjection
-    public SelectCodiOutput(int userId, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked) {
+    public SelectCodiOutput(int codiId, int userId, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked) {
+        this.codiId = codiId;
         this.userId = userId;
         this.codiName = codiName;
         this.codiTag = codiTag;

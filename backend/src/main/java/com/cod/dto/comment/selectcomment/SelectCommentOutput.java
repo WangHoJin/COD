@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 @Builder
 public class SelectCommentOutput {
+    private Integer commentId;
     private Integer codiId;
     private Integer userId;
     private String commentContent;
