@@ -1,9 +1,13 @@
 <template>
-  <div>
+  <v-app>
     <Header />
-    <router-view />
+    <v-main>
+      <v-container>
+        <router-view :key="$route.fullPath" />
+      </v-container>
+    </v-main>
     <Footer />
-  </div>
+  </v-app>
 </template>
 
 <script>

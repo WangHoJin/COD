@@ -1,5 +1,5 @@
 <template>
-  <div>푸터</div>
+  <v-footer>푸터</v-footer>
 </template>
 
 <script>

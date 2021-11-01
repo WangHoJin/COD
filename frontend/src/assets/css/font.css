@@ -1,0 +1,19 @@
+@font-face {
+  font-family: BMHANNAPro;
+  src: url('/media/font/BMHANNAPro.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'BMHANNAAir';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1 h2 h3 {
+  font-family: BMHANNAPro !important;
+}
+.v-application {
+  font-family: BMHANNAAir !important;
+}

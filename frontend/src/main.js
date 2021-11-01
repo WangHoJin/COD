@@ -1,25 +1,17 @@
-// import Vue from 'vue';
-// import App from './App.vue';
-// import router from './utils/routes';
-// import { VueAxios, axios } from './utils/axios';
-// import store from './utils/store';
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import vuetify from './plugins/vuetify';
+import axios from './utils/axios';
+import store from './store';
 
-// Vue.use(router);
-// Vue.use(VueAxios, axios);
-// Vue.use(store);
+Vue.config.productionTip = false;
+Vue.prototype.$axios = axios;
 
-// Vue.config.productionTip = false;
-
-// new Vue({
-  //   render: (h) => h(App),
-  // }).$mount('#app');
-  
-  import { createApp } from 'vue';
-  import App from './App.vue';
-  import router from './utils/routes';
-  import { VueAxios, axios } from './utils/axios';
-  import store from './utils/store';
-  createApp(App).mount('#app');
-  App.use(router);
-  App.use(VueAxios, axios);
-  App.use(store);
+new Vue({
+  axios,
+  vuetify,
+  router,
+  store,
+  render: (h) => h(App),
+}).$mount('#app');
