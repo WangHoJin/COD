@@ -3,9 +3,10 @@ package com.cod.serviceImpl;
 import com.cod.configuration.ValidationCheck;
 import com.cod.dao.CodiLikedRepository;
 import com.cod.dao.CodiRepository;
-import com.cod.dto.codiliked.createlike.CreateLikeInput;
-import com.cod.entity.Codi;
-import com.cod.entity.CodiLiked;
+import com.cod.dao.NoticeRepository;
+import com.cod.dto.codiliked.createcodiliked.CreateCodiLikedInput;
+import com.cod.dto.notice.NoticeType;
+import com.cod.entity.*;
 import com.cod.response.Response;
 import com.cod.service.CodiLikedService;
 import com.cod.service.JwtService;
@@ -25,29 +26,60 @@ public class CodiLikedServiceImpl implements CodiLikedService {
     private final CodiLikedRepository codiLikedRepository;
     private final CodiRepository codiRepository;
     private final JwtService jwtService;
+    private final NoticeRepository noticeRepository;
 
     @Override
     @Transactional
-    public ResponseEntity<Response<Object>> createLike(CreateLikeInput createLikeInput) {
+    public ResponseEntity<Response<Object>> createCodiLiked(CreateCodiLikedInput createCodiLikedInput) {
         // 1. 값 형식 체크
-        if (createLikeInput == null)
+        if (createCodiLikedInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
-        if (!ValidationCheck.isValidId(createLikeInput.getCodiId()))
+
+        if (!ValidationCheck.isValidId(createCodiLikedInput.getCodiId()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(BAD_ID_VALUE));
-        if (!ValidationCheck.isValidId(createLikeInput.getUserId()))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new Response<>(NO_CONTENTS));
+
 
         // 2. 좋아요 등록
-        CodiLiked codiLiked;
         try{
-            Codi codi = codiRepository.findById(createLikeInput.getCodiId()).orElse(null);
-            codiLiked=CodiLiked.builder()
-                    .user(jwtService.getUser())
-                    .codi(codi)
+            User loginUser = jwtService.getUser();
+            if (loginUser == null)  {
+                log.error("[POST]/codi-liked NOT FOUND LOGIN USER error");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
+            }
+            Codi codi = codiRepository.findById(createCodiLikedInput.getCodiId()).orElse(null);
+            if (codi == null)  {
+                log.error("[POST]/codi-liked NOT FOUND CODI error");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_CODI));
+            }
+
+            CodiLiked codiLiked=codiLikedRepository.findByCodiAndUser(codi,loginUser);
+
+            if(codiLiked==null){
+                codiLikedRepository.save(
+                        CodiLiked.builder()
+                                .user(jwtService.getUser())
+                                .codi(codi)
+                                .build());
+            }
+            else{
+                log.error("[POST]/codi-liked EXIST CODI LIKE error");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(EXISTS_CODI_LIKE));
+            }
+
+            // 신규 좋아요 알림
+            Notice notice = Notice.builder()
+                    .type(NoticeType.CODI_LIKED)
+                    .receiveUser(codi.getUser())
+                    .sendUser(jwtService.getUser())
+                    .isChecked(false)
+                    .message(jwtService.getUser().getNickname()+"님이 "+codi.getName()+" 코디를 좋아요 하셨습니다!")
                     .build();
+            noticeRepository.save(notice);
 
         } catch (Exception e){
             log.error("[codi-liked/post] database error", e);
@@ -62,15 +94,22 @@ public class CodiLikedServiceImpl implements CodiLikedService {
 
     @Override
     @Transactional
-    public ResponseEntity<Response<Object>> deleteLike(int id) {
+    public ResponseEntity<Response<Object>> deleteCodiLiked(int codiId) {
+
+
         try{
+            Codi codi=codiRepository.findById(codiId).orElse(null);
+            if(codi==null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_CODI));
+            }
             // 1. 코디 좋아요 조회
-            CodiLiked codiLiked = codiLikedRepository.findByUserAndCodi(id, jwtService.getUserId());
+            CodiLiked codiLiked = codiLikedRepository.findByCodiAndUser(codi, jwtService.getUser());
 
             // 2. 코디 좋아요 취소
             if(codiLiked==null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(new Response<>(BAD_ID_VALUE));
+                        .body(new Response<>(BAD_VALUES));
 
             codiLikedRepository.delete(codiLiked);
         } catch (Exception e){

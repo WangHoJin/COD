@@ -69,6 +69,7 @@ public enum  ResponseStatus {
     EXISTS_EMAIL(400, 404, "이미 존재하는 이메일입니다."),
     EXISTS_NICKNAME(400, 405, "이미 존재하는 닉네임입니다."),
     EXISTS_FOLLOW(400, 406, "이미 존재하는 팔로우 관계입니다."),
+    EXISTS_CODI_LIKE(400,407,"이미 좋아요를 눌렀습니다."),
     NO_VALUES(400, 410, "입력되지 않은 값이 존재합니다."),
     NO_CONTENTS(400, 411, "내용을 입력해주세요."),
     BAD_ACCESS_TOKEN_VALUE(400, 412, "accessToken을 입력해주세요."),

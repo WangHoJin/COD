@@ -1,4 +1,4 @@
-package com.cod.dto.codiliked.createlike;
+package com.cod.dto.codiliked.createcodiliked;
 
 import lombok.*;
 
@@ -7,7 +7,6 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class CreateLikeInput {
+public class CreateCodiLikedInput {
     private int codiId;
-    private int userId;
 }

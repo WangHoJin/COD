@@ -1,10 +1,10 @@
 package com.cod.service;
 
-import com.cod.dto.codiliked.createlike.CreateLikeInput;
+import com.cod.dto.codiliked.createcodiliked.CreateCodiLikedInput;
 import com.cod.response.Response;
 import org.springframework.http.ResponseEntity;
 
 public interface CodiLikedService {
-    ResponseEntity<Response<Object>> createLike(CreateLikeInput createLikeInput);
-    ResponseEntity<Response<Object>> deleteLike(int id);
+    ResponseEntity<Response<Object>> createCodiLiked(CreateCodiLikedInput createCodiLikedInput);
+    ResponseEntity<Response<Object>> deleteCodiLiked(int codiId);
 }

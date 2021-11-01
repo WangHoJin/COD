@@ -1,6 +1,6 @@
 package com.cod.controller;
 
-import com.cod.dto.codiliked.createlike.CreateLikeInput;
+import com.cod.dto.codiliked.createcodiliked.CreateCodiLikedInput;
 import com.cod.response.Response;
 import com.cod.service.CodiLikedService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +23,9 @@ public class CodiLikedController {
      * @return ResponseEntity<Response<Object>>
      */
     @PostMapping
-    public ResponseEntity<Response<Object>> createLike(@RequestBody CreateLikeInput createLikeInput){
+    public ResponseEntity<Response<Object>> createLike(@RequestBody CreateCodiLikedInput createCodiLikedInput){
         log.info("[POST] /codi-liked");
-        return codiLikedService.createLike(createLikeInput);
+        return codiLikedService.createCodiLiked(createCodiLikedInput);
     }
 
     /**
@@ -34,9 +34,9 @@ public class CodiLikedController {
      *
      * @return ResponseEntity<Response<Object>>
      */
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Response<Object>> deleteLike(@PathVariable("id") int id){
-        log.info("[DELETE] /codi-liked");
-        return codiLikedService.deleteLike(id);
+        log.info("[DELETE] /codi-liked"+id);
+        return codiLikedService.deleteCodiLiked(id);
     }
 }
