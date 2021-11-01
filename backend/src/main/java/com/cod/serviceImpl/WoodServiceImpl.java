@@ -104,6 +104,7 @@ public class WoodServiceImpl implements WoodService {
                 .woodTitle(wood.getTitle())
                 .woodContent(wood.getContent())
                 .WoodTerminatedAt(wood.getTerminatedAt())
+                .woodCodiCnt(woodCodiRepository.countByWood(wood))
                 .build();
 
         // 4. 결과 return
