@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CodiLikedRepository extends JpaRepository<CodiLiked, Integer> {
     int countByCodi(Codi codi);
+    CodiLiked findByUserAndCodi(int codiId, int userId);
 }

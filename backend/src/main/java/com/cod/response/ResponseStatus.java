@@ -27,6 +27,7 @@ public enum  ResponseStatus {
     CREATED_COMMENT(201, 202, "댓글 등록에 성공하였습니다."),
     CREATED_CODI(201, 203, "코디 등록에 성공하였습니다."),
     CREATED_WOOD_CODI(201, 203, "코디나무에 코디 등록에 성공하였습니다."),
+    CREATED_CODI_LIKED(201,204, "코디 좋아요 등록에 성공하였습니다."),
 
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
@@ -41,6 +42,7 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_WOOD_CODI(204, 204, "코디나무의 코디 삭제에 성공하였습니다."),
     SUCCESS_DELETE_USER(204,205,"회원 탈퇴에 성공하였습니다."),
     SUCCESS_UPDATE_PROFILE(204, 206, "회원 정보 수정에 성공하였습니다."),
+    SUCCESS_DELETE_CODI_LIKED(204,207,"코디 좋아요 취소에 성공하였습니다."),
 
     /*
      4XX Client errors
