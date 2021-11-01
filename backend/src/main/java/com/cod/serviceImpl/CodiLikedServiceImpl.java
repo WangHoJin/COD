@@ -5,13 +5,20 @@ import com.cod.dao.CodiLikedRepository;
 import com.cod.dao.CodiRepository;
 import com.cod.dao.NoticeRepository;
 import com.cod.dto.codiliked.createcodiliked.CreateCodiLikedInput;
+import com.cod.dto.codiliked.deletecodiliked.DeleteCodiLiked;
+import com.cod.dto.codiliked.selectcodilikedlist.SelectCodiLikedListInput;
+import com.cod.dto.codiliked.selectcodilikedlist.SelectCodiLikedListOutput;
 import com.cod.dto.notice.NoticeType;
 import com.cod.entity.*;
+import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.service.CodiLikedService;
 import com.cod.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,10 +45,10 @@ public class CodiLikedServiceImpl implements CodiLikedService {
 
         if (!ValidationCheck.isValidId(createCodiLikedInput.getCodiId()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new Response<>(BAD_ID_VALUE));
+                    .body(new Response<>(NO_VALUES));
 
 
-        // 2. 좋아요 등록
+        // 2. 코디 좋아요 등록
         try{
             User loginUser = jwtService.getUser();
             if (loginUser == null)  {
@@ -94,19 +101,25 @@ public class CodiLikedServiceImpl implements CodiLikedService {
 
     @Override
     @Transactional
-    public ResponseEntity<Response<Object>> deleteCodiLiked(int codiId) {
-
+    public ResponseEntity<Response<Object>> deleteCodiLiked(DeleteCodiLiked deleteCodiLiked) {
+        // 1. 값 형식 체크
+        if(deleteCodiLiked==null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(NO_VALUES));
+        if(!ValidationCheck.isValidId(deleteCodiLiked.getCodiId()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(NO_VALUES));
 
         try{
-            Codi codi=codiRepository.findById(codiId).orElse(null);
+            // 2. 코디 좋아요 조회
+            Codi codi=codiRepository.findById(deleteCodiLiked.getCodiId()).orElse(null);
             if(codi==null){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(NOT_FOUND_CODI));
             }
-            // 1. 코디 좋아요 조회
             CodiLiked codiLiked = codiLikedRepository.findByCodiAndUser(codi, jwtService.getUser());
 
-            // 2. 코디 좋아요 취소
+            // 3. 코디 좋아요 취소
             if(codiLiked==null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(BAD_VALUES));
@@ -121,5 +134,41 @@ public class CodiLikedServiceImpl implements CodiLikedService {
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new Response<>(null, SUCCESS_DELETE_CODI_LIKED));
+    }
+
+    @Override
+    public ResponseEntity<PageResponse<SelectCodiLikedListOutput>> selectCodiLikedList(SelectCodiLikedListInput selectCodiLikedListInput) {
+        // 1. 값 형식 체크
+        if (selectCodiLikedListInput == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(NO_VALUES));
+        if (!ValidationCheck.isValidPage(selectCodiLikedListInput.getPage())
+                || !ValidationCheck.isValidId(selectCodiLikedListInput.getSize()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new PageResponse<>(BAD_VALUES));
+
+        Page<SelectCodiLikedListOutput> selectCodiLikedListOutputs;
+        try {
+            // 2. 좋아요 누른 코디 조회
+            Pageable pageable = PageRequest.of(selectCodiLikedListInput.getPage() - 1, selectCodiLikedListInput.getSize());
+            Page<CodiLiked> codiLikedList=codiLikedRepository.findByUser(jwtService.getUser(),pageable);
+
+            // 3. 좋아요 누른 코디 리스트에 필요한 최종 결과 가공
+            selectCodiLikedListOutputs = codiLikedList.map(codiLiked -> {
+                return SelectCodiLikedListOutput.builder()
+                        .codiId(codiLiked.getCodi().getId())
+                        .codiThumbnail(codiLiked.getCodi().getThumbnail())
+                        .build();
+            });
+        } catch (Exception e) {
+            log.error("[codi-liked/get] database error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new PageResponse<>(DATABASE_ERROR));
+        }
+
+        // 4. 결과 return
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PageResponse<>(selectCodiLikedListOutputs, SUCCESS_SELECT_CODI_LIKED));
+
     }
 }

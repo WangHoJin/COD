@@ -25,6 +25,7 @@ public enum  ResponseStatus {
     SUCCESS_GET_FOLLOW_LIST(200, 213, "팔로우 관계 조회에 성공하였습니다."),
     SUCCESS_CHECK_NOTICE(201, 214, "새로운 알림 조회에 성공하였습니다."),
     SUCCESS_SELECT_GRADE(200, 203, "업적 조회에 성공하였습니다."),
+    SUCCESS_SELECT_CODI_LIKED(200,215,"좋아요 누른 코디 조회에 성공하였습니다."),
 
     // 201 Created - 클라이언트의 요청을 서버가 정상적으로 처리했고 새로운 리소스가 생겼다.,
     CREATED(201, 200, "리소스 생성에 성공하였습니다."),
@@ -57,6 +58,7 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_FOLLOW(204, 211, "팔로우 관계 삭제에 성공하였습니다."),
     SUCCESS_UPDATE_GRADE(204, 203, "업적 수정에 성공하였습니다."),
     SUCCESS_DELETE_CODI_LIKED(204,207,"코디 좋아요 취소에 성공하였습니다."),
+
 
     /*
      4XX Client errors

@@ -1,6 +1,10 @@
 package com.cod.controller;
 
 import com.cod.dto.codiliked.createcodiliked.CreateCodiLikedInput;
+import com.cod.dto.codiliked.deletecodiliked.DeleteCodiLiked;
+import com.cod.dto.codiliked.selectcodilikedlist.SelectCodiLikedListInput;
+import com.cod.dto.codiliked.selectcodilikedlist.SelectCodiLikedListOutput;
+import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.service.CodiLikedService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +27,7 @@ public class CodiLikedController {
      * @return ResponseEntity<Response<Object>>
      */
     @PostMapping
-    public ResponseEntity<Response<Object>> createLike(@RequestBody CreateCodiLikedInput createCodiLikedInput){
+    public ResponseEntity<Response<Object>> createCodiLiked(@RequestBody CreateCodiLikedInput createCodiLikedInput){
         log.info("[POST] /codi-liked");
         return codiLikedService.createCodiLiked(createCodiLikedInput);
     }
@@ -34,9 +38,22 @@ public class CodiLikedController {
      *
      * @return ResponseEntity<Response<Object>>
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Response<Object>> deleteLike(@PathVariable("id") int id){
-        log.info("[DELETE] /codi-liked"+id);
-        return codiLikedService.deleteCodiLiked(id);
+    @DeleteMapping
+    public ResponseEntity<Response<Object>> deleteCodiLiked(DeleteCodiLiked deleteCodiLiked){
+        log.info("[DELETE] /codi-liked?codiId={codiId}");
+        return codiLikedService.deleteCodiLiked(deleteCodiLiked);
     }
+
+    /**
+     * 좋아요 누른 코디 조회 API
+     * [GET] /codi-liked?page=&size
+     *
+     * @return ResponseEntity<PageResponse<SelectCodiLiked>>
+     */
+    @GetMapping
+    public ResponseEntity<PageResponse<SelectCodiLikedListOutput>> selectCodiLikedList(SelectCodiLikedListInput selectCodiLikedListInput){
+        log.info("[GET] /codi-liked?page=&size=");
+        return codiLikedService.selectCodiLikedList(selectCodiLikedListInput);
+    }
+
 }
