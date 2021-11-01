@@ -14,12 +14,14 @@ public class SelectWoodListOutput {
     private String woodTitle;
     private String woodContent;
     private LocalDate woodTerminatedAt;
+    private int woodCodiCnt;
 
     @QueryProjection
-    public SelectWoodListOutput(int userId, String woodTitle, String woodContent, LocalDate woodTerminatedAt) {
+    public SelectWoodListOutput(int userId, String woodTitle, String woodContent, LocalDate woodTerminatedAt, int woodCodiCnt) {
         this.userId = userId;
         this.woodTitle = woodTitle;
         this.woodContent = woodContent;
         this.woodTerminatedAt = woodTerminatedAt;
+        this.woodCodiCnt = woodCodiCnt;
     }
 }

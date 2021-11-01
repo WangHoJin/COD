@@ -25,7 +25,7 @@ public class GradeController {
      * 업적 조회 API
      * [GET] /api/grades?userId=
      *
-     * @return ResponseEntity<PageResponse < SelectWoodListOutput>>
+     * @return ResponseEntity<Response<SelectGradeOutput>>
      */
     @GetMapping
     public ResponseEntity<Response<SelectGradeOutput>> selectGrade(int userId) {
@@ -37,7 +37,7 @@ public class GradeController {
      * 업적 수정 API
      * [PATCH] /api/grades?userId=
      *
-     * @return ResponseEntity<PageResponse < SelectWoodListOutput>>
+     * @return ResponseEntity<Response<Object>>
      */
     @PatchMapping
     public ResponseEntity<Response<Object>> updateGrade(int userId, @RequestBody UpdateGradeInput updateGradeInput) {

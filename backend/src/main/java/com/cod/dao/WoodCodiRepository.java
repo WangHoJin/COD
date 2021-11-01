@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WoodCodiRepository extends JpaRepository<WoodCodi, Integer> {
     Page<WoodCodi> findByWood(Wood wood, Pageable pageable);
+    int countByWood(Wood wood);
 }
