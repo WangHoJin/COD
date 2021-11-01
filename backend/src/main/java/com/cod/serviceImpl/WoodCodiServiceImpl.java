@@ -118,6 +118,7 @@ public class WoodCodiServiceImpl implements WoodCodiService {
 
         // 최종 출력값 정리
         selectWoodCodiOutput = SelectWoodCodiOutput.builder()
+                .woodCoidId(woodCodi.getId())
                 .woodId(woodCodi.getWood().getId())
                 .userId(woodCodi.getUser().getId())
                 .codiName(woodCodi.getName())
@@ -168,6 +169,7 @@ public class WoodCodiServiceImpl implements WoodCodiService {
         // 최종 출력값 정리
         resultList = woodCodiList.map(woodCodi -> {
             return SelectWoodCodiOutput.builder()
+                    .woodCoidId(woodCodi.getId())
                     .woodId(woodCodi.getWood().getId())
                     .userId(woodCodi.getUser().getId())
                     .codiName(woodCodi.getName())

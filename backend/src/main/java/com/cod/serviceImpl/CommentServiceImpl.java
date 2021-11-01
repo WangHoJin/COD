@@ -82,6 +82,7 @@ public class CommentServiceImpl implements CommentService {
                     .codi(codi)
                     .message(loginUser.getNickname()+"님이 댓글을 다셨습니다!")
                     .build();
+
             noticeRepository.save(notice);
 
         } catch (Exception e) {
@@ -127,6 +128,7 @@ public class CommentServiceImpl implements CommentService {
         // 최종 출력값 정리
         responseList = commentList.map(comment -> {
             return SelectCommentOutput.builder()
+                    .commentId(comment.getId())
                     .codiId(comment.getCodi().getId())
                     .userId(comment.getUser().getId())
                     .commentContent(comment.getContent())

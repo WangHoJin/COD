@@ -34,6 +34,7 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
     public Page<SelectCodiOutput> findByDynamicQuery(SelectCodiInput selectCodiInput, Pageable pageable) {
         QueryResults<SelectCodiOutput> queryResult = queryFactory
                 .select(new QSelectCodiOutput(
+                        qCodi.id,
                         qCodi.user.id,
                         qCodi.name,
                         qCodi.tag,
@@ -61,6 +62,7 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
     public Page<SelectCodiOutput> getPopularCodi(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
         QueryResults<SelectCodiOutput> queryResult = queryFactory
                 .select(new QSelectCodiOutput(
+                        qCodi.id,
                         qCodi.user.id,
                         qCodi.name,
                         qCodi.tag,
@@ -88,6 +90,7 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
     public Page<SelectCodiOutput> getFollowingUserCodi(int userId, Pageable pageable) {
         QueryResults<SelectCodiOutput> queryResult = queryFactory
                 .select(new QSelectCodiOutput(
+                        qCodi.id,
                         qCodi.user.id,
                         qCodi.name,
                         qCodi.tag,

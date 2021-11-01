@@ -20,12 +20,12 @@ public class SelectNoticeOutput {
      *  2 : 좋아요
      *  3 : 댓글
      */
-    private int id;
-    private String type;
-    private String message;
+    private int noticeId;
+    private String noticeType;
+    private String noticeMessage;
+    private boolean noticeIsChecked;
     private ProfileOutput sendUser;
-    private boolean isChecked;
-    private LocalDateTime created_at;
+    private LocalDateTime noticeCreatedAt;
     /**
      * 좋아요나 댓글이 달린 코디
      */

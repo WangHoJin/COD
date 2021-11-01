@@ -100,10 +100,11 @@ public class WoodServiceImpl implements WoodService {
         }
         // 3. 출력값 정리
         selectWoodOutput = SelectWoodOutput.builder()
+                .woodId(wood.getId())
                 .userId(wood.getUser().getId())
                 .woodTitle(wood.getTitle())
                 .woodContent(wood.getContent())
-                .WoodTerminatedAt(wood.getTerminatedAt())
+                .woodTerminatedAt(wood.getTerminatedAt())
                 .woodCodiCnt(woodCodiRepository.countByWood(wood))
                 .build();
 

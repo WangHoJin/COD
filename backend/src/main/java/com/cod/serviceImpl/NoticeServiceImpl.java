@@ -152,12 +152,12 @@ public class NoticeServiceImpl implements NoticeService {
                         .liked(codiLikedRepository.countByCodi(codi))
                         .build();
             return SelectNoticeOutput.builder()
-                    .id(notice.getId())
-                    .type(notice.getType().name())
-                    .message(notice.getMessage())
+                    .noticeId(notice.getId())
+                    .noticeType(notice.getType().name())
+                    .noticeMessage(notice.getMessage())
+                    .noticeCreatedAt(notice.getCreatedAt())
+                    .noticeIsChecked(notice.isChecked())
                     .sendUser(rSender)
-                    .created_at(notice.getCreatedAt())
-                    .isChecked(notice.isChecked())
                     .codi(rCodi)
                     .build();
         });

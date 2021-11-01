@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class SelectWoodCodiOutput {
+    private int woodCoidId;
     private int woodId;
     private int userId;
     private String codiName;
@@ -25,7 +26,8 @@ public class SelectWoodCodiOutput {
     private int liked;
 
     @QueryProjection
-    public SelectWoodCodiOutput(int woodId, int userId, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked) {
+    public SelectWoodCodiOutput(int woodCoidId, int woodId, int userId, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked) {
+        this.woodCoidId = woodCoidId;
         this.woodId = woodId;
         this.userId = userId;
         this.codiName = codiName;
