@@ -3,26 +3,17 @@ package com.cod.serviceImpl;
 import com.cod.configuration.ValidationCheck;
 import com.cod.dao.CodiLikedRepository;
 import com.cod.dao.CodiRepository;
-import com.cod.dao.CommentRepository;
 import com.cod.dto.codi.createcodi.CreateCodiInput;
 import com.cod.dto.codi.getfollowingusercodi.GetFollowingUserCodiInput;
 import com.cod.dto.codi.getpopularcodi.GetPopularCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiInput;
 import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.dto.codi.updatecodi.UpdateCodiInput;
-import com.cod.dto.comment.createcomment.CreateCommentInput;
-import com.cod.dto.comment.selectcomment.SelectCommentInput;
-import com.cod.dto.comment.selectcomment.SelectCommentOutput;
-import com.cod.dto.comment.updatecomment.UpdateCommentInput;
 import com.cod.entity.Codi;
-import com.cod.entity.CodiLiked;
-import com.cod.entity.Comment;
 import com.cod.entity.User;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
-import com.cod.response.ResponseStatus;
 import com.cod.service.CodiService;
-import com.cod.service.CommentService;
 import com.cod.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -124,8 +115,8 @@ public class CodiServiceImpl implements CodiService {
                 .codiThumbnail(codi.getThumbnail())
                 .codiCoordinate(codi.getCoordinate())
                 .codiDescription(codi.getDescription())
-                .codiCreatedAt(codi.getCreated_at())
-                .codiUpdatedAt(codi.getUpdated_at())
+                .codiCreatedAt(codi.getCreatedAt())
+                .codiUpdatedAt(codi.getUpdatedAt())
                 .liked(codiLikedRepository.countByCodi(codi))
                 .build();
 

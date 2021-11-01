@@ -2,12 +2,14 @@ package com.cod.serviceImpl;
 
 import com.cod.configuration.AES128;
 import com.cod.configuration.ValidationCheck;
+import com.cod.dao.GradeRepository;
 import com.cod.dto.user.profile.ProfileOutput;
 import com.cod.dto.user.profile.ProfileUpdate;
 import com.cod.dto.user.search.UserSearchInput;
 import com.cod.dto.user.search.UserSearchOutput;
 import com.cod.dto.user.signin.SignInInput;
 import com.cod.dto.user.signup.SignUpInput;
+import com.cod.entity.Grade;
 import com.cod.entity.User;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
@@ -43,6 +45,7 @@ import static com.cod.response.ResponseStatus.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final GradeRepository gradeRepository;
     private final JwtService jwtService;
 
     @Value("${custom.constant.user.info.password.key}")
@@ -153,6 +156,7 @@ public class UserServiceImpl implements UserService {
                     .build();
 
             userRepository.save(user);
+            gradeRepository.save(Grade.builder().user(user).point(0).build());
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -289,6 +293,8 @@ public class UserServiceImpl implements UserService {
             userSearchOutput = userList.map(user -> {
                 return UserSearchOutput.builder()
                         .userId(user.getId())
+                        .profile(user.getProfile())
+                        .email(user.getEmail())
                         .nickname(user.getNickname())
                         .introduction(user.getIntroduction())
                         .build();

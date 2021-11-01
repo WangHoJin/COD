@@ -40,15 +40,15 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                         qCodi.description,
                         qCodi.thumbnail,
                         qCodi.coordinate,
-                        qCodi.created_at,
-                        qCodi.updated_at,
+                        qCodi.createdAt,
+                        qCodi.updatedAt,
                         //liked
                         JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
                                 .where(qCodiLiked.codi.id.eq(qCodi.id))
                 ))
                 .from(qCodi)
                 .where(eqTag(selectCodiInput.getTag()), eqDescription(selectCodiInput.getDescription()), eqName(selectCodiInput.getName()), eqUserId(selectCodiInput.getUserId()))
-                .orderBy(qCodi.created_at.desc())
+                .orderBy(qCodi.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetchResults();
         long totalCount = queryResult.getTotal();
@@ -67,14 +67,14 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                         qCodi.description,
                         qCodi.thumbnail,
                         qCodi.coordinate,
-                        qCodi.created_at,
-                        qCodi.updated_at,
+                        qCodi.createdAt,
+                        qCodi.updatedAt,
                         //liked
                         Expressions.as(JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
                                 .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked")
                 ))
                 .from(qCodi)
-                .where(qCodi.created_at.between(startDate,endDate))
+                .where(qCodi.createdAt.between(startDate,endDate))
                 .orderBy(Expressions.stringPath("liked").desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetchResults();
@@ -94,17 +94,17 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                         qCodi.description,
                         qCodi.thumbnail,
                         qCodi.coordinate,
-                        qCodi.created_at,
-                        qCodi.updated_at,
+                        qCodi.createdAt,
+                        qCodi.updatedAt,
                         //liked
                         Expressions.as(JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
                                 .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked")
                 ))
                 .from(qCodi)
                 .join(qFollow)
-                .on(qFollow.followUser.id.eq(qCodi.user.id))
-                .where(qFollow.user.id.eq(userId))
-                .orderBy(qCodi.created_at.desc())
+                .on(qFollow.toUser.id.eq(qCodi.user.id))
+                .where(qFollow.fromUser.id.eq(userId))
+                .orderBy(qCodi.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetchResults();
         long totalCount = queryResult.getTotal();

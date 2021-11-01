@@ -3,12 +3,15 @@ package com.cod.serviceImpl;
 import com.cod.configuration.ValidationCheck;
 import com.cod.dao.CodiRepository;
 import com.cod.dao.CommentRepository;
+import com.cod.dao.NoticeRepository;
 import com.cod.dto.comment.createcomment.CreateCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentInput;
 import com.cod.dto.comment.selectcomment.SelectCommentOutput;
 import com.cod.dto.comment.updatecomment.UpdateCommentInput;
+import com.cod.dto.notice.NoticeType;
 import com.cod.entity.Codi;
 import com.cod.entity.Comment;
+import com.cod.entity.Notice;
 import com.cod.entity.User;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
@@ -36,6 +39,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final CodiRepository codiRepository;
     private final JwtService jwtService;
+    private final NoticeRepository noticeRepository;
 
     @Override
     @Transactional
@@ -54,14 +58,31 @@ public class CommentServiceImpl implements CommentService {
         // 2. 댓글 생성
         Comment comment;
         try {
+            User loginUser = jwtService.getUser();
+            if (loginUser == null)  {
+                log.error("[GET]/comments NOT FOUND LOGIN USER error");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
+            }
             Codi codi = codiRepository.findById(createCommentInput.getCodiId()).orElse(null);
             comment = Comment.builder()
-                    .user(jwtService.getUser())
+                    .user(loginUser)
                     .codi(codi)
                     .content(createCommentInput.getContent())
                     .build();
 
             commentRepository.save(comment);
+
+            // 코디 댓글 알림
+            Notice notice = Notice.builder()
+                    .type(NoticeType.CODI_COMMENT)
+                    .receiveUser(codi.getUser())
+                    .sendUser(loginUser)
+                    .isChecked(false)
+                    .codi(codi)
+                    .message(loginUser.getNickname()+"님이 댓글을 다셨습니다!")
+                    .build();
+            noticeRepository.save(notice);
 
         } catch (Exception e) {
             log.error("[comments/post] database error", e);
@@ -75,7 +96,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ResponseEntity<PageResponse<SelectCommentOutput>> selectComment(SelectCommentInput selectCommentInput) {
+    public ResponseEntity<PageResponse<SelectCommentOutput>> selectCommentList(SelectCommentInput selectCommentInput) {
         // 1. 값 형식 체크
         if (selectCommentInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -109,8 +130,8 @@ public class CommentServiceImpl implements CommentService {
                     .codiId(comment.getCodi().getId())
                     .userId(comment.getUser().getId())
                     .commentContent(comment.getContent())
-                    .commentCreatedAt(comment.getCreated_at())
-                    .commentUpdatedAt(comment.getUpdated_at())
+                    .commentCreatedAt(comment.getCreatedAt())
+                    .commentUpdatedAt(comment.getUpdatedAt())
                     .build();
         });
 

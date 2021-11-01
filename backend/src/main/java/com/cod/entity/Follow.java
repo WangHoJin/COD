@@ -24,12 +24,12 @@ public class Follow {
 
     @ManyToOne
     @OnDelete(action= OnDeleteAction.CASCADE)
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    @JoinColumn(name="from_user_id", nullable = false)
+    private User fromUser;
 
     @ManyToOne
     @OnDelete(action=OnDeleteAction.CASCADE)
-    @JoinColumn(name="follow_user_id", nullable = false)
-    private User followUser;
+    @JoinColumn(name="to_user_id", nullable = false)
+    private User toUser;
 
 }

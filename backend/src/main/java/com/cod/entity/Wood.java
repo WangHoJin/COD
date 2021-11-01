@@ -33,17 +33,20 @@ public class Wood {
      * 코디나무를 등록한 사람
      */
     @ManyToOne
-    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable = false)
+    @OnDelete(action= OnDeleteAction.CASCADE)
     private User user;
+
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "content", nullable = false)
     private String content;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDate created_at;
+    private LocalDate createdAt;
 
     @Column(name = "terminated_at", nullable = false)
-    private LocalDate updated_at;
+    private LocalDate terminatedAt;
 }
