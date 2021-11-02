@@ -37,6 +37,7 @@ public enum  ResponseStatus {
     CREATED_NOTICE(201, 205, "알림 등록에 성공하였습니다."),
     CREATED_FOLLOW(201, 206, "팔로우 관계 등록에 성공하였습니다."),
     CREATED_CODI_LIKED(201,207, "코디 좋아요 등록에 성공하였습니다."),
+    CREATED_WOOD_CODI_LIKED(201,208, "코디나무 코디 좋아요 등록에 성공하였습니다."),
 
     // 202 Accepted - 클라이언트의 요청은 정상적이나, 서버가 아직 요청을 완료하지 못했다. 비동기
     ACCEPTED(202, 200, "요청에 성공하였습니다."),
@@ -58,6 +59,7 @@ public enum  ResponseStatus {
     SUCCESS_DELETE_FOLLOW(204, 211, "팔로우 관계 삭제에 성공하였습니다."),
     SUCCESS_UPDATE_GRADE(204, 203, "업적 수정에 성공하였습니다."),
     SUCCESS_DELETE_CODI_LIKED(204,207,"코디 좋아요 취소에 성공하였습니다."),
+    SUCCESS_DELETE_WOOD_CODI_LIKED(204,207,"코디나무 좋아요 취소에 성공하였습니다."),
 
 
     /*
