@@ -2,6 +2,8 @@ package com.cod.entity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -13,18 +15,20 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "codiwood_codi_liked")
-public class CodiwoodCodiLiked {
+@Table(name = "wood_codi_liked")
+public class WoodCodiLiked {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="codiwood_codi_id", nullable = false)
-    private CodiwoodCodi codiwoodCodi;
+    @OnDelete(action= OnDeleteAction.CASCADE)
+    @JoinColumn(name="wood_codi_id", nullable = false)
+    private WoodCodi woodCodi;
 
     @ManyToOne
+    @OnDelete(action=OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 

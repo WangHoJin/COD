@@ -1,11 +1,11 @@
 package com.cod.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -24,10 +24,12 @@ public class CodiLiked {
     private int id;
 
     @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="codi_id", nullable = false)
     private Codi codi;
 
     @ManyToOne
+    @OnDelete(action=OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 

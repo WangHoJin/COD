@@ -1,11 +1,11 @@
 package com.cod.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -27,6 +27,7 @@ public class Clothes {
     private String imgUrl;
 
     @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
@@ -59,9 +60,9 @@ public class Clothes {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime  created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 }

@@ -2,6 +2,8 @@ package com.cod.entity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -21,11 +23,13 @@ public class Follow {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    @OnDelete(action= OnDeleteAction.CASCADE)
+    @JoinColumn(name="from_user_id", nullable = false)
+    private User fromUser;
 
     @ManyToOne
-    @JoinColumn(name="follow_user_id", nullable = false)
-    private User followUser;
+    @OnDelete(action=OnDeleteAction.CASCADE)
+    @JoinColumn(name="to_user_id", nullable = false)
+    private User toUser;
 
 }

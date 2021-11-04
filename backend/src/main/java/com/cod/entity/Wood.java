@@ -1,11 +1,11 @@
 package com.cod.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -22,8 +22,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "codi_wood")
-public class Codiwood {
+@Table(name = "wood")
+public class Wood {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
@@ -34,15 +34,19 @@ public class Codiwood {
      */
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
+    @OnDelete(action= OnDeleteAction.CASCADE)
     private User user;
+
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "content", nullable = false)
     private String content;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDate created_at;
+    private LocalDate createdAt;
 
     @Column(name = "terminated_at", nullable = false)
-    private LocalDate updated_at;
+    private LocalDate terminatedAt;
 }
