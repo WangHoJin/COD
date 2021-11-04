@@ -1,5 +1,8 @@
+!
 <template lang="">
-  <div>메인페이지</div>
+  <div>
+    <h3>일교차가 커요!</h3>
+  </div>
 </template>
 <script>
 export default {};

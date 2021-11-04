@@ -1,12 +1,17 @@
 <template>
-  <v-app-bar app dense absolute color="#6A76AB" dark prominent fade-img-on-scroll>
-    <v-app-bar-title class="ml-5 mb-3"> <h2 class="ml-5">CoD</h2> </v-app-bar-title>
+  <v-app-bar app dense absolute color="#857DB1" dark fade-img-on-scroll>
+    <v-app-bar-title>
+      <h4>{{ title }}</h4>
+    </v-app-bar-title>
   </v-app-bar>
 </template>
 
 <script>
 export default {
   name: 'Header',
+  props: {
+    title: String,
+  },
 };
 </script>
 
