@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class SelectWoodListOutput {
-    private int woodCodiId;
     private int woodId;
     private int userId;
     private String woodTitle;
@@ -19,8 +18,7 @@ public class SelectWoodListOutput {
     private int woodCodiCnt;
 
     @QueryProjection
-    public SelectWoodListOutput(int woodCodiId, int woodId, int userId, String woodTitle, String woodContent, LocalDate woodTerminatedAt, int woodCodiCnt) {
-        this.woodCodiId = woodCodiId;
+    public SelectWoodListOutput(int woodId, int userId, String woodTitle, String woodContent, LocalDate woodTerminatedAt, int woodCodiCnt) {
         this.woodId = woodId;
         this.userId = userId;
         this.woodTitle = woodTitle;
