@@ -13,7 +13,12 @@ const router = new Router({
         {
           path: "/main",
           name: "main",
-          component: () => import("@/pages/Main.vue"),
+          component: () => import("@/pages/Main/Main.vue"),
+        },
+        {
+          path: "/record-codi",
+          name: "record-codi",
+          component: () => import("@/pages/Main/RecordCodi.vue"),
         },
       ],
     },
