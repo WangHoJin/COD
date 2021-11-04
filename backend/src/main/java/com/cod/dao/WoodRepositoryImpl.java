@@ -29,7 +29,6 @@ public class WoodRepositoryImpl implements WoodRepositoryCustom {
     public Page<SelectWoodListOutput> findByDynamicQuery(SelectWoodInput selectWoodInput, Pageable pageable) {
         QueryResults<SelectWoodListOutput> queryResult = queryFactory
                 .select(new QSelectWoodListOutput(
-                        qWoodCodi.id,
                         qWood.id,
                         qWood.user.id,
                         qWood.title,

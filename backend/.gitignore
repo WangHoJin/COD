@@ -42,3 +42,4 @@ out/
 
 ### Mac Os ###
 .DS_Store
+/application.pid
