@@ -20,9 +20,10 @@ public class SelectCodiOutput {
     private LocalDateTime codiCreatedAt;
     private LocalDateTime codiUpdatedAt;
     private int liked;
+    private int comment;
 
     @QueryProjection
-    public SelectCodiOutput(int codiId, int userId, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked) {
+    public SelectCodiOutput(int codiId, int userId, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked, int comment) {
         this.codiId = codiId;
         this.userId = userId;
         this.codiName = codiName;
@@ -33,5 +34,6 @@ public class SelectCodiOutput {
         this.codiCreatedAt = codiCreatedAt;
         this.codiUpdatedAt = codiUpdatedAt;
         this.liked = liked;
+        this.comment=comment;
     }
 }

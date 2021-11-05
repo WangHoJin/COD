@@ -3,6 +3,7 @@ package com.cod.serviceImpl;
 import com.cod.configuration.ValidationCheck;
 import com.cod.dao.CodiLikedRepository;
 import com.cod.dao.CodiRepository;
+import com.cod.dao.CommentRepository;
 import com.cod.dto.codi.createcodi.CreateCodiInput;
 import com.cod.dto.codi.getfollowingusercodi.GetFollowingUserCodiInput;
 import com.cod.dto.codi.getpopularcodi.GetPopularCodiInput;
@@ -39,6 +40,7 @@ public class CodiServiceImpl implements CodiService {
 
     private final CodiRepository codiRepository;
     private final CodiLikedRepository codiLikedRepository;
+    private final CommentRepository commentRepository;
     private final JwtService jwtService;
 
     @Override
@@ -119,6 +121,7 @@ public class CodiServiceImpl implements CodiService {
                 .codiCreatedAt(codi.getCreatedAt())
                 .codiUpdatedAt(codi.getUpdatedAt())
                 .liked(codiLikedRepository.countByCodi(codi))
+                .comment(commentRepository.countByCodi(codi))
                 .build();
 
         // 3. 결과 return
