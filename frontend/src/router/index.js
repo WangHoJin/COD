@@ -24,6 +24,7 @@ const router = new Router({
     },
     {
       path: "/codi",
+      name: "codi",
       redirect: "/codi/list",
       component: () => import("@/layouts/CodiLayout"),
       children: [
