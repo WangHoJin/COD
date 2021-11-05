@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     Page<Comment> findByCodi(Codi codi, Pageable paging);
+    int countByCodi(Codi codi);
 }
