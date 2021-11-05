@@ -24,20 +24,21 @@ const router = new Router({
     },
     {
       path: "/codi",
+      name: "codi",
       redirect: "/codi/list",
       component: () => import("@/layouts/CodiLayout"),
       children: [
         {
           path: "create",
-          component: () => import("@/pages/codi/CodiCreatePage.vue"),
+          component: () => import("@/pages/codi/CodiCreate.vue"),
         },
         {
           path: "list",
-          component: () => import("@/pages/codi/CodiListPage.vue"),
+          component: () => import("@/pages/codi/CodiList.vue"),
         },
         {
           path: "detail/:no",
-          component: () => import("@/pages/codi/CodiDetailPage.vue"),
+          component: () => import("@/pages/codi/CodiDetail.vue"),
         },
       ],
     },
