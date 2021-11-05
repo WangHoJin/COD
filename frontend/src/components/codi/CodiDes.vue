@@ -3,7 +3,7 @@
     <!-- 코디 인기 정보 start-->
     <v-row>
       <!-- 좋아요 -->
-      <v-col cols="2" sm="12" md="12" lg="12"
+      <v-col cols="3" sm="12" md="12" lg="12"
         ><v-icon color="#CCBEE3">mdi-heart</v-icon>
         <h5 class="purpleText">10</h5>
       </v-col>
@@ -15,7 +15,7 @@
       <!-- 공백 -->
       <v-spacer></v-spacer>
       <!-- 등록일 -->
-      <v-col class="createAt" cols="4" sm="12" md="12" lg="12">
+      <v-col class="createAt" cols="5" sm="12" md="12" lg="12">
         <h5 class="grayText">등록일 2018.10.12</h5></v-col
       >
     </v-row>
