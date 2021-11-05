@@ -6,6 +6,7 @@ import com.cod.dto.codi.selectcodi.SelectCodiOutput;
 import com.cod.entity.QCodi;
 import com.cod.entity.QCodiLiked;
 import com.cod.entity.QFollow;
+import com.cod.entity.QComment;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -29,6 +30,7 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
     QCodi qCodi = QCodi.codi;
     QCodiLiked qCodiLiked = QCodiLiked.codiLiked;
     QFollow qFollow = QFollow.follow;
+    QComment qComment =QComment.comment;
 
     @Override
     public Page<SelectCodiOutput> findByDynamicQuery(SelectCodiInput selectCodiInput, Pageable pageable) {
@@ -45,7 +47,10 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                         qCodi.updatedAt,
                         //liked
                         JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
-                                .where(qCodiLiked.codi.id.eq(qCodi.id))
+                                .where(qCodiLiked.codi.id.eq(qCodi.id)),
+                        //comment
+                        JPAExpressions.select(qComment.count().castToNum(Integer.class)).from(qComment)
+                                .where(qComment.codi.id.eq(qCodi.id))
                 ))
                 .from(qCodi)
                 .where(eqTag(selectCodiInput.getTag()), eqDescription(selectCodiInput.getDescription()), eqName(selectCodiInput.getName()), eqUserId(selectCodiInput.getUserId()))
@@ -73,7 +78,10 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                         qCodi.updatedAt,
                         //liked
                         Expressions.as(JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
-                                .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked")
+                                .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked"),
+                        //comment
+                        Expressions.as(JPAExpressions.select(qComment.count().castToNum(Integer.class)).from(qComment)
+                                .where(qComment.codi.id.eq(qCodi.id)), "comment")
                 ))
                 .from(qCodi)
                 .where(qCodi.createdAt.between(startDate,endDate))
@@ -101,7 +109,10 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                         qCodi.updatedAt,
                         //liked
                         Expressions.as(JPAExpressions.select(qCodiLiked.count().castToNum(Integer.class)).from(qCodiLiked)
-                                .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked")
+                                .where(qCodiLiked.codi.id.eq(qCodi.id)), "liked"),
+                        //comment
+                        Expressions.as(JPAExpressions.select(qComment.count().castToNum(Integer.class)).from(qComment)
+                                .where(qComment.codi.id.eq(qCodi.id)), "comment")
                 ))
                 .from(qCodi)
                 .join(qFollow)
