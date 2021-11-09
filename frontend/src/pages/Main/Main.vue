@@ -28,6 +28,6 @@ export default {
 </script>
 <style scoped>
 .content {
-  padding: 10px;
+  padding: 20px;
 }
 </style>

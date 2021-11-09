@@ -115,7 +115,7 @@
         <v-divider :vertical="true" />
         <v-col class="text-center cell" style="align-self: center; margin-top: 40px">
           <div>
-            <v-btn text fab large>
+            <v-btn text fab x-large style="margin-left: -10px">
               <v-icon> mdi-calendar </v-icon>
             </v-btn>
           </div>

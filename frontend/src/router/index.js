@@ -18,7 +18,12 @@ const router = new Router({
         {
           path: '/record-codi',
           name: 'record-codi',
-          component: () => import('@/pages/Main/RecordCodi.vue'),
+          component: () => import('@/pages/Main/RecordCodi/SelectCodi.vue'),
+        },
+        {
+          path: '/coordination',
+          name: 'coordination',
+          component: () => import('@/pages/Main/RecordCodi/Coordination.vue'),
         },
       ],
     },
