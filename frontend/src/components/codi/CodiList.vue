@@ -2,7 +2,7 @@
   <v-item-group>
     <v-container class="">
       <v-row>
-        <v-col v-for="n in 12" :key="n" cols="4" sm="3" md="2" lg="1">
+        <v-col v-for="codi in codiList" :key="codi.codiId" cols="4" sm="3" md="2" lg="1">
           <v-card class="codiImg">
             <v-img
               height="100px"
@@ -16,7 +16,38 @@
   </v-item-group>
 </template>
 <script>
-export default {};
+import { mapGetters, mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      codiList: [],
+    };
+  },
+  computed: {
+    ...mapGetters(["codies"]),
+  },
+  watch: {
+    coides: function () {
+      this.selectCodies();
+    },
+  },
+  created() {
+    this.setCodies();
+  },
+  methods: {
+    ...mapActions(["getCodies"]),
+    setCodies() {
+      let userId = this.$route.query.userId;
+      // console.log(userId);
+      let payload = { userId: 2, page: 1, size: 10 };
+      this.getCodies(payload);
+      this.codiList = this.codies;
+    },
+    selectCodies() {
+      this.codiList = this.codies;
+    },
+  },
+};
 </script>
 <style scoped>
 .codiImg {
