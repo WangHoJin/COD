@@ -10,12 +10,14 @@
   </div>
 </template>
 <script>
-import Header from '@/components/main/RecordCodi/Header.vue';
+import Header from '@/components/main/RecordCodi/CoordinationHeader.vue';
 import SBtn from '@/components/common/SquareButton.vue';
 
 export default {
   methods: {
-    mvRegist() {},
+    mvRegist() {
+      this.$router.push({ name: 'record-coid-regist' });
+    },
   },
   components: {
     Header,

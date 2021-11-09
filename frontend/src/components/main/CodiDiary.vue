@@ -115,7 +115,7 @@
         <v-divider :vertical="true" />
         <v-col class="text-center cell" style="align-self: center; margin-top: 40px">
           <div>
-            <v-btn text fab x-large style="margin-left: -10px">
+            <v-btn @click="mvCalendatDetail" text fab x-large style="margin-left: -10px">
               <v-icon> mdi-calendar </v-icon>
             </v-btn>
           </div>
@@ -146,6 +146,9 @@ export default {
     }
   },
   methods: {
+    mvCalendatDetail() {
+      this.$router.push({ name: 'record-coid-detail' });
+    },
     addDays(date, days) {
       // date는 문자열로 받는다 ex, '2020-10-15'
       var result = new Date(date);
@@ -154,7 +157,7 @@ export default {
     },
     clickPlus(date) {
       console.log(date);
-      this.$router.push({ path: `/record-codi` });
+      this.$router.push({ name: `record-codi-select` });
     },
   },
 };

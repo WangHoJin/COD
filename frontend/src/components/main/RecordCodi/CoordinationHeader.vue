@@ -8,7 +8,6 @@
     <v-spacer></v-spacer>
     <v-btn text>
       <v-icon small> mdi-plus</v-icon>
-
       내 코디에도 추가
     </v-btn>
   </v-app-bar>

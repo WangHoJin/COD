@@ -16,14 +16,24 @@ const router = new Router({
           component: () => import('@/pages/Main/Main.vue'),
         },
         {
-          path: '/record-codi',
-          name: 'record-codi',
+          path: '/record-codi/select',
+          name: 'record-codi-select',
           component: () => import('@/pages/Main/RecordCodi/SelectCodi.vue'),
         },
         {
-          path: '/coordination',
+          path: '/record-coid/coordination',
           name: 'coordination',
           component: () => import('@/pages/Main/RecordCodi/Coordination.vue'),
+        },
+        {
+          path: '/record-coid/regist',
+          name: 'record-coid-regist',
+          component: () => import('@/pages/Main/RecordCodi/RegistCodi.vue'),
+        },
+        {
+          path: '/record-coid/detail',
+          name: 'record-coid-detail',
+          component: () => import('@/pages/Main/RecordCodi/CalendarDetail.vue'),
         },
       ],
     },

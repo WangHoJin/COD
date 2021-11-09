@@ -6,7 +6,7 @@
     <v-tabs
       :centered="true"
       color="#857DB1"
-      style="margin-top: 80px; width: 100%"
+      style="margin-top: 65px; width: 100%"
       align-with-title
       fixed-tabs
       v-model="super_tab"
@@ -116,7 +116,7 @@
   </div>
 </template>
 <script>
-import Header from '@/components/common/Header.vue';
+import Header from '@/components/common/BackTitleHeader.vue';
 import SBtn from '@/components/common/SquareButton.vue';
 
 export default {
@@ -131,7 +131,7 @@ export default {
   },
   methods: {
     mvCordination() {
-      this.$router.push('coordination');
+      this.$router.push({ name: 'coordination' });
     },
   },
   components: { Header, SBtn },
