@@ -1,26 +1,54 @@
 <template lang="">
   <v-container class="codiComment">
     <!-- 댓글 start-->
-    <v-row v-for="n in 3" :key="n">
+    <v-row v-for="comment in comments" :key="comment.id">
       <v-col cols="12" sm="12" md="12" lg="12">
         <v-divider class="pb-4"></v-divider>
         <!-- 댓글 작성자 -->
-        <h5 class="blackText">ssafy.lee</h5>
+        <h5 class="blackText">{{ comment.userId }}</h5>
         <!-- 수정,삭제 버튼 -->
         <a class="grayTextBtn">수정</a>
 
         <a class="grayTextBtn">삭제</a>
         <!-- 댓글 내용 -->
-        <h4 class="">
-          댓글입니다:D 댓글입니다:D 댓글입니다:D 댓글입니다:D 댓글입니다:D 댓글입니다:D
-        </h4>
+        <h4 class="">{{ comment.commentContent }}</h4>
       </v-col>
     </v-row>
     <!-- 댓글 end-->
   </v-container>
 </template>
 <script>
-export default {};
+import { mapActions, mapGetters } from "vuex";
+
+export default {
+  data() {
+    return {
+      commentList: [],
+    };
+  },
+  computed: {
+    ...mapGetters(["comments"]),
+  },
+  created() {
+    // console.log("코디 상세 페이지 created");
+    this.selectComments();
+  },
+  methods: {
+    ...mapActions(["getComments"]),
+    selectComments() {
+      let codiId = this.$route.params.no;
+      let payload = { codiId: codiId, page: 1, size: 10 };
+      console.log(codiId + "번 코디 댓글 생성");
+      this.$store.dispatch("getComments", payload).then(() => {
+        console.log("코멘트리스트 갱신");
+        this.commentList = this.comments;
+      });
+      // this.getComments(payload);
+      // console.log("데이터 : ");
+      // console.log(this.commentList);
+    },
+  },
+};
 </script>
 <style scoped>
 .codiComment {

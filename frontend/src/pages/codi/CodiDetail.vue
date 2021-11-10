@@ -20,7 +20,6 @@ export default {
   },
   created() {
     this.no = this.$route.params.no;
-    console.log(this.$route.params.no);
   },
 };
 </script>
