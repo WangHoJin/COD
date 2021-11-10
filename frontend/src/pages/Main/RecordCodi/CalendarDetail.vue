@@ -12,7 +12,7 @@
               <v-btn fab text small color="grey darken-2" @click="prev">
                 <v-icon small> mdi-chevron-left </v-icon>
               </v-btn>
-              <v-toolbar-title v-if="$refs.calendar">
+              <v-toolbar-title v-if="isLoadingCalendar">
                 {{ $refs.calendar.title }}
               </v-toolbar-title>
               <v-btn fab text small color="grey darken-2" @click="next">
@@ -21,36 +21,29 @@
             </v-toolbar>
           </v-sheet>
           <v-sheet height="600">
-            <v-calendar ref="calendar" v-model="focus" color="primary" :type="type"></v-calendar>
-            <!-- 눌렀을 때 확장 영역 -->
-            <v-menu
-              v-model="selectedOpen"
-              :close-on-content-click="false"
-              :activator="selectedElement"
-              offset-x
+            <v-calendar
+              ref="calendar"
+              v-model="focus"
+              color="rgb(133 125 177 / 80%)"
+              type="month"
             >
-              <v-card color="grey lighten-4" min-width="350px" flat>
-                <v-toolbar :color="selectedEvent.color" dark>
-                  <v-btn icon>
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-                  <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-btn icon>
-                    <v-icon>mdi-heart</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </v-toolbar>
-                <v-card-text>
-                  <span v-html="selectedEvent.details"></span>
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn text color="secondary" @click="selectedOpen = false"> Cancel </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-menu>
+            
+            <template v-slot:day="{ date }">
+            <v-row
+            >
+              <template v-if="tracked[date]">
+                <v-sheet
+                  tile
+                  class="ml-3"
+                >
+                <div class="mt-4">
+                  <img style="width:80%; " :src="tracked[date]"/>
+                </div>
+                </v-sheet>
+              </template>
+            </v-row>
+          </template>
+            </v-calendar>
           </v-sheet>
         </v-col>
       </v-row>
@@ -63,15 +56,22 @@ export default {
   data() {
     return {
       focus: '',
-      type: 'month',
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
+      tracked: {
+        '2021-11-10': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
+        '2021-11-08': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
+        '2021-11-07': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
+        '2021-11-06': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
+      },
+      colors: ['#1867c0', '#fb8c00', '#000000'],
+      isLoadingCalendar:false
     };
   },
   mounted() {
     this.$refs.calendar.checkChange();
-    this.selectedEvent = this.$refs.calendar.title;
+    this.isLoadingCalendar = true;
   },
   methods: {
     setToday() {
