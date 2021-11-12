@@ -32,10 +32,7 @@ const router = new Router({
         },
       ],
     },
-    // {
-    //   path: "/feed/search",
 
-    // }
     {
       path: "/:catchAll(.*)*",
       component: () => import("../pages/Error404.vue"),

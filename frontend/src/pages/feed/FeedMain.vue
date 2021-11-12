@@ -19,12 +19,12 @@ import FeedComment from "../../components/feed/FeedComment.vue";
 
 export default {
   components: { FeedSearch, FeedContent, FeedComment },
-  data() {},
+  data() {
+    return {
+      page: 1,
+    };
+  },
 };
 </script>
 
-<style scoped>
-.v-tab:before {
-  background-color: #ffffff;
-}
-</style>
+<style scoped></style>

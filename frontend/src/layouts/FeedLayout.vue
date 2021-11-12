@@ -18,8 +18,8 @@ export default {
     Header,
     Footer,
   },
-  // created() {
-  //   console.log("Created FeedLayout");
-  // },
+  created() {
+    console.log("Created FeedLayout");
+  },
 };
 </script>
