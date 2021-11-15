@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -78,3 +79,14 @@ const router = new Router({
 });
 
 export default router;
+
+router.beforeEach((to, from, next) => {
+  let loginUser = store.getters.loginUser;
+  console.log(loginUser);
+  if (loginUser || to.name == 'sign-in') {
+    next();
+  } else {
+    // alert('로그인이 필요한 페이지입니다.');
+    next('/sign-in');
+  }
+});

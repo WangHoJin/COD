@@ -40,6 +40,7 @@
 </template>
 <script>
 import Header from '@/components/common/BackTitleHeader.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {

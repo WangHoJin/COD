@@ -2,9 +2,9 @@
   <!-- <v-app> -->
   <!-- <v-main> -->
   <div>
-    <v-container>
-      <router-view :key="$route.fullPath" />
-    </v-container>
+    <!-- <v-container> -->
+    <router-view :key="$route.fullPath" />
+    <!-- </v-container> -->
 
     <Footer />
   </div>
