@@ -5,6 +5,7 @@
     <v-container>
       <router-view :key="$route.fullPath" />
     </v-container>
+
     <Footer />
   </div>
   <!-- </v-main> -->
