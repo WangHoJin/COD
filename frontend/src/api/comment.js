@@ -2,13 +2,15 @@ import axios from "@/utils/axios";
 
 // 댓글 리스트 조회 API
 async function getCommentList(condition) {
-  var url = `/comments?page=${condition.page}&size=${condition.size}`;
-  if (condition.codiId) url += `&codiId=${condition.codiId}`;
+  // console.log(condition);
+  var url = `/comments?codiId=${condition.codiId}&page=${condition.page}&size=${condition.size}`;
   console.log("getCommentList API", url);
   try {
+    console.log("api 호출 성공");
     const { data } = await axios.get(url);
     return data.result;
   } catch (error) {
+    console.log("api 호출 실패");
     console.error(error);
   }
 }

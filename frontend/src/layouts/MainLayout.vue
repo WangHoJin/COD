@@ -1,23 +1,23 @@
 <template>
-  <v-app>
-    <Header />
-    <v-main>
-      <v-container>
-        <router-view :key="$route.fullPath" />
-      </v-container>
-    </v-main>
+  <!-- <v-app> -->
+  <!-- <v-main> -->
+  <div>
+    <!-- <v-container> -->
+    <router-view :key="$route.fullPath" />
+    <!-- </v-container> -->
+
     <Footer />
-  </v-app>
+  </div>
+  <!-- </v-main> -->
+  <!-- </v-app> -->
 </template>
 
 <script>
-import Header from '../components/common/Header.vue';
 import Footer from '../components/common/Footer.vue';
 
 export default {
   name: 'MainLayout',
   components: {
-    Header,
     Footer,
   },
 };
