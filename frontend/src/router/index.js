@@ -29,14 +29,17 @@ const router = new Router({
       component: () => import("@/layouts/CodiLayout"),
       children: [
         {
+          name: "codiCreate",
           path: "create",
           component: () => import("@/pages/codi/CodiCreate.vue"),
         },
         {
+          name: "codiList",
           path: "list",
           component: () => import("@/pages/codi/CodiList.vue"),
         },
         {
+          name: "codiDetail",
           path: "detail/:no",
           component: () => import("@/pages/codi/CodiDetail.vue"),
         },
