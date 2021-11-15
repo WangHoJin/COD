@@ -18,7 +18,7 @@
   </v-container>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -27,20 +27,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["comments"]),
+    ...mapGetters(['comments']),
   },
   created() {
     // console.log("코디 상세 페이지 created");
     this.selectComments();
   },
   methods: {
-    ...mapActions(["getComments"]),
+    ...mapActions(['getComments']),
     selectComments() {
       let codiId = this.$route.params.no;
       let payload = { codiId: codiId, page: 1, size: 10 };
-      console.log(codiId + "번 코디 댓글 생성");
-      this.$store.dispatch("getComments", payload).then(() => {
-        console.log("코멘트리스트 갱신");
+      console.log(codiId + '번 코디 댓글 생성');
+      this.$store.dispatch('getComments', payload).then(() => {
+        console.log('코멘트리스트 갱신');
         this.commentList = this.comments;
       });
       // this.getComments(payload);
