@@ -1,8 +1,8 @@
 !
 <template lang="">
   <div>
-    <h3 class="mb-2">내 옷장 색 비율</h3>
-    <v-divider> </v-divider>
+    <h3 class="mt-7">내 옷장 색 비율</h3>
+    <v-divider class="mt-2"> </v-divider>
     <div class="chart">
       <DoughnutChart :chartData="chartData" :options="chartOptions" />
     </div>
@@ -61,5 +61,6 @@ export default {
 </script>
 <style scoped>
 .chart {
+  padding: 10px;
 }
 </style>
