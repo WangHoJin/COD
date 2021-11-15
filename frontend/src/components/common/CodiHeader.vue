@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app absolute color="white" elevate-on-scroll scroll-target="#scrolling-techniques-7">
+  <v-app-bar app absolute color="white" elevate-on-scroll>
     <v-toolbar-title>
       <h4 class="title">{{ title }}</h4>
     </v-toolbar-title>

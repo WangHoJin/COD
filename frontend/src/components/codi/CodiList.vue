@@ -42,7 +42,7 @@
   </v-item-group>
 </template>
 <script>
-import InfiniteLoading from "vue-infinite-loading";
+// import InfiniteLoading from "vue-infinite-loading";
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
