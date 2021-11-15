@@ -59,6 +59,9 @@ dependencies {
     //StringUtils
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8'
 
+    //AWS S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+
     annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion
     annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion, classifier: 'jpa'
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")

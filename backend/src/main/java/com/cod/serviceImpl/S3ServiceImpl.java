@@ -18,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class S3Uploader {
+public class S3ServiceImpl {
 
     private final AmazonS3Client amazonS3Client;
 
@@ -45,6 +45,7 @@ public class S3Uploader {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
+
 
     // 로컬에 저장된 이미지 지우기
     private void removeNewFile(File targetFile) {
