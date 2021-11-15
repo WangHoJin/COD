@@ -14,7 +14,15 @@ import java.io.IOException;
 public class S3Controller {
 
     private final S3ServiceImpl s3Service;
-
+    /**
+     * S3 API
+     * [POST] /images
+     *
+     * key : images
+     * value : image file
+     *
+     * @return image URL
+     */
     @PostMapping("/images")
     public String upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
         String url = s3Service.upload(multipartFile, "static");
