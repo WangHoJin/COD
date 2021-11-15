@@ -7,8 +7,8 @@
             <v-col style="padding-right: 0">
               <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
             </v-col>
-            <v-col style="padding: 20px 0px 18px 12px">
-              <h4>Bogarts_In_Closet</h4>
+            <v-col style="padding: 20px 0px 18px 12px" cols="auto">
+              <h4>{{ codi.userId }}</h4>
             </v-col>
             <v-col style="padding: 23px 0px 18px 12px">
               <h5 style="color: #857db1">팔로우</h5>
@@ -26,12 +26,12 @@
           <!-- 좋아요 -->
           <v-col cols="auto" sm="12" md="12" lg="12" style="padding-right: 0"
             ><v-icon color="#CCBEE3">mdi-heart</v-icon>
-            <h5 class="purpleText">10</h5>
+            <h5 class="purpleText">{{ codi.liked }}</h5>
           </v-col>
           <!-- 댓글 -->
           <v-col cols="auto" sm="12" md="12" lg="12">
             <v-icon color="#CCBEE3">mdi-comment</v-icon>
-            <h5 class="purpleText">5</h5>
+            <h5 class="purpleText">{{ codi.comment }}</h5>
           </v-col>
           <!-- 공백 -->
           <v-spacer></v-spacer>
@@ -45,10 +45,10 @@
       <v-flex style="padding: 0 12px 0 12px">
         <v-row>
           <v-col cols="auto" style="padding-bottom: 0">
-            <h5 style="font-weight: bold">Boagarts_In_Closet</h5>
+            <h5 style="font-weight: bold">{{ codi.userId }}</h5>
           </v-col>
           <v-col style="padding-left: 0; padding-bottom: 0">
-            <h5>내용입니다~~~</h5>
+            <h5>{{ codi.codiDescription }}</h5>
           </v-col>
         </v-row>
         <v-row>
@@ -58,35 +58,40 @@
           </v-col>
         </v-row>
       </v-flex>
+      <feed-comment v-bind:codi="codi" />
     </div>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import FeedComment from "./FeedComment.vue";
 export default {
+  props: ["codi"],
+  components: { FeedComment },
   data() {
     return {
       codiList: [],
     };
   },
   computed: {
-    ...mapGetters(["codies"]),
+    ...mapGetters(["popularCodies"]),
   },
   watch: {
     codies: function () {
-      this.selectCodies();
+      console.log("watch");
+      // this.selectCodies();
     },
   },
   created() {
-    this.setCodies();
+    this.setPopularCodies();
   },
   methods: {
-    ...mapActions(["getCodies"]),
-    setCodies() {
-      let payload = { page: 1, size: 10 };
-      this.getCodies(payload);
-      this.codiList = this.codies;
+    ...mapActions(["getPopularCodies"]),
+    setPopularCodies() {
+      let payload = { startDate: "2021-10-23", endDate: "2021-11-15", page: 1, size: 10 };
+      this.getPopularCodies(payload);
+      this.codiList = this.popularCodies;
     },
   },
 };

@@ -5,6 +5,6 @@ export default VueAxios.create({
   headers: {
     "Content-type": "application/json",
     "X-ACCESS-TOKEN":
-      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjgsImlhdCI6MTYzNjQ4MzkxMX0.7ZWZ-ThxN4b5_rX0lHvJP7Aj38XQp2gUdpkLNbch4Ec",
+      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjgsImlhdCI6MTYzNjk2MDM4NX0.jlHULTsvsHGk8Pl64nG6lq-5tFkDFOOZBBulWavMFCo",
   },
 });

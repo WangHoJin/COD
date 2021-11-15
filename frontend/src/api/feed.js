@@ -12,7 +12,7 @@ async function getFollowingCodiList(condition) {
 }
 // 기웃기옷 인기 코디 리스트 조회 API
 async function getPopularCodiList(condition) {
-  var url = `/codies/popular?page=${condition.page}&size=${condition.size}`;
+  var url = `/codies/popular?startDate=${condition.startDate}&endDate=${condition.endDate}&page=${condition.page}&size=${condition.size}`;
   try {
     const { data } = await axios.get(url);
     return data.result;

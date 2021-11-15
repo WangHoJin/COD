@@ -1,28 +1,50 @@
-import { getFollowingCodiList } from "@/api/feed.js";
-import { getPopularCodiList } from "@/api/feed.js";
+import { getFollowingCodiList } from "@/api/feed";
+import { getPopularCodiList } from "../api/feed";
 
 export default {
   state: {
-    codies: [],
+    followingCodies: [],
+    popularCodies: [],
   },
   getters: {
-    codies(state) {
-      return state.codies;
+    followingCodies(state) {
+      return state.followingCodies;
+    },
+    popularCodies(state) {
+      return state.popularCodies;
     },
   },
   mutations: {
-    setCodies(state, payload) {
-      console.log("vuex mutation");
-      state.codies = payload;
+    setFollowingCodies(state, payload) {
+      console.log("following mutation");
+      state.followingCodies = payload;
+    },
+    setPopularCodies(state, payload) {
+      console.log("popular mutation");
+      state.popularCodies = payload;
     },
   },
   actions: {
-    getCodies(context, payload) {
+    getFollowingCodies(context, payload) {
       console.log("vuex action");
-      getFollowingCodiList(payload).then((res) => {
-        console.log("vuex axios");
-        context.commit("setCodies", res);
-      });
+      getFollowingCodiList(payload)
+        .then((res) => {
+          console.log("vuex axios");
+          context.commit("setFollowingCodies", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    getPopularCodies(context, payload) {
+      getPopularCodiList(payload)
+        .then((res) => {
+          console.log("popularCodiList axios");
+          context.commit("setPopularCodies", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
   },
 };

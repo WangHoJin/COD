@@ -1,45 +1,68 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="auto" style="padding: 0 0 0 12px">
-        <h5 style="font-weight: 700">yeniiii</h5>
+    <v-row v-for="(comment, index) in commentList" :key="comment.commentId">
+      <v-col v-if="index < 2" cols="auto" style="padding: 0 0 0 12px">
+        <h5 style="font-weight: 700">{{ comment.userId }}</h5>
       </v-col>
-      <v-col cols="auto" style="padding: 0 0 0 12px">
-        <h5>댓글 남기고 갑니당^_^</h5>
+      <v-col v-if="index < 2" cols="auto" style="padding: 0 0 0 12px">
+        <h5>{{ comment.commentContent }}</h5>
       </v-col>
-      <v-col cols="auto" align="right" style="padding: 0 0 0 12px">
+      <v-col
+        v-if="index < 2 && comment.userId === 8"
+        cols="auto"
+        align="right"
+        style="padding: 0 0 0 12px"
+      >
         <h6 class="modiAndDel">수정</h6></v-col
       >
-      <v-col cols="auto" align="right" style="padding: 0 0 0 6px">
+      <v-col
+        v-if="index < 2 && comment.userId === 8"
+        cols="auto"
+        align="right"
+        style="padding: 0 0 0 6px"
+      >
         <h6 class="modiAndDel">삭제</h6>
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="auto" style="padding: 0 0 0 12px">
-        <h5 style="font-weight: 700">ssafy</h5>
-      </v-col>
-      <v-col style="padding: 0 0 0 12px">
-        <h5>내일 이렇게 입어야지</h5>
+      <v-col v-if="codi.comment > 2" cols="auto" style="padding: 0 0 0 12px">
+        <h6 class="modiAndDel">댓글 모두 보기</h6>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { getComment, updateComment, deleteComment } from "@/api/comment";
+import { mapActions, mapGetters } from "vuex";
+import { getCommentList, updateComment, deleteComment } from "@/api/comment";
 export default {
-  props: [],
+  props: ["codi"],
   component: {},
   computed: {},
   data() {
     return {
+      commentList: [],
       // isModiAndDelShow: false,
       // contentRules: [(value)=>!!value || '내용을 입력해주세요'],
       // content:this.comment.commentContent,
       // valid:true,
     };
   },
+  computed: {
+    // ...mapGetters(["comments"]),
+  },
+  created() {
+    this.selectComments();
+    // this.selectComments();
+  },
   methods: {
+    // ...mapActions(["getComments"]),
+    // selectComments() {
+    //   let codiId = this.codi;
+    //   let payload = { codiId: codiId, page: 1, size: 10 };
+    //   this.$store.dispatch("getComments", payload);
+    // },
+
     // modify() {
     //   this.isModiAndDelShow = true;
     //   this.validate();
@@ -50,6 +73,17 @@ export default {
     //     Id: this.comment.Id,
     //   };
     // },
+    selectComments() {
+      // getComment(){
+      let codiId = this.codi.codiId;
+      let payload = { codiId: codiId, page: 1, size: 10 };
+      getCommentList(payload).then((res) => {
+        this.commentList = res;
+        this.userId = res.userId;
+        this.content = res.content;
+      });
+      // }
+    },
   },
 };
 </script>

@@ -4,7 +4,7 @@
 
 */
 
-import { getCommentList } from '@/api/comment';
+import { getCommentList } from "@/api/comment";
 
 export default {
   // 현재 상태들
@@ -13,7 +13,7 @@ export default {
     comments: [],
   },
   getters: {
-    board(state) {
+    comments(state) {
       return state.comments;
     },
   },
@@ -25,7 +25,11 @@ export default {
   actions: {
     //현재 띄워줄 댓글 리스트 가져오기
     getComments(context, payload) {
-      getCommentList(payload).then((res) => context.commit('setComments', res));
+      getCommentList(payload)
+        .then((res) => context.commit("setComments", res))
+        .catch(function (err) {
+          console.log(err);
+        });
     },
   },
 };
