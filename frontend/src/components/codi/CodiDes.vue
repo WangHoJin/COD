@@ -5,18 +5,18 @@
       <!-- 좋아요 -->
       <v-col cols="3" sm="12" md="12" lg="12"
         ><v-icon color="#CCBEE3">mdi-heart</v-icon>
-        <h5 class="purpleText">{{ codiDetail.liked }}</h5>
+        <h5 class="purpleText">{{ codi.liked }}</h5>
       </v-col>
       <!-- 댓글 -->
       <v-col cols="2" sm="12" md="12" lg="12">
         <v-icon color="#CCBEE3">mdi-comment</v-icon>
-        <h5 class="purpleText">{{ codiDetail.comment }}</h5>
+        <h5 class="purpleText">{{ codi.comment }}</h5>
       </v-col>
       <!-- 공백 -->
       <v-spacer></v-spacer>
       <!-- 등록일 -->
       <v-col class="createAt" cols="5" sm="12" md="12" lg="12">
-        <h5 class="grayText">등록일 {{ createdAt }}</h5></v-col
+        <h5 class="grayText">등록일 {{ codi.codiCreatedAt.split(`T`)[0] }}</h5></v-col
       >
     </v-row>
     <!-- 코디 인기 정보 end-->
@@ -26,48 +26,68 @@
       <v-col cols="12" sm="12" md="12" lg="12">
         <v-divider class="pb-4"></v-divider>
         <!-- 작성자 -->
-        <h5 class="purpleText">{{ codiDetail.userId }}</h5>
+        <h5 class="purpleText">{{ codi.userId }}</h5>
         <br />
         <!-- 코디설명 -->
         <h4 class="">
-          {{ codiDetail.codiDescription }}
+          {{ codi.codiDescription }}
         </h4>
         <!-- 태그 -->
-        <span v-for="tag in tags" :key="tag" class="tag mt-3 mr-3">#{{ tag }}</span>
+        <span v-for="tag in codi.codiTag.split(`,`)" :key="tag" class="tag mt-3 mr-3"
+          >#{{ tag }}</span
+        >
       </v-col>
     </v-row>
     <!-- 코디 설명 end-->
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list-item>
+        <v-list-item-avatar>
+          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title>John Leider</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list dense>
+        <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </v-container>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
       codiDetail: "",
       tags: [],
       createdAt: [],
+      drawer: null,
     };
   },
   computed: {
     ...mapGetters(["codi"]),
   },
   created() {
-    // console.log("코디 상세 페이지 created");
     this.selectCodi();
-    this.codiDetail = this.codi;
-    this.tags = this.codi.codiTag.split(",");
-    this.createdAt = this.codi.codiCreatedAt.split("T");
-    this.createdAt = this.createdAt[0] + " " + this.createdAt[1];
-    //  {{ createAt[0] }} {{ createAt[1] }}
-    // console.log("vuex 코디 데이터");
-    // console.log(this.codiDetail);
   },
   methods: {
     ...mapActions(["getCodi"]),
     selectCodi() {
       let codiId = this.$route.params.no;
-      // this.$store.dispatch("getComments", payload);
       this.getCodi(codiId);
     },
   },
