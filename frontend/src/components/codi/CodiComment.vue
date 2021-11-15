@@ -30,7 +30,6 @@ export default {
     ...mapGetters(["comments"]),
   },
   created() {
-    // console.log("코디 상세 페이지 created");
     this.selectComments();
   },
   methods: {
@@ -38,14 +37,7 @@ export default {
     selectComments() {
       let codiId = this.$route.params.no;
       let payload = { codiId: codiId, page: 1, size: 10 };
-      console.log(codiId + "번 코디 댓글 생성");
-      this.$store.dispatch("getComments", payload).then(() => {
-        console.log("코멘트리스트 갱신");
-        this.commentList = this.comments;
-      });
-      // this.getComments(payload);
-      // console.log("데이터 : ");
-      // console.log(this.commentList);
+      this.$store.dispatch("getComments", payload);
     },
   },
 };
