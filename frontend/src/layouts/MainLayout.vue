@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <!-- <v-main> -->
-    <!-- <v-container> -->
-    <router-view :key="$route.fullPath" />
-    <!-- </v-container> -->
-    <!-- </v-main> -->
-    <Footer />
+    <v-main>
+      <!-- <v-container fluid> -->
+      <router-view :key="$route.fullPath" />
+      <!-- </v-container> -->
+      <Footer />
+    </v-main>
   </v-app>
 </template>
 

@@ -1,4 +1,4 @@
-import axios from "@/utils/axios";
+import axios from '@/utils/axios';
 
 // 코디 리스트 조회 API
 async function getCodiList(condition) {
@@ -28,7 +28,7 @@ async function getCodi(codiId) {
 async function createCodi(codi) {
   // console.log("createCodi API", codi);
   try {
-    return axios.post("/codies", codi);
+    return axios.post('/codies', codi);
   } catch (error) {
     console.error(error.response.data.message);
   }

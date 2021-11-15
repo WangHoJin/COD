@@ -1,10 +1,14 @@
 <template>
-  <v-footer class="footer">
+  <v-footer padless absolute width="100%" app class="footer">
     <v-card flat width="100%" class="text-center">
       <v-card-text>
-        <v-btn v-for="(icon, i) in icons" :key="i" class="menuBtn" @click="selectMenu(i)" icon>
-          <img style="width: 35%; padding: 10px 10px" :src="icon" />
-        </v-btn>
+        <v-row class="mx-2">
+          <v-col v-for="(icon, i) in icons" :key="i">
+            <v-btn small class="menuBtn" @click="selectMenu(i)" icon>
+              <img style="width: 30%; padding: 0px 10px" :src="icon" />
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
   </v-footer>
@@ -12,17 +16,17 @@
 
 <script>
 export default {
-  name: "Footer",
+  name: 'Footer',
   components: {},
   data: () => ({
     icons: [
-      require("@/assets/icon/menu/home.png"),
-      require("@/assets/icon/menu/feed.png"),
-      require("@/assets/icon/menu/closet.png"),
-      require("@/assets/icon/menu/codi.png"),
-      require("@/assets/icon/menu/mypage.png"),
+      require('@/assets/icon/menu/home.png'),
+      require('@/assets/icon/menu/feed.png'),
+      require('@/assets/icon/menu/closet.png'),
+      require('@/assets/icon/menu/codi.png'),
+      require('@/assets/icon/menu/mypage.png'),
     ],
-    urls: ["main", "wood", "closet", "codi", "mypage"],
+    urls: ['main', 'wood', 'closet', 'codi', 'mypage'],
   }),
   methods: {
     selectMenu(i) {
@@ -49,6 +53,5 @@ export default {
   background: #ffffff;
 }
 .menuBtn {
-  margin: 0px 17px;
 }
 </style>

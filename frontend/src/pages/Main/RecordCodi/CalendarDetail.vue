@@ -94,6 +94,6 @@ export default {
 </script>
 <style scoped>
 .content {
-  margin-top: 80px;
+  margin: 10px 5px;
 }
 </style>
