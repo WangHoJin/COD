@@ -1,11 +1,20 @@
 <template>
-  <v-app-bar app absolute color="white" elevate-on-scroll>
+  <v-app-bar app absolute color="white" outline>
+    <!-- 뒤로가기 버튼 start -->
+    <v-btn icon onclick="history.back()">
+      <v-icon dark left> mdi-arrow-left </v-icon>
+    </v-btn>
+    <!-- 뒤로가기 버튼 end -->
+
+    <!-- 메뉴 타이틀 start -->
     <v-toolbar-title>
       <h4 class="title">{{ title }}</h4>
     </v-toolbar-title>
     <v-spacer></v-spacer>
+    <!-- 메뉴 타이틀 end -->
+
     <!-- 추가 설정 버튼 start -->
-    <v-menu v-if="flag" offset-y>
+    <v-menu v-if="listFlag" offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon>mdi-dots-vertical</v-icon>
@@ -30,7 +39,7 @@ export default {
   name: "Header",
   data() {
     return {
-      flag: false,
+      listFlag: false,
     };
   },
   props: {
@@ -49,13 +58,13 @@ export default {
     selectHeader() {
       if (this.title == "codiList") {
         this.title = "코디 목록";
-        this.flag = false;
+        this.listFlag = false;
       } else if (this.title == "codiCreate") {
         this.title = "코디 등록";
-        this.flag = false;
+        this.listFlag = false;
       } else if (this.title == "codiDetail") {
         this.title = this.$route.params.no + "번 코디 상세 정보";
-        this.flag = true;
+        this.listFlag = true;
       }
     },
     updateClick() {
