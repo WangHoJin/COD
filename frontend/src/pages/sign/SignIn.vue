@@ -4,7 +4,7 @@
       <div class="px-16 mb-9">
         <v-img src="@/assets/logo/login-with-text.png"></v-img>
       </div>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" v-model="valid">
         <v-text-field
           class="mb-2"
           v-model="email"
@@ -81,9 +81,6 @@ export default {
     },
   },
   methods: {
-    logout() {
-      this.$store.dispatch('logout');
-    },
     login() {
       this.validate();
       if (!this.valid) return;
@@ -106,9 +103,7 @@ export default {
         });
     },
     mvSignUp() {
-      this.$router.push({
-        name: 'sign-up',
-      });
+      this.$router.push({ name: 'sign-up' });
     },
     validate() {
       this.$refs.form.validate();
