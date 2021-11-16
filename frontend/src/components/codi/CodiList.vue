@@ -8,7 +8,7 @@
           <v-card class="codiImg">
             <v-img
               height="100px"
-              :src="require('@/assets/test/상의.jpg')"
+              :src="codi.codiThumbnail"
               oneerror="https://picsum.photos/id/11/500/300"
               @click="codiClick(codi.codiId)"
             ></v-img>
@@ -25,17 +25,7 @@
     <!-- 코디 페이지 end -->
 
     <!-- 코디 추가 버튼 start -->
-    <v-btn
-      id="createBtn"
-      v-show="!hidden"
-      color="#857DB1"
-      dark
-      absolute
-      top
-      right
-      fab
-      @click="addClick()"
-    >
+    <v-btn id="createBtn" color="#857DB1" dark absolute top right fab @click="addClick()">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <!-- 코디 추가 버튼 end -->
@@ -47,8 +37,8 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      codiList: [],
       limit: 0,
+      page: 1,
     };
   },
   components: {
@@ -63,9 +53,8 @@ export default {
   methods: {
     ...mapActions(["getCodies"]),
     selectCodies() {
-      let userId = this.$route.query.userId;
-      // console.log(userId);
-      let payload = { userId: 2, page: 1, size: 10 };
+      let userId = this.$store.state.auth.loginUser.userId;
+      let payload = { userId: userId, page: 1, size: 10 };
       this.getCodies(payload);
     },
     infiniteHandler($state) {

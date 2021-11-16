@@ -45,28 +45,8 @@ export default {
   props: {
     title: String,
   },
-  created() {
-    this.selectHeader();
-  },
-  watch: {
-    title: function () {
-      console.log("제목변경");
-      this.selectHeader();
-    },
-  },
+
   methods: {
-    selectHeader() {
-      if (this.title == "codiList") {
-        this.title = "코디 목록";
-        this.listFlag = false;
-      } else if (this.title == "codiCreate") {
-        this.title = "코디 등록";
-        this.listFlag = false;
-      } else if (this.title == "codiDetail") {
-        this.title = this.$route.params.no + "번 코디 상세 정보";
-        this.listFlag = true;
-      }
-    },
     updateClick() {
       console.log("수정 클릭");
     },
