@@ -131,6 +131,7 @@ public class CommentServiceImpl implements CommentService {
                     .commentId(comment.getId())
                     .codiId(comment.getCodi().getId())
                     .userId(comment.getUser().getId())
+                    .userNickname(comment.getUser().getNickname())
                     .commentContent(comment.getContent())
                     .commentCreatedAt(comment.getCreatedAt())
                     .commentUpdatedAt(comment.getUpdatedAt())
