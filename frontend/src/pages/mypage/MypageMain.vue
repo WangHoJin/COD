@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <v-container fluid>
     <MypageDetail />
     <MypageClothes />
     <MypageCodi />
-  </div>
+  </v-container>
 </template>
 <script>
-import MypageDetail from "../../components/mypage/MypageDetail.vue";
-import MypageClothes from "../../components/mypage/MypageClothes.vue";
-import MypageCodi from "../../components/mypage/MypageCodi.vue";
+import MypageDetail from "@/components/mypage/MypageDetail.vue";
+import MypageClothes from "@/components/mypage/MypageClothes.vue";
+import MypageCodi from "@/components/mypage/MypageCodi.vue";
 
 export default {
   components: {
