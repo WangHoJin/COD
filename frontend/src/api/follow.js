@@ -25,7 +25,7 @@ async function createFollow(follow, accessToken) {
 // 팔로우 상태 해제 API
 async function deleteFollow(userId, accessToken) {
   try {
-    return axios.delete(`/follows?userId=${userId}`, {
+    return axios.delete(`/follows?toUserId=${userId}`, {
       headers: {
         "X-ACCESS-TOKEN": accessToken,
       },

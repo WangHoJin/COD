@@ -1,11 +1,13 @@
 import { getFollowingCodiList, getPopularCodiList } from "@/api/feed";
 import { getFollowList } from "@/api/follow";
+import { getCodiLikedList } from "../api/codiLiked";
 
 export default {
   state: {
     followingCodies: [],
     popularCodies: [],
     followList: [],
+    codiLikedList: [],
   },
   getters: {
     followingCodies(state) {
@@ -16,6 +18,9 @@ export default {
     },
     followList(state) {
       return state.followList;
+    },
+    codiLikedList(state) {
+      return state.codiLikedList;
     },
   },
   mutations: {
@@ -29,9 +34,12 @@ export default {
     },
     setFollowList(state, payload) {
       console.log("follow mutation");
-      console.log("페이로드야" + payload);
       state.followList = payload;
       console.log(state.followList);
+    },
+    setCodiLikedList(state, payload) {
+      console.log("like mutation");
+      state.codiLikedList = payload;
     },
   },
   actions: {
@@ -66,6 +74,12 @@ export default {
         .catch(function (err) {
           console.log(err);
         });
+    },
+    getCodiLiked(context, payload) {
+      let payload2 = { page: payload.page, size: payload.size };
+      getCodiLikedList(payload2, payload.accessToken).then((res) => {
+        context.commit("setCodiLikedList", res);
+      });
     },
   },
 };

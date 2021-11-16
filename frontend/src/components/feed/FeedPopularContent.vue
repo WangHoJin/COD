@@ -38,7 +38,18 @@
         <v-row>
           <!-- 좋아요 -->
           <v-col cols="auto" sm="12" md="12" lg="12" style="padding-right: 0"
-            ><v-icon color="#CCBEE3">mdi-heart</v-icon>
+            ><v-icon
+              v-if="isLiked(codi.codiId)"
+              @click="deleteCodiLiked(codi.codiId)"
+              color="#CCBEE3"
+              >mdi-heart</v-icon
+            >
+            <v-icon
+              v-if="!isLiked(codi.codiId)"
+              @click="createCodiLiked(codi.codiId)"
+              color="#CCBEE3"
+              >mdi-heart-outline</v-icon
+            >
             <h5 class="purpleText">{{ codi.liked }}</h5>
           </v-col>
           <!-- 댓글 -->
@@ -85,6 +96,7 @@
 import { mapActions, mapGetters } from "vuex";
 import FeedComment from "./FeedComment.vue";
 import { createFollow, deleteFollow } from "@/api/follow";
+import { createCodiLiked, deleteCodiLiked } from "@/api/codiLiked";
 export default {
   props: ["codi"],
   components: { FeedComment },
@@ -92,24 +104,33 @@ export default {
     return {
       codiList: [],
       followingList: [],
+      likedList: [],
     };
   },
   computed: {
-    ...mapGetters(["popularCodies", "followList"]),
+    ...mapGetters(["popularCodies", "followList", "codiLikedList"]),
   },
   watch: {
-    followStatus() {
+    followList: function () {
       console.log("watch");
-      console.log(this.followingList);
+      console.log(this.followList);
+      this.followingList = this.follow5List;
+      this.setFollowingCodies();
+    },
+    codiLikedList: function () {
+      this.likedList = this.codiLikedList;
+      this.setPopularCodies();
+      this.setFollowingCodies();
     },
   },
   created() {
     this.setPopularCodies();
     this.setFollowList();
+    this.setCodiLikedList();
   },
 
   methods: {
-    ...mapActions(["getPopularCodies", "getFollows"]),
+    ...mapActions(["getPopularCodies", "getFollows", "getFollowingCodies", "getCodiLiked"]),
     setPopularCodies() {
       let payload = { startDate: "2021-10-23", endDate: "2021-11-15", page: 1, size: 10 };
       this.getPopularCodies(payload);
@@ -132,37 +153,24 @@ export default {
       this.followingList = this.followList.map((a) => a.userId);
     },
     isFollow(userId) {
-      // console.log(this.followingList);
-      // for (var i in this.followingList) {
-      //   console.log("isFollow" + i.userId);
-      //   if (i.userId === userId) {
-      //     return false;
-      //   } else {
-      //     return true;
-      //   }
-      // }
-      if (this.followingList.includes(userId)) {
-        return false;
-      } else {
-        return true;
+      for (var i = 0; i < this.$store.state.feed.followList.length; i++) {
+        // console.log("팔로우 리스트 : " + this.$store.state.feed.followList[i].userId);
+        if (this.$store.state.feed.followList[i].userId === userId) {
+          // console.log("있는 놈임" + this.$store.state.feed.followList[i].userId);
+          return false;
+        }
       }
+      return true;
     },
     createFollow(toUserId) {
       let accessToken = this.$store.state.auth.accessToken;
       let payload = { toUserId: toUserId };
       console.log("크리에이트" + JSON.stringify(payload));
       createFollow(toUserId, accessToken).then(() => {
+        this.setFollowList();
         console.log("팔로우 성공");
       });
-      this.setFollowList();
-      // this.refreshFollow(payload);
-      // this.$store.dispatch("getFollows", payload).then(() => {});
-      // this.$store.dispatch("getFollows",payload).
     },
-    // refreshFollow(payload) {
-    //   let payload2 = { toUserId: payload.toUserId, fromUserId: "", page: 1, size: 10 };
-    //   this.$store.dispatch("getFollows", payload2);
-    // },
     deleteFollow(toUserId) {
       let accessToken = this.$store.state.auth.accessToken;
       deleteFollow(toUserId, accessToken).then(() => {
@@ -170,6 +178,48 @@ export default {
         console.log("팔로우 취소");
       });
       this.setFollowList();
+    },
+    setFollowingCodies() {
+      let accessToken = this.$store.state.auth.accessToken;
+
+      let payload = { page: 1, size: 10, accessToken: accessToken };
+      console.log(payload.accessToken);
+      this.getFollowingCodies(payload);
+    },
+    isLiked(codiId) {
+      // console.log(this.$store.state.feed.codiLikedList.codiId);
+      for (var i = 0; i < this.$store.state.feed.codiLikedList.length; i++) {
+        console.log("좋아요 리스트: " + this.$store.state.feed.codiLikedList[i].codiId);
+        if (this.$store.state.feed.codiLikedList[i].codiId === codiId) {
+          console.log("있음" + this.$store.state.feed.codiLikedList[i].codiId);
+          return true;
+        }
+      }
+      return false;
+    },
+    setCodiLikedList() {
+      let accessToken = this.$store.state.auth.accessToken;
+      let payload = { page: 1, size: 10, accessToken: accessToken };
+      this.getCodiLiked(payload);
+      this.likedList = this.codiLikedList.map((a) => a.codiId);
+    },
+    createCodiLiked(codiId) {
+      let accessToken = this.$store.state.auth.accessToken;
+      let payload = { codiId: codiId };
+      createCodiLiked(payload, accessToken).then(() => {
+        this.setCodiLikedList();
+        this.setPopularCodies();
+        console.log("좋아요 성공");
+      });
+    },
+    deleteCodiLiked(codiId) {
+      let accessToken = this.$store.state.auth.accessToken;
+      deleteCodiLiked(codiId, accessToken).then(() => {
+        this.setCodiLikedList();
+        this.setPopularCodies();
+        console.log("좋아요 취소");
+      });
+      this.setCodiLikedList();
     },
   },
 };
