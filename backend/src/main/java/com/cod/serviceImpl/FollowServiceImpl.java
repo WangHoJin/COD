@@ -73,6 +73,7 @@ public class FollowServiceImpl implements FollowService {
                 resultList = followList.map(follow -> {
                     User toUser = follow.getToUser();
                     return ProfileOutput.builder()
+                            .userId(toUser.getId())
                             .email(toUser.getEmail())
                             .name(toUser.getName())
                             .nickname(toUser.getNickname())
@@ -90,6 +91,7 @@ public class FollowServiceImpl implements FollowService {
                 resultList = followList.map(follow -> {
                     User fromUser = follow.getFromUser();
                     return ProfileOutput.builder()
+                            .userId(fromUser.getId())
                             .email(fromUser.getEmail())
                             .name(fromUser.getName())
                             .nickname(fromUser.getNickname())

@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 public class SelectCodiOutput {
     private int codiId;
     private int userId;
+    private String userNickname;
+    private String userProfileImg;
     private String codiName;
     private String codiTag;
     private String codiDescription;
@@ -23,9 +25,11 @@ public class SelectCodiOutput {
     private int comment;
 
     @QueryProjection
-    public SelectCodiOutput(int codiId, int userId, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked, int comment) {
+    public SelectCodiOutput(int codiId, int userId, String userNickname, String userProfileImg, String codiName, String codiTag, String codiDescription, String codiThumbnail, String codiCoordinate, LocalDateTime codiCreatedAt, LocalDateTime codiUpdatedAt, int liked, int comment) {
         this.codiId = codiId;
         this.userId = userId;
+        this.userNickname = userNickname;
+        this.userProfileImg = userProfileImg;
         this.codiName = codiName;
         this.codiTag = codiTag;
         this.codiDescription = codiDescription;
