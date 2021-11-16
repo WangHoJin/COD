@@ -72,6 +72,24 @@ const router = new Router({
       ],
     },
     {
+      path: "/mypage",
+      name: "mypage",
+      redirect: "/mypage",
+      component: () => import("@/layouts/MypageLayout"),
+      children: [
+        {
+          name: "mypageMain",
+          path: "",
+          component: () => import("@/pages/mypage/MypageMain.vue"),
+        },
+        {
+          name: "mypageFollow",
+          path: "follow",
+          component: () => import("@/pages/mypage/MypageFollow.vue"),
+        },
+      ],
+    },
+    {
       path: "/:catchAll(.*)*",
       component: () => import("../pages/Error404.vue"),
     },
@@ -85,8 +103,8 @@ export default router;
 
 router.beforeEach((to, from, next) => {
   let loginUser = store.getters.loginUser;
-  console.log('loginUser', loginUser);
-  if (loginUser || to.name == 'sign-in' || to.name == 'sign-up') {
+  console.log("loginUser", loginUser);
+  if (loginUser || to.name == "sign-in" || to.name == "sign-up") {
     next();
   } else {
     // alert('로그인이 필요한 페이지입니다.');
