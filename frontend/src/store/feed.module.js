@@ -29,13 +29,15 @@ export default {
     },
     setFollowList(state, payload) {
       console.log("follow mutation");
+      console.log("페이로드야" + payload);
       state.followList = payload;
+      console.log(state.followList);
     },
   },
   actions: {
-    getFollowingCodies(context, payload) {
+    getFollowingCodies(context, payload, accessToken) {
       console.log("vuex action");
-      getFollowingCodiList(payload)
+      getFollowingCodiList(payload, accessToken)
         .then((res) => {
           console.log("vuex axios");
           context.commit("setFollowingCodies", res);
@@ -57,7 +59,8 @@ export default {
     getFollows(context, payload) {
       getFollowList(payload)
         .then((res) => {
-          context.commit("setFollowList", res);
+          console.log("action" + JSON.stringify(payload));
+          context.commit("setFollowList", payload);
         })
         .catch(function (err) {
           console.log(err);

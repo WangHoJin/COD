@@ -2,13 +2,13 @@
   <v-container>
     <v-row v-for="(comment, index) in commentList" :key="comment.commentId">
       <v-col v-if="index < 2" cols="auto" style="padding: 0 0 0 12px">
-        <h5 style="font-weight: 700">{{ comment.userId }}</h5>
+        <h5 style="font-weight: 700">{{ comment.userNickname }}</h5>
       </v-col>
       <v-col v-if="index < 2" cols="auto" style="padding: 0 0 0 12px">
         <h5>{{ comment.commentContent }}</h5>
       </v-col>
       <v-col
-        v-if="index < 2 && comment.userId == 2"
+        v-if="index < 2 && comment.userNickname == '호진님'"
         cols="auto"
         align="right"
         style="padding: 0 0 0 12px"
@@ -16,7 +16,7 @@
         <h6 class="modiAndDel">수정</h6></v-col
       >
       <v-col
-        v-if="index < 2 && comment.userId == 2"
+        v-if="index < 2 && comment.userNickname == '호진님'"
         cols="auto"
         align="right"
         style="padding: 0 0 0 6px"

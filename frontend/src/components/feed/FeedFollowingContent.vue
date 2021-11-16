@@ -4,11 +4,11 @@
       <v-flex style="padding: 12px 12px 8px 12px">
         <div class="profileInfo">
           <v-row>
-            <v-col style="padding-right: 0">
+            <v-col cols="auto" style="padding-right: 0">
               <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
             </v-col>
-            <v-col style="padding: 20px 0px 18px 12px">
-              <h4>{{ codi.userId }}</h4>
+            <v-col cols="auto" style="padding: 20px 0px 18px 12px">
+              <h4>{{ codi.userNickname }}</h4>
             </v-col>
           </v-row>
         </div>
@@ -43,7 +43,7 @@
       <v-flex style="padding: 0 12px 0 12px">
         <v-row>
           <v-col cols="auto" style="padding-bottom: 0">
-            <h5 style="font-weight: bold">{{ codi.userId }}</h5>
+            <h5 style="font-weight: bold">{{ codi.userNickname }}</h5>
           </v-col>
           <v-col style="padding-left: 0; padding-bottom: 0">
             <h5>{{ codi.codiDescription }}</h5>

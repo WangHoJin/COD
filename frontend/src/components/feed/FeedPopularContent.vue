@@ -4,18 +4,28 @@
       <v-flex style="padding: 12px 12px 8px 12px">
         <div class="profileInfo">
           <v-row>
-            <v-col style="padding-right: 0">
+            <v-col cols="auto" style="padding-right: 0">
               <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
             </v-col>
-            <v-col style="padding: 20px 0px 18px 12px" cols="auto">
-              <h4>{{ codi.userId }}</h4>
+            <v-col cols="auto" style="padding: 20px 0px 18px 12px">
+              <h4>{{ codi.userNickname }}</h4>
             </v-col>
-            <div v-for="follow in followingList" :key="follow.email">
-              <v-col style="padding: 23px 0px 18px 12px">
-                <h5 v-if="follow.email === 'co323co17@gmail.com'" style="color: #857db1"></h5>
-                <h5 v-else style="color: #857db1">팔로우</h5>
-              </v-col>
-            </div>
+            <v-col style="padding: 23px 0px 18px 6px">
+              <h5
+                v-if="isFollow(codi.userId)"
+                @click="createFollow(codi.userId)"
+                style="color: #857db1"
+              >
+                팔로우
+              </h5>
+              <h5
+                v-if="!isFollow(codi.userId)"
+                @click="deleteFollow(codi.userId)"
+                style="color: #9e9e9e"
+              >
+                팔로잉
+              </h5>
+            </v-col>
           </v-row>
         </div>
       </v-flex>
@@ -48,7 +58,7 @@
       <v-flex style="padding: 0 12px 0 12px">
         <v-row>
           <v-col cols="auto" style="padding-bottom: 0">
-            <h5 style="font-weight: bold">{{ codi.userId }}</h5>
+            <h5 style="font-weight: bold">{{ codi.userNickname }}</h5>
           </v-col>
           <v-col style="padding-left: 0; padding-bottom: 0">
             <h5>{{ codi.codiDescription }}</h5>
@@ -74,6 +84,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import FeedComment from "./FeedComment.vue";
+import { createFollow, deleteFollow } from "@/api/follow";
 export default {
   props: ["codi"],
   components: { FeedComment },
@@ -87,15 +98,16 @@ export default {
     ...mapGetters(["popularCodies", "followList"]),
   },
   watch: {
-    codies: function () {
+    followStatus() {
       console.log("watch");
-      // this.selectCodies();
+      console.log(this.followingList);
     },
   },
   created() {
     this.setPopularCodies();
     this.setFollowList();
   },
+
   methods: {
     ...mapActions(["getPopularCodies", "getFollows"]),
     setPopularCodies() {
@@ -107,10 +119,47 @@ export default {
       return text.split(",");
     },
     setFollowList() {
-      let payload = { fromUserId: 8, toUserId: "", page: 1, size: 10 };
-      this.getFollows(payload);
-      this.followingList = this.followList;
-      console.log("팔로우" + this.followingList);
+      let payload = {
+        fromUserId: this.$store.state.auth.loginUser.userId,
+        toUserId: "",
+        page: 1,
+        size: 10,
+      };
+      this.$store.dispatch("getFollows", payload).then(() => {
+        console.log("여기 셋이긴해" + this.followingList);
+      });
+      this.followingList = this.followList.map((a) => a.userId);
+    },
+    isFollow(userId) {
+      if (this.followingList.includes(userId)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    createFollow(toUserId) {
+      let accessToken = this.$store.state.auth.accessToken;
+      let payload = { toUserId: toUserId };
+      console.log("크리에이트" + JSON.stringify(payload));
+      createFollow(toUserId, accessToken).then(() => {
+        console.log("팔로우 성공");
+      });
+      this.setFollowList();
+      this.refreshFollow(payload);
+      // this.$store.dispatch("getFollows", payload).then(() => {});
+      // this.$store.dispatch("getFollows",payload).
+    },
+    refreshFollow(payload) {
+      let payload2 = { toUserId: payload.toUserId, fromUserId: "", page: 1, size: 10 };
+      this.$store.dispatch("getFollows", payload2);
+    },
+    deleteFollow(toUserId) {
+      let accessToken = this.$store.state.auth.accessToken;
+      deleteFollow(toUserId, accessToken).then(() => {
+        this.setFollowList();
+        console.log("팔로우 취소");
+      });
+      this.setFollowList();
     },
   },
 };
