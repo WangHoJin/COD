@@ -25,10 +25,14 @@ async function getCodi(codiId) {
   }
 }
 // 코디 작성 API
-async function createCodi(codi) {
+async function createCodi(codi, accessToken) {
   // console.log("createCodi API", codi);
   try {
-    return axios.post("/codies", codi);
+    return axios.post("/codies", codi, {
+      headers: {
+        "X-ACCESS-TOKEN": accessToken,
+      },
+    });
   } catch (error) {
     console.error(error.response.data.message);
   }
