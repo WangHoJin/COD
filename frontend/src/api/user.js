@@ -17,7 +17,7 @@ async function signUp(info) {
     const { data } = await axios.post('/users/signup', info);
     return data;
   } catch (error) {
-    // console.error('login API', error.response.data.message);
+    // console.error('signUp API', error.response.data.message);
     throw error;
   }
 }
