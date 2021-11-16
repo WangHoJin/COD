@@ -8,7 +8,7 @@
         <h5>{{ comment.commentContent }}</h5>
       </v-col>
       <v-col
-        v-if="index < 2 && comment.userId === 8"
+        v-if="index < 2 && comment.userId == 2"
         cols="auto"
         align="right"
         style="padding: 0 0 0 12px"
@@ -16,7 +16,7 @@
         <h6 class="modiAndDel">수정</h6></v-col
       >
       <v-col
-        v-if="index < 2 && comment.userId === 8"
+        v-if="index < 2 && comment.userId == 2"
         cols="auto"
         align="right"
         style="padding: 0 0 0 6px"

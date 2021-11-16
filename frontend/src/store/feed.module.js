@@ -1,10 +1,11 @@
-import { getFollowingCodiList } from "@/api/feed";
-import { getPopularCodiList } from "../api/feed";
+import { getFollowingCodiList, getPopularCodiList } from "@/api/feed";
+import { getFollowList } from "@/api/follow";
 
 export default {
   state: {
     followingCodies: [],
     popularCodies: [],
+    followList: [],
   },
   getters: {
     followingCodies(state) {
@@ -12,6 +13,9 @@ export default {
     },
     popularCodies(state) {
       return state.popularCodies;
+    },
+    followList(state) {
+      return state.followList;
     },
   },
   mutations: {
@@ -22,6 +26,10 @@ export default {
     setPopularCodies(state, payload) {
       console.log("popular mutation");
       state.popularCodies = payload;
+    },
+    setFollowList(state, payload) {
+      console.log("follow mutation");
+      state.followList = payload;
     },
   },
   actions: {
@@ -41,6 +49,15 @@ export default {
         .then((res) => {
           console.log("popularCodiList axios");
           context.commit("setPopularCodies", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    getFollows(context, payload) {
+      getFollowList(payload)
+        .then((res) => {
+          context.commit("setFollowList", res);
         })
         .catch(function (err) {
           console.log(err);

@@ -10,9 +10,12 @@
             <v-col style="padding: 20px 0px 18px 12px" cols="auto">
               <h4>{{ codi.userId }}</h4>
             </v-col>
-            <v-col style="padding: 23px 0px 18px 12px">
-              <h5 style="color: #857db1">팔로우</h5>
-            </v-col>
+            <div v-for="follow in followingList" :key="follow.email">
+              <v-col style="padding: 23px 0px 18px 12px">
+                <h5 v-if="follow.email === 'co323co17@gmail.com'" style="color: #857db1"></h5>
+                <h5 v-else style="color: #857db1">팔로우</h5>
+              </v-col>
+            </div>
           </v-row>
         </div>
       </v-flex>
@@ -52,9 +55,14 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col style="padding-top: 0px">
-            <h5 class="tag">#데일리룩</h5>
-            <h5 class="tag">#내일뭐입지</h5>
+          <v-col
+            cols="auto"
+            v-for="(tag, index) in splitTag(codi.codiTag)"
+            :key="tag"
+            style="padding: 0 0 12px 5px"
+          >
+            <h5 v-if="index >= 1" class="tag">#{{ tag }}</h5>
+            <h5 v-if="index < 1" style="padding-left: 7px" class="tag">#{{ tag }}</h5>
           </v-col>
         </v-row>
       </v-flex>
@@ -72,10 +80,11 @@ export default {
   data() {
     return {
       codiList: [],
+      followingList: [],
     };
   },
   computed: {
-    ...mapGetters(["popularCodies"]),
+    ...mapGetters(["popularCodies", "followList"]),
   },
   watch: {
     codies: function () {
@@ -85,13 +94,23 @@ export default {
   },
   created() {
     this.setPopularCodies();
+    this.setFollowList();
   },
   methods: {
-    ...mapActions(["getPopularCodies"]),
+    ...mapActions(["getPopularCodies", "getFollows"]),
     setPopularCodies() {
       let payload = { startDate: "2021-10-23", endDate: "2021-11-15", page: 1, size: 10 };
       this.getPopularCodies(payload);
       this.codiList = this.popularCodies;
+    },
+    splitTag(text) {
+      return text.split(",");
+    },
+    setFollowList() {
+      let payload = { fromUserId: 8, toUserId: "", page: 1, size: 10 };
+      this.getFollows(payload);
+      this.followingList = this.followList;
+      console.log("팔로우" + this.followingList);
     },
   },
 };
@@ -129,6 +148,6 @@ export default {
 .tag {
   color: #c4bddd;
   display: inline;
-  padding-right: 5px;
+  /* padding-right: 5px; */
 }
 </style>

@@ -50,9 +50,14 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col style="padding-top: 0px">
-            <h5 class="tag">#데일리룩</h5>
-            <h5 class="tag">#내일뭐입지</h5>
+          <v-col
+            cols="auto"
+            v-for="(tag, index) in splitTag(codi.codiTag)"
+            :key="tag"
+            style="padding: 0 0 12px 5px"
+          >
+            <h5 v-if="index >= 1" class="tag">#{{ tag }}</h5>
+            <h5 v-if="index < 1" style="padding-left: 7px" class="tag">#{{ tag }}</h5>
           </v-col>
         </v-row>
       </v-flex>
@@ -76,12 +81,7 @@ export default {
   computed: {
     ...mapGetters(["followingCodies"]),
   },
-  // watch: {
-  //   codies: function () {
-  //     console.log("watch");
-  //     // this.selectCodies();
-  //   },
-  // },
+
   created() {
     this.setFollowingCodies();
   },
@@ -92,10 +92,9 @@ export default {
       this.getFollowingCodies(payload);
       this.codiList = this.followingCodies;
     },
-    // selectCodies(){
-    //   let codiId=this.$route.params.no;
-    //   this.getCodi(codiId);
-    // }
+    splitTag(text) {
+      return text.split(",");
+    },
   },
 };
 </script>
@@ -131,7 +130,7 @@ export default {
 }
 .tag {
   color: #c4bddd;
-  display: inline;
-  padding-right: 5px;
+  /* display: inline; */
+  /* padding-right: 5px; */
 }
 </style>
