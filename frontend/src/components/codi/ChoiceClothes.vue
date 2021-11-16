@@ -45,17 +45,17 @@ export default {
     return { idx: 1 };
   },
   computed: {
-    ...mapGetters[("clothes", "codi")],
+    ...mapGetters["usedClothes"],
   },
   methods: {
-    ...mapActions["getClothes"],
+    ...mapActions["getUsedClothes"],
     addClothes() {
       console.log("추가");
       let payload = {
         clothesId: this.idx++,
         path: require("@/assets/test/바지.png"),
       };
-      this.$store.dispatch("getClothes", payload);
+      this.$store.dispatch("getUsedClothes", payload);
       // this.getClothes(payload);
     },
   },

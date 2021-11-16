@@ -5,7 +5,7 @@
         <v-col cols="12" sm="12" md="12" lg="12"
           ><v-card class="codiImg">
             <div id="codiCombi">
-              <ClothesImg v-for="(c, i) in $store.state.codi.clothes" :key="i" :path="c.path" />
+              <ClothesImg v-for="(c, i) in $store.state.codi.usedClothes" :key="i" :path="c.path" />
             </div>
             <!-- <v-button @click="copyImg()">click</v-button> -->
           </v-card>
@@ -35,7 +35,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters["clothes"],
+    ...mapGetters["usedClothes"],
   },
   components: {
     ChoiceClothes,

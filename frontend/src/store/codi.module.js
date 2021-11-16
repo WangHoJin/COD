@@ -5,7 +5,7 @@ export default {
   state: {
     codies: [],
     codi: "",
-    clothes: [],
+    usedClothes: [],
   },
   getters: {
     codies(state) {
@@ -14,8 +14,8 @@ export default {
     codi(state) {
       return state.codi;
     },
-    clothes(state) {
-      return state.clothes;
+    usedClothes(state) {
+      return state.usedClothes;
     },
   },
   mutations: {
@@ -25,12 +25,12 @@ export default {
     setCodi(state, payload) {
       state.codi = payload;
     },
-    setClothes(state, payload) {
+    setUsedClothes(state, payload) {
       console.log("옷넣기");
-      state.clothes = [...state.clothes, payload];
+      state.usedClothes = [...state.usedClothes, payload];
     },
-    removeClothes(state, payload) {
-      state.clothes = payload;
+    removeUsedClothes(state, payload) {
+      state.usedClothes = payload;
     },
   },
   actions: {
@@ -54,13 +54,13 @@ export default {
           console.log(err);
         });
     },
-    getClothes: ({ commit }, payload) => {
+    getUsedClothes: ({ commit }, payload) => {
       console.log("옷가져오기");
-      commit("setClothes", payload);
+      commit("setUsedClothes", payload);
     },
-    removeClothes: ({ commit }, payload) => {
+    removeUsedClothes: ({ commit }, payload) => {
       console.log("옷 삭제하기");
-      commit("removeClothes", payload);
+      commit("removeUsedClothes", payload);
     },
   },
 };
