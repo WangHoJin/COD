@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class ProfileOutput {
+    private int userId;
     private String email;
     private String name;
     private String nickname;

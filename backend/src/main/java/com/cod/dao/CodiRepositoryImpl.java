@@ -38,6 +38,8 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                 .select(new QSelectCodiOutput(
                         qCodi.id,
                         qCodi.user.id,
+                        qCodi.user.nickname,
+                        qCodi.user.profile,
                         qCodi.name,
                         qCodi.tag,
                         qCodi.description,
@@ -69,6 +71,8 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                 .select(new QSelectCodiOutput(
                         qCodi.id,
                         qCodi.user.id,
+                        qCodi.user.nickname,
+                        qCodi.user.profile,
                         qCodi.name,
                         qCodi.tag,
                         qCodi.description,
@@ -100,6 +104,8 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
                 .select(new QSelectCodiOutput(
                         qCodi.id,
                         qCodi.user.id,
+                        qCodi.user.nickname,
+                        qCodi.user.profile,
                         qCodi.name,
                         qCodi.tag,
                         qCodi.description,
