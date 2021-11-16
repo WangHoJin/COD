@@ -5,7 +5,7 @@
       <v-col cols="12" sm="12" md="12" lg="12">
         <v-divider class="pb-4"></v-divider>
         <!-- 댓글 작성자 -->
-        <h5 class="blackText">{{ comment.userId }}</h5>
+        <h5 class="blackText">{{ comment.userNickname }}</h5>
         <!-- 수정,삭제 버튼 -->
         <a class="grayTextBtn">수정</a>
 

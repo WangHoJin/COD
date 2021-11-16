@@ -26,7 +26,7 @@
       <v-col cols="12" sm="12" md="12" lg="12">
         <v-divider class="pb-4"></v-divider>
         <!-- 작성자 -->
-        <h5 class="purpleText">{{ codi.userId }}</h5>
+        <h5 class="purpleText">{{ codi.userNickname }}</h5>
         <br />
         <!-- 코디설명 -->
         <h4 class="">
@@ -39,31 +39,6 @@
       </v-col>
     </v-row>
     <!-- 코디 설명 end-->
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list-item>
-        <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title>John Leider</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list dense>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
   </v-container>
 </template>
 <script>

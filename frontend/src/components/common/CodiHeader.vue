@@ -38,12 +38,11 @@ import { deleteCodi } from "@/api/codi";
 export default {
   name: "Header",
   data() {
-    return {
-      listFlag: false,
-    };
+    return {};
   },
   props: {
     title: String,
+    listFlag: Boolean,
   },
 
   methods: {
