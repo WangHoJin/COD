@@ -1,20 +1,14 @@
 <template>
   <div>
-    <CodiImg />
-    <CodiDes />
-    <CodiComment />
+    <MypageFollow />
   </div>
 </template>
 <script>
-import CodiImg from "../../components/codi/CodiImg.vue";
-import CodiDes from "../../components/codi/CodiDes.vue";
-import CodiComment from "../../components/codi/CodiComment.vue";
+import MypageFollow from "@/components/mypage/MypageFollow.vue";
 
 export default {
   components: {
-    CodiImg,
-    CodiDes,
-    CodiComment,
+    MypageFollow,
   },
   data() {
     return {
@@ -26,8 +20,4 @@ export default {
   },
 };
 </script>
-<style>
-v-row {
-  background-color: yellow;
-}
-</style>
+<style scoped></style>

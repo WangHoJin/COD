@@ -38,7 +38,6 @@ export default {
     selectHeader() {
       if (this.$route.name == "mypageMain") {
         this.title = this.$store.state.auth.loginUser.nickname;
-        console.log("타이틀", this.title);
         this.listFlag = false;
       } else if (this.$route.name == "mypageFollow") {
         this.title = this.$store.state.auth.loginUser.nickname + "의 친구들";

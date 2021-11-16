@@ -11,9 +11,9 @@
 
       <!-- 팔로우 및 소개글 start -->
       <v-col class="follow" cols="5">
-        <h5 class="grayText">팔로워 10</h5>
+        <h5 class="grayText" @click="clickFollower()">팔로워 10</h5>
         &nbsp;
-        <h5 class="grayText">팔로잉 16</h5>
+        <h5 class="grayText" @click="clickFollowing()">팔로잉 16</h5>
         <v-img class="grade" width="15px" src="@/assets/icon/mypage/medal.png" />
         <h5 class="blackText">데일리 소개입니다 :)</h5>
       </v-col>
@@ -41,7 +41,16 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    clickFollowing() {
+      this.$router.push({ name: `mypageFollow` });
+    },
+    clickFollower() {
+      this.$router.push({ name: "mypageFollow" });
+    },
+  },
+};
 </script>
 <style scoped>
 .grayText {
