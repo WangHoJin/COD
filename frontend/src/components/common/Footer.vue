@@ -30,9 +30,6 @@ export default {
   }),
   methods: {
     selectMenu(i) {
-      console.log(this.urls[i]);
-      // console.log(i - 1);
-      // console.log(this.urls[i - 1]);
       this.$router.push({ name: this.urls[i] }).catch((err) => {});
     },
   },

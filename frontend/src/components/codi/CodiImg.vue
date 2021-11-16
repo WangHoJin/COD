@@ -20,9 +20,6 @@ export default {
       s: 100,
     };
   },
-  created() {
-    console.log(this.$store.state.codi.codi.codiThumbnail);
-  },
   methods: {
     onResize: function (x, y, width, height) {
       this.x = x;
