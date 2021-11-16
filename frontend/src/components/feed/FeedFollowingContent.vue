@@ -88,7 +88,10 @@ export default {
   methods: {
     ...mapActions(["getFollowingCodies"]),
     setFollowingCodies() {
-      let payload = { page: 1, size: 10 };
+      let accessToken = this.$store.state.auth.accessToken;
+
+      let payload = { page: 1, size: 10, accessToken: accessToken };
+      console.log(payload.accessToken);
       this.getFollowingCodies(payload);
       this.codiList = this.followingCodies;
     },

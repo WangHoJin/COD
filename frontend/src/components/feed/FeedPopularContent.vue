@@ -125,12 +125,22 @@ export default {
         page: 1,
         size: 10,
       };
-      this.$store.dispatch("getFollows", payload).then(() => {
-        console.log("여기 셋이긴해" + this.followingList);
-      });
+      this.getFollows(payload);
+      // this.followingList = this.followList;
+      // this.$store.dispatch("getFollows", payload).then(() => {
+      // });
       this.followingList = this.followList.map((a) => a.userId);
     },
     isFollow(userId) {
+      // console.log(this.followingList);
+      // for (var i in this.followingList) {
+      //   console.log("isFollow" + i.userId);
+      //   if (i.userId === userId) {
+      //     return false;
+      //   } else {
+      //     return true;
+      //   }
+      // }
       if (this.followingList.includes(userId)) {
         return false;
       } else {
@@ -145,14 +155,14 @@ export default {
         console.log("팔로우 성공");
       });
       this.setFollowList();
-      this.refreshFollow(payload);
+      // this.refreshFollow(payload);
       // this.$store.dispatch("getFollows", payload).then(() => {});
       // this.$store.dispatch("getFollows",payload).
     },
-    refreshFollow(payload) {
-      let payload2 = { toUserId: payload.toUserId, fromUserId: "", page: 1, size: 10 };
-      this.$store.dispatch("getFollows", payload2);
-    },
+    // refreshFollow(payload) {
+    //   let payload2 = { toUserId: payload.toUserId, fromUserId: "", page: 1, size: 10 };
+    //   this.$store.dispatch("getFollows", payload2);
+    // },
     deleteFollow(toUserId) {
       let accessToken = this.$store.state.auth.accessToken;
       deleteFollow(toUserId, accessToken).then(() => {

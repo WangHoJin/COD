@@ -4,13 +4,11 @@ import axios from "@/utils/axios";
 async function getFollowingCodiList(condition, accessToken) {
   var url = `/codies/following?page=${condition.page}&size=${condition.size}`;
   try {
-    console.log("토큰" + accessToken);
     const { data } = await axios.get(url, {
       headers: {
         "X-ACCESS-TOKEN": accessToken,
       },
     });
-    console.log("결과" + data.result);
     return data.result;
   } catch (error) {
     console.error(error.response.data.message);

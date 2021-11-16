@@ -35,9 +35,10 @@ export default {
     },
   },
   actions: {
-    getFollowingCodies(context, payload, accessToken) {
+    getFollowingCodies(context, payload) {
       console.log("vuex action");
-      getFollowingCodiList(payload, accessToken)
+      let payload2 = { page: payload.page, size: payload.size };
+      getFollowingCodiList(payload2, payload.accessToken)
         .then((res) => {
           console.log("vuex axios");
           context.commit("setFollowingCodies", res);
@@ -60,7 +61,7 @@ export default {
       getFollowList(payload)
         .then((res) => {
           console.log("action" + JSON.stringify(payload));
-          context.commit("setFollowList", payload);
+          context.commit("setFollowList", res);
         })
         .catch(function (err) {
           console.log(err);
