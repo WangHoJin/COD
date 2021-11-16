@@ -11,6 +11,17 @@ async function signIn(info) {
   }
 }
 
+async function signUp(info) {
+  console.log('signUp API', info);
+  try {
+    const { data } = await axios.post('/users/signup', info);
+    return data;
+  } catch (error) {
+    // console.error('login API', error.response.data.message);
+    throw error;
+  }
+}
+
 async function getProfile(accessToken) {
   console.log('get login user Profile API');
   try {
@@ -25,4 +36,4 @@ async function getProfile(accessToken) {
     throw error;
   }
 }
-export { signIn, getProfile };
+export { signIn, getProfile, signUp };
