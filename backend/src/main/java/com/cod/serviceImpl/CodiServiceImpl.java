@@ -113,6 +113,8 @@ public class CodiServiceImpl implements CodiService {
         selectCodiOutput = SelectCodiOutput.builder()
                 .codiId(codi.getId())
                 .userId(codi.getUser().getId())
+                .userNickname(codi.getUser().getNickname())
+                .userProfileImg(codi.getUser().getProfile())
                 .codiName(codi.getName())
                 .codiTag(codi.getTag())
                 .codiThumbnail(codi.getThumbnail())
