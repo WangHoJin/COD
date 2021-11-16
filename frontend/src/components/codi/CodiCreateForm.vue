@@ -14,33 +14,40 @@
           </v-card>
         </v-col>
         <!-- 옷 사용 목록 end -->
-
-        <v-col class="" cols="12" md="4">
-          <v-divider class="pb-4"></v-divider>
-        </v-col>
       </v-row>
     </v-container>
     <!-- 코디 입력 폼 start -->
     <v-container v-if="true">
       <v-row>
         <v-col class="inputForm" cols="12" md="4">
-          <v-textarea label="코디명" auto-grow outlined rows="1"></v-textarea>
-          <v-textarea label="태그" auto-grow outlined rows="1" row-height="15"></v-textarea>
-          <v-textarea outlined label="설명"></v-textarea>
+          <v-divider class="pb-4"></v-divider>
+        </v-col>
+        <v-col class="inputForm" cols="12" md="4">
+          <v-textarea label="코디명" auto-grow outlined rows="1" v-model="name"></v-textarea>
+          <v-textarea
+            label="태그"
+            auto-grow
+            outlined
+            rows="1"
+            row-height="15"
+            v-model="tag"
+          ></v-textarea>
+          <v-textarea outlined label="설명" v-model="description"></v-textarea>
         </v-col>
       </v-row>
-      <v-row>
+      <!-- 코디 공대 유무 -->
+      <!-- <v-row>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
         <v-col class="switchBtn" cols="4" md="4"><v-switch label="공개"></v-switch></v-col>
-      </v-row>
-      <v-row>
+      </v-row> -->
+      <!-- <v-row>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
         <v-col class="" cols="4" md="4">
           <v-btn class="mr-4" @click="submit"> submit </v-btn></v-col
         >
-      </v-row>
+      </v-row> -->
     </v-container>
     <!-- 코디 입력 폼 end -->
 
@@ -81,13 +88,14 @@ export default {
       alert("확인");
       let coordinates = [{}];
       let codi = {
-        name: "테스트코디5",
-        tag: "데일리, 일상, 힙합",
-        description: "테스트코디입니다5",
+        name: this.name,
+        tag: this.tag,
+        description: this.description,
         thumbnail: "@/assets/test/상의.jpg",
-        coordinate: coordinates,
+        coordinate: "json",
       };
-      createCodi(codi).then(() => {
+      let token = this.$store.state.auth.accessToken;
+      createCodi(codi, token).then(() => {
         console.log("등록 성공");
       });
     },
@@ -96,7 +104,7 @@ export default {
 </script>
 <style scoped>
 .inputForm {
-  padding-top: 30px;
+  /* padding-top: 30px; */
   padding-bottom: 0px;
 }
 .switchBtn {
@@ -114,8 +122,8 @@ export default {
   right: 0%;
 }
 #addBtn {
-  position: fixed;
-  top: 1%;
+  position: absolute;
+  top: -6.5%;
   right: 1%;
   z-index: 1;
 }
