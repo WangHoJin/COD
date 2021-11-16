@@ -216,6 +216,7 @@ public class UserServiceImpl implements UserService {
             }
 
             profileOutput = ProfileOutput.builder()
+                    .userId(user.getId())
                     .email(user.getEmail())
                     .name(user.getName())
                     .nickname(user.getNickname())
