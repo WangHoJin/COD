@@ -1,11 +1,11 @@
 <template>
-  <div></div>
+  <div><Password /></div>
 </template>
 <script>
-// import MypageFollow from "@/components/mypage/MypageFollow.vue";
+import Password from "@/components/setting/Password.vue";
 
 export default {
-  components: {},
+  components: { Password },
   data() {
     return {
       no: "",
