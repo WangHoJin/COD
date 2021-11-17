@@ -16,8 +16,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Builder
 @Getter @Setter
 @Entity
-@Table(name = "clothes")
-public class Clothes {
+@Table(name = "cloth")
+public class Cloth {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
@@ -41,7 +41,7 @@ public class Clothes {
     private String season;
 
     @Column(name = "is_owned", nullable = false)
-    private boolean isOwned;
+    private Boolean isOwned;
 
     @Column(name = "tag", columnDefinition = "TEXT")
     private String tag;
@@ -55,8 +55,8 @@ public class Clothes {
     @Column(name = "name",  length = 45)
     private String name;
 
-    @Column(name = "size",  length = 20)
-    private String size;
+    @Column(name = "measure",  length = 20)
+    private String measure;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
