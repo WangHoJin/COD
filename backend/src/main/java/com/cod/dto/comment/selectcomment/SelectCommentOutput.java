@@ -15,6 +15,7 @@ public class SelectCommentOutput {
     private Integer commentId;
     private Integer codiId;
     private Integer userId;
+    private String userProfileImg;
     private String userNickname;
     private String commentContent;
     private LocalDateTime commentCreatedAt;
