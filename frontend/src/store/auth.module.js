@@ -1,4 +1,4 @@
-import { signIn, getProfile } from '@/api/user.js';
+import { signIn, getProfile } from "@/api/user.js";
 
 export default {
   // 현재 상태들
@@ -29,10 +29,11 @@ export default {
           .then((res) => {
             //엑세스 토큰 셋팅
             let accessToken = res.result.accessToken;
-            commit('setAccessToken', accessToken);
+            console.log(accessToken);
+            commit("setAccessToken", accessToken);
             //로그인 유저 셋팅
             getProfile(accessToken).then((res) => {
-              commit('setLoginUser', res.result);
+              commit("setLoginUser", res.result);
               resolve();
             });
           })
@@ -43,9 +44,9 @@ export default {
       });
     },
     logout: ({ commit }) => {
-      console.log('로그아웃 시도');
-      commit('setAccessToken', null);
-      commit('setLoginUser', null);
+      console.log("로그아웃 시도");
+      commit("setAccessToken", null);
+      commit("setLoginUser", null);
     },
   },
 };
