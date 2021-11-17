@@ -30,6 +30,7 @@ export default {
   },
   watch: {},
   created() {
+    console.log("왜안돼");
     this.setFollowerList();
   },
   methods: {

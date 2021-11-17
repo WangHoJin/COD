@@ -84,7 +84,7 @@ const router = new Router({
         },
         {
           name: "mypageFollow",
-          path: "follow",
+          path: ":no/follow",
           component: () => import("@/pages/mypage/MypageFollow.vue"),
         },
       ],
