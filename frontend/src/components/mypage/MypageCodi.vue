@@ -4,7 +4,7 @@
     <v-col cols="9" sm="3" md="3" lg="3">
       <h4 class="pl-4" style="display: inline-block">코디</h4>
     </v-col>
-    <v-col class="codiList" v-for="i in 10" :key="i" cols="4" sm="3" md="3" lg="3">
+    <v-col class="codiList" v-for="(c, i) in codies" :key="i" cols="4" sm="3" md="3" lg="3">
       <v-card outlined>
         <v-img class="codiImg" src="@/assets/test/codisample.png"></v-img>
       </v-card>
@@ -13,7 +13,23 @@
   <!-- 코디 목록 end -->
 </template>
 <script>
-export default {};
+import { mapGetters, mapActions } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["codies"]),
+  },
+  created() {
+    this.selectCodies();
+  },
+  methods: {
+    ...mapActions(["getCodies"]),
+    selectCodies() {
+      let userId = this.$store.state.auth.loginUser.userId;
+      let payload = { userId: userId, page: 1, size: 9 };
+      this.getCodies(payload);
+    },
+  },
+};
 </script>
 <style scoped>
 .codiList {
