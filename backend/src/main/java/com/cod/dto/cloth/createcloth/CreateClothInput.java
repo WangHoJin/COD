@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 public class CreateClothInput {
-    private String imgUrl;
     private String name;
     private String type;
     private String color;
@@ -22,4 +21,5 @@ public class CreateClothInput {
     private Integer price;
     private String brand;
     private String measure;
+    private String imgUrl;
 }

@@ -31,16 +31,16 @@ public class Cloth {
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
-    @Column(name = "type", nullable = false, length = 20)
+    @Column(name = "type", length = 20)
     private String type;
 
-    @Column(name = "color", nullable = false, length = 20)
+    @Column(name = "color", length = 20)
     private String color;
 
-    @Column(name = "season", nullable = false, length = 45)
+    @Column(name = "season", length = 45)
     private String season;
 
-    @Column(name = "is_owned", nullable = false)
+    @Column(name = "is_owned")
     private Boolean isOwned;
 
     @Column(name = "tag", columnDefinition = "TEXT")
