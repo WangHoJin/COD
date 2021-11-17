@@ -47,10 +47,14 @@ async function updateCodi(codi, codiId) {
   }
 }
 // 코디 삭제 API
-async function deleteCodi(codiId) {
+async function deleteCodi(codiId, accessToken) {
   // console.log("deleteCodi API", codiId);
   try {
-    return axios.delete(`/codies/${codiId}`);
+    return axios.delete(`/codies/${codiId}`, {
+      headers: {
+        "X-ACCESS-TOKEN": accessToken,
+      },
+    });
   } catch (error) {
     console.log(error);
     console.error(error.response.data.message);
