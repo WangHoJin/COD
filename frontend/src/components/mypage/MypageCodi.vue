@@ -24,7 +24,7 @@ export default {
   methods: {
     ...mapActions(["getCodies"]),
     selectCodies() {
-      let userId = this.$store.state.auth.loginUser.userId;
+      let userId = this.$route.params.no;
       let payload = { userId: userId, page: 1, size: 9 };
       this.getCodies(payload);
     },

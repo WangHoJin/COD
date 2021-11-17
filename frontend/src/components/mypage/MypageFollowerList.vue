@@ -53,12 +53,12 @@ export default {
       });
     },
     setFollowerList() {
-      let userId = this.$store.state.auth.loginUser.userId;
+      let userId = this.$route.params.no;
       let payload = { page: 1, size: 10, toUserId: userId };
       this.getFollower(payload);
     },
     setFollowingList() {
-      let userId = this.$store.state.auth.loginUser.userId;
+      let userId = this.$route.params.no;
       let payload = { page: 1, size: 10, fromUserId: userId };
       this.getFollowing(payload);
     },

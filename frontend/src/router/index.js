@@ -74,12 +74,12 @@ const router = new Router({
     {
       path: "/mypage",
       name: "mypage",
-      redirect: "/mypage",
+      redirect: "/mypage/:no",
       component: () => import("@/layouts/MypageLayout"),
       children: [
         {
           name: "mypageMain",
-          path: "",
+          path: ":no",
           component: () => import("@/pages/mypage/MypageMain.vue"),
         },
         {

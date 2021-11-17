@@ -58,7 +58,7 @@ export default {
       this.$router.push({ name: "mypageFollow" });
     },
     countFollow() {
-      let userId = this.$store.state.auth.loginUser.userId;
+      let userId = this.$route.params.no;
       let payload1 = { page: 1, size: 10, toUserId: userId };
       this.getFollower(payload1);
       let payload2 = { page: 1, size: 10, fromUserId: userId };
