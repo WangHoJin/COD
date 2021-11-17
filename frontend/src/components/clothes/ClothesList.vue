@@ -14,7 +14,11 @@
           <v-row>
             <v-col v-for="(c, i) in clothes" :key="i" cols="4" sm="3" md="2" lg="1">
               <v-card v-if="isTab(c, item.tab)" class="">
-                <v-img height="100px" src="@/assets/test/바지.png"></v-img>
+                <v-img
+                  height="100px"
+                  src="@/assets/test/바지.png"
+                  @click="clothesClick(i + 1)"
+                ></v-img>
               </v-card>
             </v-col>
           </v-row>
@@ -27,7 +31,7 @@
     <!-- 옷 페이지 end -->
 
     <!-- 옷 추가 버튼 start -->
-    <v-btn id="createBtn" color="#857DB1" dark absolute top right fab>
+    <v-btn id="createBtn" color="#857DB1" dark absolute top right fab @click="createClick()">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <!-- 옷 추가 버튼 end -->
@@ -58,9 +62,21 @@ export default {
   created() {},
   methods: {
     // ...mapActions(["getCodies"]),
-    isTab(codi, tab) {
-      if (codi == tab) return true;
+    isTab(clothes, tab) {
+      if (tab === "전체") return true;
+      if (clothes == tab) return true;
       return false;
+    },
+    clothesClick(clothesId) {
+      console.log("코디 클릭" + clothesId);
+      this.$router.push({
+        path: `detail/` + clothesId,
+      });
+    },
+    createClick() {
+      this.$router.push({
+        path: `create/`,
+      });
     },
   },
 };
