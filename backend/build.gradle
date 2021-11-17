@@ -45,7 +45,6 @@ dependencies {
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '3.4.5'
 
     // Authentication
-
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation 'org.springframework.security:spring-security-test'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.3.2.RELEASE'
@@ -58,6 +57,19 @@ dependencies {
 
     //StringUtils
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8'
+
+    //AWS S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+
+    //Spring WebClient
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
+
+    //Junit Jupiter API
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
+
+    //MultipartFile
+    //implementation 'org.springframework.web.multipart.commons.CommonsMultipartFile'
 
     annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion
     annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion, classifier: 'jpa'
