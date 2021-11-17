@@ -26,11 +26,14 @@ export default {
       require('@/assets/icon/menu/codi.png'),
       require('@/assets/icon/menu/mypage.png'),
     ],
-    urls: ['main', 'wood', 'closet', 'codi', 'mypage'],
+    urls: ['main', 'feed', 'clothes', 'codi', 'mypage'],
   }),
   methods: {
     selectMenu(i) {
-      this.$router.push({ name: this.urls[i] }).catch((err) => {});
+      if (i == 4) {
+        let userId = this.$store.state.auth.loginUser.userId;
+        this.$router.push({ name: this.urls[i], params: { no: userId } }).catch((err) => {});
+      } else this.$router.push({ name: this.urls[i] }).catch((err) => {});
     },
   },
 };

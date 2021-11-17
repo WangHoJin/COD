@@ -15,9 +15,7 @@
       </v-tabs>
       <!-- 코디에서 고르기 -->
       <div v-if="super_tab == 0">
-        <!-- 중간 서브바 -->
-        <v-row class="px-2">
-          <!-- 태그들 -->
+        <!-- <v-row class="px-2">
           <v-col>
             <v-icon class="mx-2" color="black" small> mdi-tag </v-icon>
             <div style="display: inline-block" v-for="(tag, index) in tags" :key="index">
@@ -26,7 +24,6 @@
               }}</v-chip>
             </div>
           </v-col>
-          <!-- 계절 셀렉트 -->
           <v-col cols="3">
             <v-select
               class="mt-2 mr-2"
@@ -41,7 +38,7 @@
               :items="weather"
             ></v-select>
           </v-col>
-        </v-row>
+        </v-row> -->
         <!-- 코디 그리드 -->
         <div class="codi-content py-7">
           <div v-for="(item, i) in codies" :key="i" class="codi-holder text-center">
