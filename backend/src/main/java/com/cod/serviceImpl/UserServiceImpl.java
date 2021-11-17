@@ -104,6 +104,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<Response<SignUpOutput>> signUp(SignUpInput signUpInput) {
         // 1. 값 형식 체크
+        System.out.println(signUpInput);
+        System.out.println("버스 : " + signUpInput.getBirth());
         if (signUpInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
