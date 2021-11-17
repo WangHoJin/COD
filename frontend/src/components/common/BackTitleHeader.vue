@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app dense color="white" fade-img-on-scroll>
+  <v-app-bar dense color="white" fade-img-on-scroll>
     <v-btn style="margin-left: -10px" small fab text @click="$router.go(-1)">
       <img src="@/assets/icon/back.png" style="margin-left: 20px; height: 20px; width: 20px" />
       <v-icon>mdi-chevron-lef</v-icon>

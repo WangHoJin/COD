@@ -1,8 +1,6 @@
-!
 <template lang="">
   <div>
     <Header title="코디 기록하기" />
-
     <div class="content">
       <v-tabs
         :centered="true"
@@ -46,11 +44,10 @@
         </v-row>
         <!-- 코디 그리드 -->
         <div class="codi-content py-7">
-          <div class="codi-holder text-center">
-            <div class="box"></div>
-          </div>
-          <div class="codi-holder text-center">
-            <div class="box"></div>
+          <div v-for="(item, i) in codies" :key="i" class="codi-holder text-center">
+            <div class="box pa-2" @click="selectCodi(item)">
+              <v-img class="img-thumbnail" contain :src="item.codiThumbnail" />
+            </div>
           </div>
         </div>
       </div>
@@ -120,8 +117,16 @@
 <script>
 import Header from '@/components/common/BackTitleHeader.vue';
 import SBtn from '@/components/common/SquareButton.vue';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
+  created() {
+    let userId = this.$store.state.auth.loginUser.userId;
+    let payload = { userId: userId, page: 1, size: 1000 };
+    this.getCodies(payload).then(() => {
+      console.log('코디', this.codies);
+    });
+  },
   data() {
     return {
       super_tab: '0',
@@ -131,9 +136,19 @@ export default {
       selectedClothes: [],
     };
   },
+  computed: {
+    ...mapGetters(['codies']),
+  },
   methods: {
+    ...mapActions(['setCodi', 'getCodies']),
     mvCordination() {
       this.$router.push({ name: 'coordination' });
+    },
+    selectCodi(item) {
+      console.log(item);
+      this.setCodi(item);
+      let date = this.$route.query.date;
+      this.$router.push({ path: `/record-coid/regist?date=${date}` });
     },
   },
   components: { Header, SBtn },
@@ -146,7 +161,7 @@ export default {
 .codi-content {
   background-color: #e5e5e5;
   padding: 0 2%;
-  min-height: 108vw;
+  min-height: 130vw;
 }
 .codi-holder {
   display: inline-block;
@@ -171,8 +186,14 @@ export default {
   margin-bottom: 5%;
   background-color: white;
   display: inline-block;
+  overflow: hidden;
 }
 .v-item-group v-slide-group__prev--disabled {
   display: none !important;
+}
+.img-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
