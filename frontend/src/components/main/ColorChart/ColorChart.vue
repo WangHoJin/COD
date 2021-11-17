@@ -1,4 +1,3 @@
-!
 <template lang="">
   <div>
     <h3 class="mt-7">내 옷장 색 비율</h3>
