@@ -81,7 +81,7 @@ public class ClothServiceImpl implements ClothService {
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new Response<>(null, CREATED_CODI));
+                .body(new Response<>(null, CREATED_CLOTH));
     }
 
 
@@ -127,7 +127,7 @@ public class ClothServiceImpl implements ClothService {
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new Response<>(selectClothOutput, SUCCESS_SELECT_CODI));
+                .body(new Response<>(selectClothOutput, SUCCESS_SELECT_CLOTH));
     }
 
     @Override
@@ -154,7 +154,7 @@ public class ClothServiceImpl implements ClothService {
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new PageResponse<>(selectClothOutputs, SUCCESS_SELECT_CODI));
+                .body(new PageResponse<>(selectClothOutputs, SUCCESS_SELECT_CLOTH));
     }
 
     @Override
