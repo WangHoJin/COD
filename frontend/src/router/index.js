@@ -90,6 +90,22 @@ const router = new Router({
       ],
     },
     {
+      path: "/feed",
+      redirect: "/feed/main",
+      component: () => import("@/layouts/FeedLayout.vue"),
+      children: [
+        {
+          path: "main",
+          component: () => import("@/pages/feed/FeedMain.vue"),
+        },
+        {
+          path: "search",
+          component: () => import("@/pages/feed/FeedSearch.vue"),
+        },
+      ],
+    },
+
+    {
       path: "/:catchAll(.*)*",
       component: () => import("../pages/Error404.vue"),
     },
