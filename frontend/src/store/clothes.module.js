@@ -1,10 +1,11 @@
-import { getClothes, getClothesList } from "@/api/clothes";
+import { getClothes, getClothesList } from '@/api/clothes';
+import store from '@/store';
 
 export default {
   // 현재 상태들
   state: {
     clothesList: [],
-    clothes: "",
+    clothes: '',
   },
   getters: {
     clothesList(state) {
@@ -25,9 +26,10 @@ export default {
   actions: {
     // 옷 리스트 가져오기
     getClothesList: ({ commit }, payload) => {
-      getClothesList(payload)
+      let accessToken = store.state.auth.accessToken;
+      getClothesList(payload, accessToken)
         .then((res) => {
-          commit("setClothesList", res);
+          commit('setClothesList', res);
         })
         .catch(function (err) {
           console.log(err);
@@ -37,7 +39,7 @@ export default {
     getClothes: ({ commit }, payload) => {
       getClothes(payload)
         .then((res) => {
-          commit("setClothes", res);
+          commit('setClothes', res);
         })
         .catch(function (err) {
           console.log(err);

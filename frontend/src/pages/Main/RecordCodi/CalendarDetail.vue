@@ -37,7 +37,7 @@
                   class="ml-3"
                 >
                 <div class="mt-4">
-                  <img style="width:80%; " :src="tracked[date]"/>
+                  <v-img contain class="img-thumbnail" :src="tracked[date]"/>
                 </div>
                 </v-sheet>
               </template>
@@ -60,10 +60,10 @@ export default {
       selectedElement: null,
       selectedOpen: false,
       tracked: {
-        '2021-11-10': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
-        '2021-11-08': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
-        '2021-11-07': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
-        '2021-11-06': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcfenUKQ0feNbp-pxx8hQryvWD4fCDDoKaA&usqp=CAU",
+        '2021-11-10': "https://mblogthumb-phinf.pstatic.net/20160510_32/mkhjsk_14628892954266DY4i_PNG/1.png?type=w2",
+        '2021-11-08': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY4emgdTEJmNK72ydRTyzds0y4WWx09BdN5fid5oUaDo-kSkhadoMK3k1Dkwnu-HwuPIg&usqp=CAU",
+        '2021-11-07': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUzlBJLjR-RMcFJ4lP-Y-QzvfpXcqh3zrzwYoaMDCDoo0WDXh7M0kMlnkj8tnxasdzRPY&usqp=CAU",
+        '2021-11-06': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkM1WYcuIZYNpaq63j2zJLPVVOJM5z6c6TpVLhpKXUHEU5ypHaveekmWZtqpbdwwT0R94&usqp=CAU",
       },
       colors: ['#1867c0', '#fb8c00', '#000000'],
       isLoadingCalendar:false
@@ -94,6 +94,11 @@ export default {
 </script>
 <style scoped>
 .content {
-  margin-top: 80px;
+  margin: 10px 5px;
+}
+.img-thumbnail {
+  /* width: 20%; */
+  height: 50%;
+  object-fit: cover;
 }
 </style>
