@@ -6,7 +6,11 @@
     </v-col>
     <v-col class="codiList" v-for="(c, i) in codies" :key="i" cols="4" sm="3" md="3" lg="3">
       <v-card outlined>
-        <v-img class="codiImg" src="@/assets/test/codisample.png"></v-img>
+        <v-img
+          class="codiImg"
+          src="@/assets/test/codisample.png"
+          @click="codiClick(c.codiId)"
+        ></v-img>
       </v-card>
     </v-col>
   </v-row>
@@ -27,6 +31,12 @@ export default {
       let userId = this.$route.params.no;
       let payload = { userId: userId, page: 1, size: 9 };
       this.getCodies(payload);
+    },
+    codiClick(codiId) {
+      // console.log("코디 클릭" + codiId);
+      this.$router.push({
+        path: `../codi/detail/` + codiId,
+      });
     },
   },
 };
