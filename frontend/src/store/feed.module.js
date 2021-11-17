@@ -8,6 +8,8 @@ export default {
     popularCodies: [],
     followList: [],
     codiLikedList: [],
+    followerList: [],
+    followingList: [],
   },
   getters: {
     followingCodies(state) {
@@ -21,6 +23,12 @@ export default {
     },
     codiLikedList(state) {
       return state.codiLikedList;
+    },
+    followerList(state) {
+      return state.followerList;
+    },
+    followingList(state) {
+      return state.followingList;
     },
   },
   mutations: {
@@ -40,6 +48,12 @@ export default {
     setCodiLikedList(state, payload) {
       console.log("like mutation");
       state.codiLikedList = payload;
+    },
+    setFollowerList(state, payload) {
+      state.followerList = payload;
+    },
+    setFollowingList(state, payload) {
+      state.followingList = payload;
     },
   },
   actions: {
@@ -80,6 +94,24 @@ export default {
       getCodiLikedList(payload2, payload.accessToken).then((res) => {
         context.commit("setCodiLikedList", res);
       });
+    },
+    getFollower(context, payload) {
+      getFollowList(payload)
+        .then((res) => {
+          context.commit("setFollowerList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    getFollowing(context, payload) {
+      getFollowList(payload)
+        .then((res) => {
+          context.commit("setFollowingList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
   },
 };
