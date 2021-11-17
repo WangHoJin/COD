@@ -7,7 +7,7 @@
         </v-avatar>
       </v-col>
       <v-col>
-        <h4 class="followName">{{ f.nickname }}</h4>
+        <h4 class="followName" @click="clickUser(f.userId)">{{ f.nickname }}</h4>
       </v-col>
       <v-col>
         <h5 v-if="isFollow()" class="following" @click="deleteFollow(f.userId)">팔로잉</h5>
@@ -47,6 +47,11 @@ export default {
       let userId = this.$route.params.no;
       let payload = { page: 1, size: 10, fromUserId: userId };
       this.getFollowing(payload).then(console.log(this.followingList));
+    },
+    clickUser(userId) {
+      this.$router.push({
+        path: `../` + userId,
+      });
     },
   },
 };
