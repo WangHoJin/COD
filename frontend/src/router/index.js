@@ -55,14 +55,17 @@ const router = new Router({
       component: () => import("@/layouts/CodiLayout"),
       children: [
         {
+          name: "codiCreate",
           path: "create",
           component: () => import("@/pages/codi/CodiCreate.vue"),
         },
         {
+          name: "codiList",
           path: "list",
           component: () => import("@/pages/codi/CodiList.vue"),
         },
         {
+          name: "codiDetail",
           path: "detail/:no",
           component: () => import("@/pages/codi/CodiDetail.vue"),
         },
@@ -98,8 +101,8 @@ export default router;
 
 router.beforeEach((to, from, next) => {
   let loginUser = store.getters.loginUser;
-  console.log(loginUser);
-  if (loginUser || to.name == "sign-in") {
+  console.log("loginUser", loginUser);
+  if (loginUser || to.name == "sign-in" || to.name == "sign-up") {
     next();
   } else {
     // alert('로그인이 필요한 페이지입니다.');

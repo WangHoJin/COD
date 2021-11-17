@@ -1,15 +1,17 @@
 <template>
   <div>
-    코디등록페이지
-    <CodiImg />
+    <CodiCombination />
     <CodiCreateForm />
   </div>
 </template>
 <script>
-import CodiImg from "../../components/codi/CodiImg.vue";
+import CodiCombination from "../../components/codi/CodiCombination.vue";
 import CodiCreateForm from "../../components/codi/CodiCreateForm.vue";
 export default {
-  components: { CodiImg, CodiCreateForm },
+  components: {
+    CodiCombination,
+    CodiCreateForm,
+  },
 };
 </script>
-<style></style>
+<style scoped></style>

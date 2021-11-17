@@ -16,23 +16,20 @@
 
 <script>
 export default {
-  name: 'Footer',
+  name: "Footer",
   components: {},
   data: () => ({
     icons: [
-      require('@/assets/icon/menu/home.png'),
-      require('@/assets/icon/menu/feed.png'),
-      require('@/assets/icon/menu/closet.png'),
-      require('@/assets/icon/menu/codi.png'),
-      require('@/assets/icon/menu/mypage.png'),
+      require("@/assets/icon/menu/home.png"),
+      require("@/assets/icon/menu/feed.png"),
+      require("@/assets/icon/menu/closet.png"),
+      require("@/assets/icon/menu/codi.png"),
+      require("@/assets/icon/menu/mypage.png"),
     ],
-    urls: ['main', 'wood', 'closet', 'codi', 'mypage'],
+    urls: ["main", "wood", "closet", "codi", "mypage"],
   }),
   methods: {
     selectMenu(i) {
-      console.log(this.urls[i]);
-      // console.log(i - 1);
-      // console.log(this.urls[i - 1]);
       this.$router.push({ name: this.urls[i] }).catch((err) => {});
     },
   },
@@ -45,9 +42,9 @@ export default {
 }
 
 .footer {
-  /* position: fixed; */
-  /* left: 0%; */
-  /* top: 92%; */
+  position: fixed;
+  left: 0%;
+  top: 92%;
   padding: 0px;
   background: #ffffff;
 }
