@@ -149,6 +149,11 @@ const router = new Router({
           component: () => import("@/pages/setting/settingUpadateProfile.vue"),
         },
         {
+          name: "settingInfo",
+          path: "info",
+          component: () => import("@/pages/setting/settingInfo.vue"),
+        },
+        {
           name: "settingChangePassword",
           path: "changePassword",
           component: () => import("@/pages/setting/settingChangePassword.vue"),

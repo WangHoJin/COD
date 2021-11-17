@@ -57,7 +57,11 @@
 <script>
 export default {
   methods: {
-    clickInfo() {},
+    clickInfo() {
+      this.$router.push({
+        path: `info/`,
+      });
+    },
     clickUpdate() {},
   },
 };
