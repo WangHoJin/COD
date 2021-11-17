@@ -51,10 +51,11 @@ export default {
     },
     deleteClick() {
       console.log("삭제 클릭");
+      let token = this.$store.state.auth.accessToken;
+      deleteCodi(this.$route.params.no, token);
       alert("삭제하시겠습니까?");
-      deleteCodi(this.$route.params.no);
       this.$router.push({
-        name: codiList,
+        name: "codi",
       });
     },
   },
