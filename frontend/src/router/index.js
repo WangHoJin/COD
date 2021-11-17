@@ -72,6 +72,24 @@ const router = new Router({
       ],
     },
     {
+      path: '/mypage',
+      name: 'mypage',
+      redirect: '/mypage/:no',
+      component: () => import('@/layouts/MypageLayout'),
+      children: [
+        {
+          name: 'mypageMain',
+          path: ':no',
+          component: () => import('@/pages/mypage/MypageMain.vue'),
+        },
+        {
+          name: 'mypageFollow',
+          path: ':no/follow',
+          component: () => import('@/pages/mypage/MypageFollow.vue'),
+        },
+      ],
+    },
+    {
       path: '/feed',
       redirect: '/feed/main',
       component: () => import('@/layouts/FeedLayout.vue'),
@@ -86,7 +104,29 @@ const router = new Router({
         },
       ],
     },
-
+    {
+      path: '/clothes',
+      name: 'clothes',
+      redirect: '/clothes/list',
+      component: () => import('@/layouts/ClothesLayout'),
+      children: [
+        {
+          name: 'clothesCreate',
+          path: 'create',
+          component: () => import('@/pages/clothes/ClothesCreate.vue'),
+        },
+        {
+          name: 'clothesList',
+          path: 'list',
+          component: () => import('@/pages/clothes/ClothesList.vue'),
+        },
+        {
+          name: 'clothesDetail',
+          path: 'detail/:no',
+          component: () => import('@/pages/clothes/ClothesDetail.vue'),
+        },
+      ],
+    },
     {
       path: '/:catchAll(.*)*',
       component: () => import('../pages/Error404.vue'),
