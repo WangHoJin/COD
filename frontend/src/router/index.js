@@ -86,7 +86,29 @@ const router = new Router({
         },
       ],
     },
-
+    {
+      path: "/clothes",
+      name: "clothes",
+      redirect: "/clothes/list",
+      component: () => import("@/layouts/ClothesLayout"),
+      children: [
+        {
+          name: "clothesCreate",
+          path: "create",
+          component: () => import("@/pages/clothes/ClothesCreate.vue"),
+        },
+        {
+          name: "clothesList",
+          path: "list",
+          component: () => import("@/pages/clothes/ClothesList.vue"),
+        },
+        {
+          name: "clothesDetail",
+          path: "detail/:no",
+          component: () => import("@/pages/clothes/ClothesDetail.vue"),
+        },
+      ],
+    },
     {
       path: "/:catchAll(.*)*",
       component: () => import("../pages/Error404.vue"),
