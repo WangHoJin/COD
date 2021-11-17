@@ -1,11 +1,11 @@
 <template>
-  <div>설정 메뉴들</div>
+  <div><SettingList /></div>
 </template>
 <script>
-// import MypageFollow from "@/components/mypage/MypageFollow.vue";
+import SettingList from "@/components/setting/SettingList.vue";
 
 export default {
-  components: {},
+  components: { SettingList },
   data() {
     return {
       no: "",
