@@ -1,11 +1,11 @@
 <template>
-  <v-footer padless absolute width="100%" app class="footer">
-    <v-card flat width="100%" class="text-center">
+  <v-footer class="footer" absolute>
+    <v-card flat width="100%" class="text-center px-3">
       <v-card-text>
-        <v-row class="mx-2">
+        <v-row>
           <v-col v-for="(icon, i) in icons" :key="i">
-            <v-btn small class="menuBtn" @click="selectMenu(i)" icon>
-              <img style="width: 30%; padding: 0px 10px" :src="icon" />
+            <v-btn class="menuBtn" @click="selectMenu(i)" icon>
+              <v-img width="25px" :src="icon" />
             </v-btn>
           </v-col>
         </v-row>
@@ -30,11 +30,7 @@ export default {
   }),
   methods: {
     selectMenu(i) {
-      console.log(i - 1);
-      console.log(this.urls[i - 1]);
-      this.$router.push({
-        name: this.urls[i - 1],
-      });
+      this.$router.push({ name: this.urls[i] }).catch((err) => {});
     },
   },
 };
