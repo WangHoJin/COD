@@ -1,11 +1,11 @@
 <template>
-  <div></div>
+  <div><Profile /></div>
 </template>
 <script>
-// import MypageFollow from "@/components/mypage/MypageFollow.vue";
+import Profile from "@/components/setting/Profile.vue";
 
 export default {
-  components: {},
+  components: { Profile },
   data() {
     return {
       no: "",
