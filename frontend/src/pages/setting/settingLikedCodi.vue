@@ -1,11 +1,13 @@
 <template>
-  <div></div>
+  <div>
+    <LikedCodiList />
+  </div>
 </template>
 <script>
-// import MypageFollow from "@/components/mypage/MypageFollow.vue";
+import LikedCodiList from "@/components/setting/LikedCodiList.vue";
 
 export default {
-  components: {},
+  components: { LikedCodiList },
   data() {
     return {
       no: "",
