@@ -1,6 +1,7 @@
 import { getFollowingCodiList, getPopularCodiList } from "@/api/feed";
 import { getFollowList } from "@/api/follow";
 import { getCodiLikedList } from "../api/codiLiked";
+import { getUserList } from "@/api/user";
 
 export default {
   state: {
@@ -8,6 +9,7 @@ export default {
     popularCodies: [],
     followList: [],
     codiLikedList: [],
+    userList: [],
   },
   getters: {
     followingCodies(state) {
@@ -21,6 +23,9 @@ export default {
     },
     codiLikedList(state) {
       return state.codiLikedList;
+    },
+    userList(state) {
+      return state.userList;
     },
   },
   mutations: {
@@ -40,6 +45,11 @@ export default {
     setCodiLikedList(state, payload) {
       console.log("like mutation");
       state.codiLikedList = payload;
+    },
+    setUserList(state, payload) {
+      console.log("user mutation");
+      state.userList = payload;
+      console.log(state.userList);
     },
   },
   actions: {
@@ -80,6 +90,15 @@ export default {
       getCodiLikedList(payload2, payload.accessToken).then((res) => {
         context.commit("setCodiLikedList", res);
       });
+    },
+    getUsers(context, payload) {
+      getUserList(payload)
+        .then((res) => {
+          context.commit("setUserList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
   },
 };

@@ -88,6 +88,7 @@ export default {
     return {
       codiList: [],
       likedList: [],
+      like: "false",
     };
   },
   computed: {
@@ -118,15 +119,21 @@ export default {
       this.getFollowingCodies(payload);
       this.codiList = this.followingCodies;
     },
+    setPopularCodies() {
+      let payload = { startDate: "2021-10-23", endDate: "2021-11-15", page: 1, size: 10 };
+      this.getPopularCodies(payload);
+      this.codiList = this.popularCodies;
+    },
     splitTag(text) {
       return text.split(",");
     },
     isLiked(codiId) {
       // console.log(this.$store.state.feed.codiLikedList.codiId);
       for (var i = 0; i < this.$store.state.feed.codiLikedList.length; i++) {
-        console.log("좋아요 리스트: " + this.$store.state.feed.codiLikedList[i].codiId);
+        // console.log("좋아요 리스트: " + this.$store.state.feed.codiLikedList[i].codiId);
         if (this.$store.state.feed.codiLikedList[i].codiId === codiId) {
-          console.log("있음" + this.$store.state.feed.codiLikedList[i].codiId);
+          // console.log("있음" + this.$store.state.feed.codiLikedList[i].codiId);
+          // this.like=true;
           return true;
         }
       }

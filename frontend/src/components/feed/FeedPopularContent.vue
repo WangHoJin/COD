@@ -114,7 +114,7 @@ export default {
     followList: function () {
       console.log("watch");
       console.log(this.followList);
-      this.followingList = this.follow5List;
+      this.followingList = this.followList;
       this.setFollowingCodies();
     },
     codiLikedList: function () {
@@ -189,9 +189,9 @@ export default {
     isLiked(codiId) {
       // console.log(this.$store.state.feed.codiLikedList.codiId);
       for (var i = 0; i < this.$store.state.feed.codiLikedList.length; i++) {
-        console.log("좋아요 리스트: " + this.$store.state.feed.codiLikedList[i].codiId);
+        // console.log("좋아요 리스트: " + this.$store.state.feed.codiLikedList[i].codiId);
         if (this.$store.state.feed.codiLikedList[i].codiId === codiId) {
-          console.log("있음" + this.$store.state.feed.codiLikedList[i].codiId);
+          // console.log("있음" + this.$store.state.feed.codiLikedList[i].codiId);
           return true;
         }
       }
