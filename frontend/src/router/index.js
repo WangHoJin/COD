@@ -128,6 +128,34 @@ const router = new Router({
       ],
     },
     {
+      path: "/setting",
+      name: "setting",
+      redirect: "/setting",
+      component: () => import("@/layouts/SettingLayout"),
+      children: [
+        {
+          name: "settingMain",
+          path: "",
+          component: () => import("@/pages/setting/settingMain.vue"),
+        },
+        {
+          name: "settingLikedCodi",
+          path: "likedCodi",
+          component: () => import("@/pages/setting/settingLikedCodi.vue"),
+        },
+        {
+          name: "settingUpadateProfile",
+          path: "upadateProfile",
+          component: () => import("@/pages/setting/settingUpadateProfile.vue"),
+        },
+        {
+          name: "settingChangePassword",
+          path: "changePassword",
+          component: () => import("@/pages/setting/settingChangePassword.vue"),
+        },
+      ],
+    },
+    {
       path: "/:catchAll(.*)*",
       component: () => import("../pages/Error404.vue"),
     },
