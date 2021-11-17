@@ -72,6 +72,22 @@ const router = new Router({
       ],
     },
     {
+      path: "/feed",
+      redirect: "/feed/main",
+      component: () => import("@/layouts/FeedLayout.vue"),
+      children: [
+        {
+          path: "main",
+          component: () => import("@/pages/feed/FeedMain.vue"),
+        },
+        {
+          path: "search",
+          component: () => import("@/pages/feed/FeedSearch.vue"),
+        },
+      ],
+    },
+
+    {
       path: "/:catchAll(.*)*",
       component: () => import("../pages/Error404.vue"),
     },
@@ -85,8 +101,8 @@ export default router;
 
 router.beforeEach((to, from, next) => {
   let loginUser = store.getters.loginUser;
-  console.log('loginUser', loginUser);
-  if (loginUser || to.name == 'sign-in' || to.name == 'sign-up') {
+  console.log("loginUser", loginUser);
+  if (loginUser || to.name == "sign-in" || to.name == "sign-up") {
     next();
   } else {
     // alert('로그인이 필요한 페이지입니다.');
