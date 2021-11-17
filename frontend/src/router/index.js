@@ -72,6 +72,24 @@ const router = new Router({
       ],
     },
     {
+      path: "/mypage",
+      name: "mypage",
+      redirect: "/mypage/:no",
+      component: () => import("@/layouts/MypageLayout"),
+      children: [
+        {
+          name: "mypageMain",
+          path: ":no",
+          component: () => import("@/pages/mypage/MypageMain.vue"),
+        },
+        {
+          name: "mypageFollow",
+          path: "follow",
+          component: () => import("@/pages/mypage/MypageFollow.vue"),
+        },
+      ],
+    },
+    {
       path: "/feed",
       redirect: "/feed/main",
       component: () => import("@/layouts/FeedLayout.vue"),
