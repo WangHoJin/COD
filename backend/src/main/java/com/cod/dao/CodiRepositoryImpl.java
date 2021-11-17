@@ -151,7 +151,7 @@ public class CodiRepositoryImpl implements CodiRepositoryCustom {
         if (StringUtils.isEmpty(tag)) {
             return null;
         }
-        return qCodi.name.contains(tag);
+        return qCodi.tag.contains(tag);
     }
 
     private BooleanExpression eqUserId(Integer userId) {
