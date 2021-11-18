@@ -35,7 +35,7 @@ export default {
   methods: {
     selectHeader() {
       if (this.$route.name == "feedMain") {
-        this.title = "피드";
+        this.title = "기웃기옷";
       } else if (this.$route.name == "feedSearch") {
         this.title = "검색";
       } else if (this.$route.name == "feedComment") {

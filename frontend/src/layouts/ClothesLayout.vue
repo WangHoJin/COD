@@ -36,7 +36,7 @@ export default {
   methods: {
     selectHeader() {
       if (this.$route.name == "clothesList") {
-        this.title = "옷 목록";
+        this.title = "옷장";
       } else if (this.$route.name == "clothesCreate") {
         this.title = "옷 등록";
       } else if (this.$route.name == "clothesDetail") {

@@ -37,7 +37,7 @@ export default {
   methods: {
     selectHeader() {
       if (this.$route.name == "codiList") {
-        this.title = "코디 목록";
+        this.title = "코디";
         this.listFlag = false;
       } else if (this.$route.name == "codiCreate") {
         this.title = "코디 등록";
