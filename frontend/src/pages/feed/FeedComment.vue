@@ -72,9 +72,9 @@
       style="
         background-color: #ffffff;
         width: 100%;
-        padding: 15px 12px 15px 12px;
+        padding: 15px 12px 0px 12px;
         position: fixed;
-        bottom: 75px;
+        bottom: 95px;
         z-index: 10;
       "
     >
