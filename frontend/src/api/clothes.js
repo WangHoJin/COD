@@ -5,6 +5,7 @@ import store from "@/store";
 async function getClothesList(condition, accessToken) {
   var url = `/clothes?page=${condition.page}&size=${condition.size}`;
   if (condition.userId) url += `&userId=${condition.userId}`;
+  if (condition.type) url += `&type=${condition.type}`;
   try {
     const { data } = await axios.get(url, {
       headers: {
