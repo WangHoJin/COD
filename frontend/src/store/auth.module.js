@@ -48,5 +48,14 @@ export default {
       commit("setAccessToken", null);
       commit("setLoginUser", null);
     },
+    getUser: ({ commit }, payload) => {
+      getProfile(payload)
+        .then((res) => {
+          commit("setLoginUser", res.result);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
   },
 };
