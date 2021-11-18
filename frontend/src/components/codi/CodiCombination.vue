@@ -25,7 +25,7 @@ import { mapGetters } from "vuex";
 import html2canvas from "html2canvas";
 import axios from "@/utils/axios";
 export default {
-  data: function () {
+  data: function() {
     return {
       width: 0,
       height: 0,
@@ -46,24 +46,21 @@ export default {
     copyImg() {
       console.log("클릭실행");
       let myImg;
-      html2canvas(document.querySelector("#codiCombi")).then((canvas) => {
-        // document.body.appendChild(canvas);
+      html2canvas(document.querySelector("#codiCombi"), {
+        allowTaint: true,
+        useCORS: true,
+        logging: true,
+      }).then((canvas) => {
         myImg = canvas.toDataURL("image/png");
-        // console.log(myImg);
-        // myImg = myImg.replace("data:image/png;base64,", "");
-        // console.log(myImg);
         var blobBin = window.atob(myImg.split(",")[1]); // base64 데이터 디코딩
-        // console.log("blobBin", blobBin);
         var array = [];
         for (var i = 0; i < blobBin.length; i++) {
           array.push(blobBin.charCodeAt(i));
         }
         var file = new Blob([new Uint8Array(array)], { type: "image/png" }); // Blob 생성
-        console.log(file);
         var formdata = new FormData();
         formdata.append("images", file);
         let accessToken = this.$store.state.auth.accessToken;
-        console.log(formdata);
         axios
           .post("/images", formdata, {
             headers: {
@@ -96,7 +93,7 @@ export default {
 #codiCombi {
   height: 200px;
   width: 345px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   position: relative;
 }
 #shot {
