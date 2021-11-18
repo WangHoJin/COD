@@ -1,20 +1,5 @@
-<template lang="">
-  <v-container class="codiComment">
-    <!-- 댓글 start-->
-    <!-- <v-row v-for="comment in comments" :key="comment.id">
-      <v-col cols="12" sm="12" md="12" lg="12">
-        <v-divider class="pb-4"></v-divider> -->
-    <!-- 댓글 작성자 -->
-    <!-- <h5 class="blackText">{{ comment.userNickname }}</h5> -->
-    <!-- 수정,삭제 버튼 -->
-    <!-- <a class="grayTextBtn">수정</a> -->
-
-    <!-- <a @click="deleteComments(comment.commentId)" class="grayTextBtn">삭제</a> -->
-    <!-- 댓글 내용 -->
-    <!-- <h4 class="">{{ comment.commentContent }}</h4> -->
-    <!-- </v-col> -->
-    <!-- </v-row> -->
-    <!-- 댓글 end-->
+<template>
+  <v-container style="padding-top: 25px">
     <v-row v-for="comment in comments" :key="comment.commentId">
       <v-col cols="auto" style="padding-right: 0">
         <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
@@ -87,7 +72,7 @@
       style="
         background-color: #ffffff;
         width: 100%;
-        padding: 15px 15px 0px 0px;
+        padding: 15px 12px 0px 12px;
         position: fixed;
         bottom: 95px;
         z-index: 10;
@@ -110,6 +95,7 @@
     </v-row>
   </v-container>
 </template>
+
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { createComment, updateComment, deleteComment } from "@/api/comment";
@@ -186,25 +172,8 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-.codiComment {
-  padding-top: 0px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-.blackText {
-  color: #a9a9a9;
-  width: 280px;
-  display: inline-block;
-}
-.grayTextBtn {
-  color: #a9a9a9;
-  display: inline-block;
-  font-size: 13px;
-  padding-left: 2px;
-  padding-right: 2px;
-}
 .profileImg {
   border-style: solid;
   border-color: #857db1;

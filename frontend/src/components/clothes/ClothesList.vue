@@ -12,12 +12,13 @@
         <!-- 옷 리스트 start -->
         <v-container>
           <v-row>
-            <v-col v-for="(c, i) in clothes" :key="i" cols="4" sm="3" md="2" lg="1">
+            <v-col v-for="(c, i) in clothesList" :key="i" cols="4" sm="3" md="2" lg="1">
               <v-card v-if="isTab(c, item.tab)" class="">
                 <v-img
+                  contain
                   height="100px"
-                  src="@/assets/test/바지.png"
-                  @click="clothesClick(i + 1)"
+                  :src="c.clothImgUrl"
+                  @click="clothesClick(c.clothId)"
                 ></v-img>
               </v-card>
             </v-col>
@@ -38,7 +39,7 @@
   </v-item-group>
 </template>
 <script>
-// import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -52,16 +53,22 @@ export default {
         { tab: "아우터" },
         { tab: "잡화" },
       ],
-      clothes: ["아우터", "상의", "상의", "상의", "하의", "하의", "상의", "하의", "하의"],
     };
   },
   components: {},
   computed: {
-    // ...mapGetters(["clotheses"]),
+    ...mapGetters(["clothesList"]),
   },
-  created() {},
+  created() {
+    this.selectClothes();
+  },
   methods: {
-    // ...mapActions(["getCodies"]),
+    ...mapActions(["getClothesList"]),
+    selectClothes() {
+      let userId = this.$store.state.auth.loginUser.userId;
+      let payload = { userId: userId, page: 1, size: 100 };
+      this.getClothesList(payload);
+    },
     isTab(clothes, tab) {
       if (tab === "전체") return true;
       if (clothes == tab) return true;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <feed-search />
+    <feed-search v-bind:status="'main'" />
     <div>
       <v-tabs v-model="tab" fixed-tabs color="#857DB1">
         <v-tab v-for="item in items" :key="item.tab">
@@ -24,6 +24,9 @@ import FeedPopularContent from "../../components/feed/FeedPopularContent.vue";
 import Header from "../../components/common/Header.vue";
 
 export default {
+  props: {
+    status: { type: String },
+  },
   components: { FeedSearch, FeedFollowingContent, FeedPopularContent },
   data() {
     return {

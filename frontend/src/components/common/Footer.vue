@@ -52,6 +52,5 @@ export default {
   background: #ffffff;
 }
 .menuBtn {
-  /* margin: 0px 17px; */
 }
 </style>

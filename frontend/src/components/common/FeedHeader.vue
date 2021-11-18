@@ -14,7 +14,7 @@
     <!-- 메뉴 타이틀 end -->
 
     <!-- 추가 설정 버튼 start -->
-    <v-menu v-if="listFlag" offset-y>
+    <!-- <v-menu v-if="listFlag" offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon>mdi-dots-vertical</v-icon>
@@ -25,7 +25,7 @@
           <v-list-item-title @click="deleteClick()">삭제하기</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-menu>
+    </v-menu> -->
     <!-- 추가 설정 버튼 end -->
   </v-app-bar>
 </template>
@@ -39,19 +39,19 @@ export default {
   },
   props: {
     title: String,
-    listFlag: Boolean,
+    // listFlag: Boolean,
   },
 
   methods: {
-    deleteClick() {
-      console.log("삭제 클릭");
-      let token = this.$store.state.auth.accessToken;
-      deleteCodi(this.$route.params.no, token);
-      alert("삭제하시겠습니까?");
-      this.$router.push({
-        name: "codi",
-      });
-    },
+    // deleteClick() {
+    //   console.log("삭제 클릭");
+    //   let token = this.$store.state.auth.accessToken;
+    //   deleteCodi(this.$route.params.no, token);
+    //   alert("삭제하시겠습니까?");
+    //   this.$router.push({
+    //     name: "codi",
+    //   });
+    // },
   },
 };
 </script>

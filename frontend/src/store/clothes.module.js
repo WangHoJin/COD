@@ -1,4 +1,5 @@
 import { getClothes, getClothesList } from "@/api/clothes";
+import store from "@/store";
 
 export default {
   // 현재 상태들
@@ -25,6 +26,7 @@ export default {
   actions: {
     // 옷 리스트 가져오기
     getClothesList: ({ commit }, payload) => {
+      console.log("사이즈", payload.size);
       getClothesList(payload)
         .then((res) => {
           commit("setClothesList", res);

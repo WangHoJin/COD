@@ -91,16 +91,24 @@ const router = new Router({
     },
     {
       path: "/feed",
+      name: "feed",
       redirect: "/feed/main",
       component: () => import("@/layouts/FeedLayout.vue"),
       children: [
         {
           path: "main",
+          name: "feedMain",
           component: () => import("@/pages/feed/FeedMain.vue"),
         },
         {
           path: "search",
+          name: "feedSearch",
           component: () => import("@/pages/feed/FeedSearch.vue"),
+        },
+        {
+          path: "comment/:no",
+          name: "feedComment",
+          component: () => import("@/pages/feed/FeedComment.vue"),
         },
       ],
     },

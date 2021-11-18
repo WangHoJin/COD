@@ -9,7 +9,14 @@
     :parent="true"
     class="dragImg"
   >
-    <v-img class="" lazy-src="https://picsum.photos/id/11/10/6" :src="path"></v-img>
+    <v-img
+      contain
+      crossOrigin="true"
+      class=""
+      lazy-src="https://picsum.photos/id/11/10/6"
+      :src="path"
+    ></v-img>
+    <!-- 선택한 이미지 -->
   </vue-draggable-resizable>
 </template>
 <script>

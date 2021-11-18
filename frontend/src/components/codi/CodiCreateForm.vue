@@ -1,8 +1,20 @@
 <template>
   <v-form>
-    <v-container v-if="true">
+    <v-container>
+      <!-- 옷 조합 start -->
+      <v-row class="square">
+        <v-col class="inner" cols="auto" sm="12" md="12" lg="12">
+          <v-card class="codiImg">
+            <div class="codiCombi">
+              <ClothesImg v-for="(c, i) in $store.state.codi.usedClothes" :key="i" :path="c.path" />
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+      <!-- 옷 조합 end -->
+
+      <!-- 옷 사용 목록 start -->
       <v-row>
-        <!-- 옷 사용 목록 start -->
         <v-col class="" cols="12" md="4">
           <v-divider class="pb-4"></v-divider>
           <h5>사용목록</h5>
@@ -10,14 +22,13 @@
         <v-col class="" cols="4" md="4" v-for="(c, i) in $store.state.codi.usedClothes" :key="i"
           ><v-card class="codiImg">
             <v-icon class="cancelBtn" @click="removeClothes(c.clothesId)">mdi-close</v-icon>
-            <v-img height="100px" :src="c.path"></v-img>
+            <v-img contain height="100px" :src="c.path"></v-img>
           </v-card>
         </v-col>
-        <!-- 옷 사용 목록 end -->
       </v-row>
-    </v-container>
-    <!-- 코디 입력 폼 start -->
-    <v-container v-if="true">
+      <!-- 옷 사용 목록 end -->
+
+      <!-- 코디 입력 폼 start -->
       <v-row>
         <v-col class="inputForm" cols="12" md="4">
           <v-divider class="pb-4"></v-divider>
@@ -35,32 +46,25 @@
           <v-textarea outlined label="설명" v-model="description"></v-textarea>
         </v-col>
       </v-row>
-      <!-- 코디 공대 유무 -->
-      <!-- <v-row>
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-col class="switchBtn" cols="4" md="4"><v-switch label="공개"></v-switch></v-col>
-      </v-row> -->
-      <!-- <v-row>
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-col class="" cols="4" md="4">
-          <v-btn class="mr-4" @click="submit"> submit </v-btn></v-col
-        >
-      </v-row> -->
     </v-container>
     <!-- 코디 입력 폼 end -->
 
     <!-- 등록 버튼 start -->
-    <v-btn icon id="addBtn" @click="addClothes()">
+    <v-btn icon id="addBtn" @click="clickCreate()">
       <v-icon large color="#857DB1" left> mdi-checkbox-marked-circle </v-icon>
     </v-btn>
     <!-- 등록 버튼 end -->
   </v-form>
 </template>
 <script>
+import ClothesImg from "@/components/codi/ClothesImg.vue";
 import { createCodi } from "@/api/codi";
+import html2canvas from "html2canvas";
+import axios from "@/utils/axios";
 export default {
+  components: {
+    ClothesImg,
+  },
   data: function () {
     return {
       name: "",
@@ -69,6 +73,9 @@ export default {
       thumbnail: "",
       coordinate: [],
     };
+  },
+  created() {
+    this.$store.state.codi.usedClothes = "";
   },
   methods: {
     removeClothes(clothesId) {
@@ -84,19 +91,53 @@ export default {
       console.log("새로운 배열", newlist);
       this.$store.dispatch("removeUsedClothes", newlist);
     },
-    addClothes() {
-      alert("확인");
-      let coordinates = [{}];
+    addClothes(path) {
+      console.log("위치", this.thumbnail);
       let codi = {
         name: this.name,
         tag: this.tag,
         description: this.description,
-        thumbnail: "@/assets/test/상의.jpg",
+        thumbnail: path,
         coordinate: "json",
       };
       let token = this.$store.state.auth.accessToken;
       createCodi(codi, token).then(() => {
-        console.log("등록 성공");
+        this.$router.push({
+          name: "clothesList",
+        });
+      });
+    },
+    clickCreate() {
+      let myImg;
+      html2canvas(document.querySelector(".codiCombi"), {
+        allowTaint: true,
+        useCORS: true,
+        logging: true,
+      }).then((canvas) => {
+        myImg = canvas.toDataURL("image/png");
+        var blobBin = window.atob(myImg.split(",")[1]); // base64 데이터 디코딩
+        var array = [];
+        for (var i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i));
+        }
+        var file = new Blob([new Uint8Array(array)], { type: "image/png" }); // Blob 생성
+        var formdata = new FormData();
+        formdata.append("images", file);
+        let accessToken = this.$store.state.auth.accessToken;
+        axios
+          .post("/images", formdata, {
+            headers: {
+              "X-ACCESS-TOKEN": accessToken,
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            this.addClothes(res.data);
+          })
+          .catch((error) => {
+            console.log("에러야?");
+            console.log(error.response.data.message);
+          });
       });
     },
   },
@@ -126,5 +167,24 @@ export default {
   top: -6.5%;
   right: 1%;
   z-index: 1;
+}
+.dragImg {
+  /* border: 1px solid white; */
+  border: none;
+}
+.square {
+  width: 100%;
+  margin: 0;
+}
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.codiCombi {
+  height: 100%;
+  width: 345px;
+  /* border: 1px solid black; */
+  position: relative;
 }
 </style>
