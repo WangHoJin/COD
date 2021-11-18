@@ -112,7 +112,7 @@ export default {
 <style scoped>
 .content {
   /* padding: 10px 12px; */
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
 }
 .img-thumbnail {
   /* width: 10vw; */
