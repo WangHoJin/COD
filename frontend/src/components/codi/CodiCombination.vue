@@ -7,7 +7,7 @@
             <div id="codiCombi">
               <ClothesImg v-for="(c, i) in $store.state.codi.usedClothes" :key="i" :path="c.path" />
             </div>
-            <!-- <v-button @click="copyImg()">click</v-button> -->
+            <v-button @click="copyImg()">click</v-button>
           </v-card>
         </v-col>
       </v-row>
@@ -23,6 +23,7 @@ import ChoiceClothes from "@/components/codi/ChoiceClothes.vue";
 import ClothesImg from "@/components/codi/ClothesImg.vue";
 import { mapGetters } from "vuex";
 import html2canvas from "html2canvas";
+import axios from "@/utils/axios";
 export default {
   data: function () {
     return {
@@ -48,7 +49,34 @@ export default {
       html2canvas(document.querySelector("#codiCombi")).then((canvas) => {
         // document.body.appendChild(canvas);
         myImg = canvas.toDataURL("image/png");
-        myImg = myImg.replace("data:image/png;base64,", "");
+        // console.log(myImg);
+        // myImg = myImg.replace("data:image/png;base64,", "");
+        // console.log(myImg);
+        var blobBin = window.atob(myImg.split(",")[1]); // base64 데이터 디코딩
+        // console.log("blobBin", blobBin);
+        var array = [];
+        for (var i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i));
+        }
+        var file = new Blob([new Uint8Array(array)], { type: "image/png" }); // Blob 생성
+        console.log(file);
+        var formdata = new FormData();
+        formdata.append("images", file);
+        let accessToken = this.$store.state.auth.accessToken;
+        console.log(formdata);
+        axios
+          .post("/images", formdata, {
+            headers: {
+              "X-ACCESS-TOKEN": accessToken,
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+          });
       });
     },
   },
