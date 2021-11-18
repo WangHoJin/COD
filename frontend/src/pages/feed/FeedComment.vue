@@ -1,6 +1,10 @@
 <template>
   <v-container style="padding-top: 25px">
-    <div v-if="comments.length == 0" class="mt-16 text-center"><h4>아직 댓글이 없습니다!</h4></div>
+    <div v-if="comments.length == 0" class="mt-16 text-center">
+      <v-icon x-large class="mt-16 mb-3">mdi-package-variant</v-icon>
+
+      <h4>아직 댓글이 없습니다!</h4>
+    </div>
     <v-row v-for="comment in comments" :key="comment.commentId">
       <v-col cols="auto" style="padding-right: 0">
         <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
