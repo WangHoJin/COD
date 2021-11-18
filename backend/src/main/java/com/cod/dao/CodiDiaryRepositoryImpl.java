@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -34,10 +34,10 @@ public class CodiDiaryRepositoryImpl implements CodiDiaryRepositoryCustom {
                         qCodiDiary.thumbnail,
                         qCodiDiary.content,
                         qCodiDiary.createdAt,
-                        qCodiDiary.updatedAt,
+                        qCodiDiary.updatedAt
                 ))
                 .from(qCodiDiary)
-                .eqDate(selectCodiDiaryInput.getDate()), eqUserId(selectCodiDiaryInput.getUserId()))
+                .where(eqDate(selectCodiDiaryInput.getDate()), eqUserId(selectCodiDiaryInput.getUserId()))
                 .orderBy(qCodiDiary.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetchResults();
@@ -48,11 +48,11 @@ public class CodiDiaryRepositoryImpl implements CodiDiaryRepositoryCustom {
     }
 
 
-    private BooleanExpression eqDate(String date) {
-        if (StringUtils.isEmpty()) {
+    private BooleanExpression eqDate(LocalDate date) {
+        if (StringUtils.isEmpty(date)) {
             return null;
         }
-        return qCodiDiary.date.between());
+        return qCodiDiary.date.eq(date);
     }
 
     private BooleanExpression eqUserId(Integer userId) {
@@ -63,4 +63,3 @@ public class CodiDiaryRepositoryImpl implements CodiDiaryRepositoryCustom {
     }
 
 }
-

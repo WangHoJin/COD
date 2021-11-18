@@ -48,7 +48,7 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
 
-        // 2. 코디 생성
+        // 2. 코디일기 생성
         CodiDiary codiDiary;
         try {
             User loginUser = jwtService.getUser();
@@ -59,7 +59,7 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
             }
             codiDiary = CodiDiary.builder()
                     .user(loginUser)
-                    .date(LocalDate.now())
+                    .date(createCodiDiaryInput.getDate())
                     .thumbnail(createCodiDiaryInput.getThumbnail())
                     .content(createCodiDiaryInput.getContent())
                     .build();
@@ -85,7 +85,7 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(BAD_ID_VALUE));
         }
-        // 2. 코디 조회
+        // 2. 코디일기 조회
         CodiDiary codiDiary;
         SelectCodiDiaryOutput selectCodiDiaryOutput;
         try {
@@ -126,7 +126,7 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new PageResponse<>(NO_VALUES));
 
-        // 2. 코디 조회
+        // 2. 코디일기 조회
         Pageable pageable = PageRequest.of(selectCodiDiaryInput.getPage() - 1, selectCodiDiaryInput.getSize());
         Page<SelectCodiDiaryOutput> selectCodiDiaryOutputs;
         try {
@@ -146,10 +146,10 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
     @Transactional
     public ResponseEntity<Response<Object>> updateCodiDiary(UpdateCodiDiaryInput updateCodiDiaryInput, int codiDiaryId) {
         try {
-            // 1. 코디 조회
+            // 1. 코디일기 조회
             CodiDiary codiDiary = codiDiaryRepository.findById(codiDiaryId).orElse(null);
 
-            // 2. 코디 수정
+            // 2. 코디일기 수정
             if (codiDiary == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(BAD_ID_VALUE));
@@ -170,10 +170,10 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
     @Transactional
     public ResponseEntity<Response<Object>> deleteCodiDiary(int codiDiaryId) {
         try {
-            // 1. 코디 조회
+            // 1. 코디일기 조회
             CodiDiary codiDiary = codiDiaryRepository.findById(codiDiaryId).orElse(null);
 
-            // 2. 코디 삭제
+            // 2. 코디일기 삭제
             if (codiDiary == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(BAD_ID_VALUE));
