@@ -5,6 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.*;
@@ -16,26 +18,47 @@ import static javax.persistence.GenerationType.*;
 @Getter @Setter
 @Entity
 @Table(name = "user")
-public class UserDB {
+public class User {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = IDENTITY)
     private int id;
 
-    @Column(name = "email", nullable = false, length = 45)
+    @Column(name = "email", nullable = false, length = 45, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false, length = 45)
     private String password;
 
-    @Column(name = "nickname", nullable = false, length = 45)
+    @Column(name = "name", nullable = false, length = 45)
+    private String name;
+
+    @Column(name = "nickname", nullable = false, length = 45, unique = true)
     private String nickname;
+
+    @Column(name = "birth", nullable = false)
+    private LocalDate birth;
+
+    @Column(name = "gender", nullable = false, length = 5)
+    private String gender;
+
+    /**
+     * 프로필 사진
+     */
+    @Column(name = "profile", columnDefinition = "TEXT")
+    private String profile;
+
+    /**
+     * 소개글
+     */
+    @Column(name = "introduction", length = 200)
+    private String introduction;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Date created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private Date updated_at;
+    private LocalDateTime updatedAt;
 }

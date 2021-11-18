@@ -1,5 +1,6 @@
 <template>
-  <v-container>
+  <div>
+    <!-- <v-container> -->
     <div>
       <feed-search />
     </div>
@@ -16,13 +17,14 @@
         </v-tab-item>
       </v-tabs-items>
     </div>
-  </v-container>
+    <!-- </v-container> -->
+  </div>
 </template>
 
 <script>
-import FeedSearch from "../../components/feed/FeedSearch.vue";
-import FeedSearchUserResult from "../../components/feed/FeedSearchUserResult.vue";
-import FeedSearchTagResult from "../../components/feed/FeedSearchTagResult.vue";
+import FeedSearch from '../../components/feed/FeedSearch.vue';
+import FeedSearchUserResult from '../../components/feed/FeedSearchUserResult.vue';
+import FeedSearchTagResult from '../../components/feed/FeedSearchTagResult.vue';
 
 export default {
   components: { FeedSearch, FeedSearchUserResult, FeedSearchTagResult },
@@ -30,7 +32,7 @@ export default {
     return {
       page: 1,
       tab: null,
-      items: [{ tab: "유저검색" }, { tab: "태그검색" }],
+      items: [{ tab: '유저검색' }, { tab: '태그검색' }],
     };
   },
 };

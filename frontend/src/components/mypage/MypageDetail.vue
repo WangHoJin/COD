@@ -3,7 +3,7 @@
     <v-row>
       <!-- 프로필 사진 start -->
       <v-col class="profile" cols="3" sm="3" md="3" lg="3">
-        <v-avatar size="60">
+        <v-avatar size="70">
           <img :src="loginUser.profile" />
         </v-avatar>
       </v-col>
