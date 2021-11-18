@@ -1,6 +1,6 @@
 <template>
-  <v-app-bar dense color="white" fade-img-on-scroll>
-    <v-btn style="margin-left: -10px" small fab text @click="$router.go(-1)">
+  <v-app-bar dense app :color="color" :dark="isDark">
+    <v-btn v-if="hasBack" style="margin-left: -5px" small fab text @click="$router.go(-1)">
       <img src="@/assets/icon/back.png" style="margin-left: 20px; height: 20px; width: 20px" />
       <v-icon>mdi-chevron-lef</v-icon>
     </v-btn>
@@ -13,6 +13,9 @@ export default {
   name: 'Header',
   props: {
     title: String,
+    hasBack: Boolean,
+    color: String,
+    isDark: Boolean,
   },
 };
 </script>
