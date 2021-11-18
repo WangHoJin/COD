@@ -1,8 +1,8 @@
 <template>
   <v-app-bar app absolute color="white" outline>
     <!-- 뒤로가기 버튼 start -->
-    <v-btn icon onclick="history.back()">
-      <v-icon dark left> mdi-arrow-left </v-icon>
+    <v-btn icon @click="$router.go(-1)">
+      <v-icon large> mdi-chevron-left </v-icon>
     </v-btn>
     <!-- 뒤로가기 버튼 end -->
 
@@ -21,9 +21,6 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item>
-          <v-list-item-title @click="updateClick()">수정하기</v-list-item-title>
-        </v-list-item>
         <v-list-item>
           <v-list-item-title @click="deleteClick()">삭제하기</v-list-item-title>
         </v-list-item>
@@ -46,9 +43,6 @@ export default {
   },
 
   methods: {
-    updateClick() {
-      console.log("수정 클릭");
-    },
     deleteClick() {
       console.log("삭제 클릭");
       let token = this.$store.state.auth.accessToken;
