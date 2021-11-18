@@ -20,7 +20,12 @@
         <v-row>
           <v-col v-for="c in $store.state.clothes.clothesList" :key="c.id" cols="4" md="4"
             ><v-card class="codiImg">
-              <v-img height="100px" :src="c.clothImgUrl" @click="addClothes()"></v-img>
+              <v-img
+                contain
+                height="100px"
+                :src="c.clothImgUrl"
+                @click="addClothes(c.clothImgUrl)"
+              ></v-img>
             </v-card>
           </v-col>
         </v-row>
@@ -52,11 +57,11 @@ export default {
       let payload = { userId: userId, page: 1, size: 100 };
       this.getClothesList(payload);
     },
-    addClothes() {
+    addClothes(src) {
       console.log("추가");
       let payload = {
         clothesId: this.idx++,
-        path: "https://cod-bucket.s3.ap-northeast-2.amazonaws.com/static/9fb4d3c0-bb13-4044-8689-1806c90c661cyaleHood.png",
+        path: src,
       };
       this.$store.dispatch("getUsedClothes", payload);
       // this.getClothes(payload);
