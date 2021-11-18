@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 public class CreateCodiDiaryInput {
-    private int codiDiaryId;
 //    private String date;
     private String thumbnail;
     private String content;

@@ -45,7 +45,6 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
         if (!ValidationCheck.isValid(createCodiDiaryInput.getName())
-                || !ValidationCheck.isValid(createCodiDiaryInput.getCoordinate())
                 || !ValidationCheck.isValid(createCodiDiaryInput.getThumbnail()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
@@ -63,9 +62,7 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
                     .user(loginUser)
                     .name(createCodiDiaryInput.getName())
                     .thumbnail(createCodiDiaryInput.getThumbnail())
-                    .coordinate(createCodiDiaryInput.getCoordinate())
-                    .description(createCodiDiaryInput.getDescription())
-                    .tag(createCodiDiaryInput.getTag())
+                    .content(createCodiDiaryInput.getContent())
                     .build();
 
             codiDiaryRepository.save(codiDiary);

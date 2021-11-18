@@ -37,7 +37,7 @@ public class CodiDiaryRepositoryImpl implements CodiDiaryRepositoryCustom {
                         qCodiDiary.updatedAt,
                 ))
                 .from(qCodiDiary)
-                .eqName(selectCodiDiaryInput.getName()), eqUserId(selectCodiDiaryInput.getUserId()))
+                .eqDate(selectCodiDiaryInput.getDate()), eqUserId(selectCodiDiaryInput.getUserId()))
                 .orderBy(qCodiDiary.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetchResults();
@@ -48,11 +48,11 @@ public class CodiDiaryRepositoryImpl implements CodiDiaryRepositoryCustom {
     }
 
 
-    private BooleanExpression eqName(String word) {
-        if (StringUtils.isEmpty(word)) {
+    private BooleanExpression eqDate(String date) {
+        if (StringUtils.isEmpty()) {
             return null;
         }
-        return qCodiDiary.name.contains(word);
+        return qCodiDiary.date.between());
     }
 
     private BooleanExpression eqUserId(Integer userId) {

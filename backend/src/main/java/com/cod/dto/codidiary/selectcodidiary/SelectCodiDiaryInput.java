@@ -1,7 +1,7 @@
 package com.cod.dto.codidiary.selectcodidiary;
 
 import lombok.*;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 @Setter
 public class SelectCodiDiaryInput {
     private Integer userId;
-    private DateTime date;
+    private LocalDate date;
     private int page;
     private int size;
 }
