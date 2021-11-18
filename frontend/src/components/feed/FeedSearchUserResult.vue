@@ -7,7 +7,7 @@
             <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
           </v-col>
           <v-col style="padding: 28px 0px 20px 12px">
-            <h4 style="text-align: left">{{ user.nickname }}</h4>
+            <h4 @click="userClick(user.userId)" style="text-align: left">{{ user.nickname }}</h4>
           </v-col>
         </v-row>
       </div>
@@ -39,6 +39,12 @@ export default {
       // });
       console.log(this.input);
       console.log(this.userList);
+    },
+    userClick(userId) {
+      console.log("유저클릭" + userId);
+      this.$router.push({
+        path: `../mypage/` + userId,
+      });
     },
   },
 };

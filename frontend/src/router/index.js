@@ -97,12 +97,12 @@ const router = new Router({
       children: [
         {
           path: "main",
-          name: "main",
+          name: "feedMain",
           component: () => import("@/pages/feed/FeedMain.vue"),
         },
         {
           path: "search",
-          name: "search",
+          name: "feedSearch",
           component: () => import("@/pages/feed/FeedSearch.vue"),
         },
         {

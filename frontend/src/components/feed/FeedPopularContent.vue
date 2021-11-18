@@ -1,14 +1,19 @@
 <template>
-  <v-container style="padding: 0">
+  <v-container style="padding: 0 0 70px 0">
     <div v-for="codi in codiList" :key="codi.codiId">
       <v-flex style="padding: 12px 12px 8px 12px">
         <div class="profileInfo">
           <v-row>
             <v-col cols="auto" style="padding-right: 0">
-              <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
+              <v-img
+                @click="userClick(codi.userId)"
+                class="profileImg"
+                src="../../assets/logo/login.png"
+              >
+              </v-img>
             </v-col>
             <v-col cols="auto" style="padding: 20px 0px 18px 12px">
-              <h4>{{ codi.userNickname }}</h4>
+              <h4 @click="userClick(codi.userId)">{{ codi.userNickname }}</h4>
             </v-col>
             <v-col style="padding: 23px 0px 18px 6px">
               <h5
@@ -214,6 +219,11 @@ export default {
     comment(codiId) {
       this.$router.push({
         path: "comment/" + codiId,
+      });
+    },
+    userClick(userId) {
+      this.$router.push({
+        path: "../mypage/" + userId,
       });
     },
   },

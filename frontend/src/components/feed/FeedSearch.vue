@@ -10,6 +10,8 @@
         hide-details=""
         @click:append="search()"
         v-on:keyup.enter="search()"
+        color="#857db1"
+        background-color="#e0e0e0"
       >
       </v-text-field>
     </v-container>
@@ -43,7 +45,7 @@ export default {
       console.log("status:" + this.status);
       if (this.status == "main") {
         this.$router.push({
-          name: "search",
+          name: "feedSearch",
         });
       }
       console.log(this.$store.state.feed.userList);
@@ -52,4 +54,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.gg {
+  color: #d1cbe6;
+}
+</style>
