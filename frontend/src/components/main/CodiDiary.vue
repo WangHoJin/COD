@@ -185,7 +185,8 @@ export default {
     },
     clickPlus(date) {
       console.log(date);
-      this.$router.push({ name: `record-codi-select` });
+      let str = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      this.$router.push({ path: `record-codi/select?date=${str}` });
     },
   },
 };

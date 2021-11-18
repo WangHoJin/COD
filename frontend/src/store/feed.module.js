@@ -10,6 +10,8 @@ export default {
     followList: [],
     codiLikedList: [],
     userList: [],
+    followerList: [],
+    followingList: [],
   },
   getters: {
     followingCodies(state) {
@@ -26,6 +28,12 @@ export default {
     },
     userList(state) {
       return state.userList;
+    },
+    followerList(state) {
+      return state.followerList;
+    },
+    followingList(state) {
+      return state.followingList;
     },
   },
   mutations: {
@@ -48,6 +56,12 @@ export default {
     setUserList(state, payload) {
       console.log("user mutation");
       state.userList = payload;
+    },
+    setFollowerList(state, payload) {
+      state.followerList = payload;
+    },
+    setFollowingList(state, payload) {
+      state.followingList = payload;
     },
   },
   actions: {
@@ -85,14 +99,36 @@ export default {
     },
     getCodiLiked(context, payload) {
       let payload2 = { page: payload.page, size: payload.size };
-      getCodiLikedList(payload2, payload.accessToken).then((res) => {
-        context.commit("setCodiLikedList", res);
-      });
+      getCodiLikedList(payload2, payload.accessToken)
+        .then((res) => {
+          context.commit("setCodiLikedList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
     getUsers(context, payload) {
       getUserList(payload)
         .then((res) => {
           context.commit("setUserList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    getFollower(context, payload) {
+      getFollowList(payload)
+        .then((res) => {
+          context.commit("setFollowerList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    getFollowing(context, payload) {
+      getFollowList(payload)
+        .then((res) => {
+          context.commit("setFollowingList", res);
         })
         .catch(function (err) {
           console.log(err);

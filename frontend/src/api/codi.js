@@ -1,4 +1,4 @@
-import axios from "@/utils/axios";
+import axios from '@/utils/axios';
 
 // 코디 리스트 조회 API
 async function getCodiList(condition) {
@@ -28,9 +28,9 @@ async function getCodi(codiId) {
 async function createCodi(codi, accessToken) {
   // console.log("createCodi API", codi);
   try {
-    return axios.post("/codies", codi, {
+    return axios.post('/codies', codi, {
       headers: {
-        "X-ACCESS-TOKEN": accessToken,
+        'X-ACCESS-TOKEN': accessToken,
       },
     });
   } catch (error) {
@@ -47,10 +47,14 @@ async function updateCodi(codi, codiId) {
   }
 }
 // 코디 삭제 API
-async function deleteCodi(codiId) {
+async function deleteCodi(codiId, accessToken) {
   // console.log("deleteCodi API", codiId);
   try {
-    return axios.delete(`/codies/${codiId}`);
+    return axios.delete(`/codies/${codiId}`, {
+      headers: {
+        'X-ACCESS-TOKEN': accessToken,
+      },
+    });
   } catch (error) {
     console.log(error);
     console.error(error.response.data.message);

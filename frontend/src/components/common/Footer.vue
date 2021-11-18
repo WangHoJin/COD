@@ -30,7 +30,10 @@ export default {
   }),
   methods: {
     selectMenu(i) {
-      this.$router.push({ name: this.urls[i] }).catch((err) => {});
+      if (i == 4) {
+        let userId = this.$store.state.auth.loginUser.userId;
+        this.$router.push({ name: this.urls[i], params: { no: userId } }).catch((err) => {});
+      } else this.$router.push({ name: this.urls[i] }).catch((err) => {});
     },
   },
 };
@@ -49,6 +52,5 @@ export default {
   background: #ffffff;
 }
 .menuBtn {
-  /* margin: 0px 17px; */
 }
 </style>
