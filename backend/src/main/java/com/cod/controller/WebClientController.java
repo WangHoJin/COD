@@ -35,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,7 +44,7 @@ public class WebClientController {
     private final AmazonS3Client amazonS3Client;
 
     @PostMapping("/rembg")
-    public byte[] upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
+    public String upload(@RequestParam("images") MultipartFile multipartFile) throws IOException {
         String url = s3Service2.upload(multipartFile, "static");
 
         //Memory 조정: 10M (default 256KB)
@@ -85,51 +86,58 @@ public class WebClientController {
                 .exchangeStrategies(exchangeStrategies)
                 .build();
 
-        //method1
-//        byte[] fileItem = client.get()
-//                .uri("?url=https://cod-bucket2.s3.ap-northeast-2.amazonaws.com/static/54e1f959-774f-4c19-bf8f-b4fe384cd64bolli-the-polite-cat.jpg")
-//                .accept(MediaType.IMAGE_PNG)
-//                .retrieve()
-//                .bodyToMono(byte[].class)
-//                .block();
-        //method2
-//        Mono<byte[]> monoContents = client
-//                .get()
-//                .uri("/largefiles/1")
-//                .retrieve()
-//                .bodyToMono(byte[].class);
-
-        byte[] image = client
+        byte[] byteArray = client
                 .get()
-                .uri(url)
+                .uri("?url="+url)
                 .accept(MediaType.IMAGE_JPEG)
                 .retrieve()
                 .bodyToMono(byte[].class)
                 .block();
 
-        return image;
+        //파일로 변환
+        int lByteArraySize = byteArray.length;
+        String filename = "tempFile_" + multipartFile.getOriginalFilename();
+        System.out.println(filename);
+        String res = null;
+        try{
 
-//        File uploadFile = new File()
-//        return "OK";
+            String rootPath = System.getProperty("user.dir");
+            String path = rootPath+File.separator+"temp"; //폴더 경로
+            File Folder = new File(path);
+            // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+            if (!Folder.exists()) {
+                try{
+                    Folder.mkdir(); //폴더 생성합니다.
+                    System.out.println("폴더가 생성되었습니다.");
+                }
+                catch(Exception e){
+                    e.getStackTrace();
+                }
+            }else {
+                System.out.println("이미 폴더가 생성되어 있습니다.");
+            }
 
-//        s3Service2.upload(new FileOutputStream(fileItem).write(img);,"static");
+            System.out.println(multipartFile.getName());
+            System.out.println(multipartFile.getOriginalFilename());
+            File lOutFile = new File(path+File.separator+filename);
+            System.out.println(path+File.separator+filename);
+            FileOutputStream lFileOutputStream = new FileOutputStream(lOutFile);
+            lFileOutputStream.write(byteArray);
+            lFileOutputStream.close();
 
-//        File uploadFile = convert(fileItem).
-//        s3Service2.upload()
+            res = s3Service2.upload(lOutFile, "static");
+            try{
+                lOutFile.delete();
+                System.out.println("삭제성공");
 
-//        Flux<DataBuffer> dataBufferFlux = client.get()
-//                .uri("?url=https://cod-bucket2.s3.ap-northeast-2.amazonaws.com/static/54e1f959-774f-4c19-bf8f-b4fe384cd64bolli-the-polite-cat.jpg")
-//                .accept(MediaType.IMAGE_PNG)
-//                .retrieve()
-//                .bodyToFlux(DataBuffer.class);
-//
-//        DataBufferUtils.write(dataBufferFlux,"/",).block;
-//        s3Service2.upload(fileItem,"static");
+            }catch (Exception e){
+                System.out.println("삭제실패");
+            }
 
-//        return client.get()
-//                .uri("?url=https://cod-bucket2.s3.ap-northeast-2.amazonaws.com/static/54e1f959-774f-4c19-bf8f-b4fe384cd64bolli-the-polite-cat.jpg")
-//                .retrieve()
-//                .bodyToMono(String.class);
+        }catch(Throwable e){
+            e.printStackTrace(System.out);
+        }
+        return res;
     }
 
     @GetMapping("/rembg")
