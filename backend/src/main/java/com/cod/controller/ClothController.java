@@ -62,11 +62,11 @@ public class ClothController {
         }
         if(selectClothInput.getType()!=null){
             log.info("[GET] /api/clothes?userId=&page=&size=");
-            return clothService.selectClothList(selectClothInput,false);
+            return clothService.selectClothList(selectClothInput,true);
         }
         else{
             log.info("[GET] /api/clothes?userId=&type=&page=&size=");
-            return clothService.selectClothList(selectClothInput,true);
+            return clothService.selectClothList(selectClothInput,false);
         }
 
 
