@@ -5,6 +5,10 @@
     <div v-if="loading" class="chart">
       <DoughnutChart :chartData="chartData" :options="chartOptions" />
     </div>
+    <div v-else class="mt-6 text-center">
+      <v-icon x-large class="mt-16 mb-3">mdi-hanger</v-icon>
+      <h4>아직 옷장에 옷이 없습니다!</h4>
+    </div>
   </div>
 </template>
 <script>
@@ -89,7 +93,7 @@ export default {
         }
       }
       this.chartOptions.plugins.doughnutlabel.labels[1].text = maxColor.color;
-      this.loading = true;
+      if (map.size > 0) this.loading = true;
       console.log(this.chartData);
     });
 

@@ -1,7 +1,7 @@
-import { getFollowingCodiList, getPopularCodiList } from "@/api/feed";
-import { getFollowList } from "@/api/follow";
-import { getCodiLikedList } from "../api/codiLiked";
-import { getUserList } from "@/api/user";
+import { getFollowingCodiList, getPopularCodiList } from '@/api/feed';
+import { getFollowList } from '@/api/follow';
+import { getCodiLikedList } from '../api/codiLiked';
+import { getUserList } from '@/api/user';
 
 export default {
   state: {
@@ -38,23 +38,23 @@ export default {
   },
   mutations: {
     setFollowingCodies(state, payload) {
-      console.log("following mutation");
+      console.log('following mutation');
       state.followingCodies = payload;
     },
     setPopularCodies(state, payload) {
-      console.log("popular mutation");
+      console.log('popular mutation');
       state.popularCodies = payload;
     },
     setFollowList(state, payload) {
-      console.log("follow mutation");
+      console.log('follow mutation');
       state.followList = payload;
     },
     setCodiLikedList(state, payload) {
-      console.log("like mutation");
+      console.log('like mutation');
       state.codiLikedList = payload;
     },
     setUserList(state, payload) {
-      console.log("user mutation");
+      console.log('user mutation');
       state.userList = payload;
     },
     setFollowerList(state, payload) {
@@ -66,12 +66,12 @@ export default {
   },
   actions: {
     getFollowingCodies(context, payload) {
-      console.log("vuex action");
+      console.log('vuex action');
       let payload2 = { page: payload.page, size: payload.size };
       getFollowingCodiList(payload2, payload.accessToken)
         .then((res) => {
-          console.log("vuex axios");
-          context.commit("setFollowingCodies", res);
+          console.log('vuex axios');
+          context.commit('setFollowingCodies', res);
         })
         .catch(function (err) {
           console.log(err);
@@ -80,8 +80,8 @@ export default {
     getPopularCodies(context, payload) {
       getPopularCodiList(payload)
         .then((res) => {
-          console.log("popularCodiList axios");
-          context.commit("setPopularCodies", res);
+          console.log('popularCodiList axios');
+          context.commit('setPopularCodies', res);
         })
         .catch(function (err) {
           console.log(err);
@@ -90,8 +90,8 @@ export default {
     getFollows(context, payload) {
       getFollowList(payload)
         .then((res) => {
-          console.log("action" + JSON.stringify(payload));
-          context.commit("setFollowList", res);
+          console.log('action' + JSON.stringify(payload));
+          context.commit('setFollowList', res);
         })
         .catch(function (err) {
           console.log(err);
@@ -101,7 +101,7 @@ export default {
       let payload2 = { page: payload.page, size: payload.size };
       getCodiLikedList(payload2, payload.accessToken)
         .then((res) => {
-          context.commit("setCodiLikedList", res);
+          context.commit('setCodiLikedList', res);
         })
         .catch(function (err) {
           console.log(err);
@@ -110,7 +110,7 @@ export default {
     getUsers(context, payload) {
       getUserList(payload)
         .then((res) => {
-          context.commit("setUserList", res);
+          context.commit('setUserList', res);
         })
         .catch(function (err) {
           console.log(err);
@@ -119,7 +119,7 @@ export default {
     getFollower(context, payload) {
       getFollowList(payload)
         .then((res) => {
-          context.commit("setFollowerList", res);
+          context.commit('setFollowerList', res);
         })
         .catch(function (err) {
           console.log(err);
@@ -128,7 +128,7 @@ export default {
     getFollowing(context, payload) {
       getFollowList(payload)
         .then((res) => {
-          context.commit("setFollowingList", res);
+          context.commit('setFollowingList', res);
         })
         .catch(function (err) {
           console.log(err);

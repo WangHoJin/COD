@@ -1,16 +1,26 @@
 <template>
   <v-container style="padding: 0 0 70px 0">
+    <div v-if="codiList.length == 0" class="mt-16 pt-10 text-center">
+      <v-icon x-large class="mt-16 mb-3">mdi-package-variant</v-icon>
+      <h4>아직 아무도 코디를 올리지 않았어요 😥</h4>
+    </div>
     <div v-for="codi in codiList" :key="codi.codiId">
       <v-flex style="padding: 12px 12px 8px 12px">
         <div class="profileInfo">
           <v-row>
             <v-col cols="auto" style="padding-right: 0">
               <v-img
+                v-if="!codi.userProfileImg"
                 @click="userClick(codi.userId)"
                 class="profileImg"
                 src="../../assets/logo/login.png"
-              >
-              </v-img>
+              />
+              <v-img
+                v-else
+                @click="userClick(codi.userId)"
+                class="profileImg"
+                :src="codi.userProfileImg"
+              />
             </v-col>
             <v-col cols="auto" style="padding: 20px 0px 18px 12px">
               <h4 @click="userClick(codi.userId)">{{ codi.userNickname }}</h4>
@@ -20,7 +30,7 @@
       </v-flex>
       <v-flex>
         <div>
-          <v-img src="../../assets/img/feedsample.png"></v-img>
+          <v-img :src="codi.codiThumbnail" style="background-color: rgb(133 125 177 / 35%)" />
         </div>
       </v-flex>
       <v-flex style="padding: 12px">
