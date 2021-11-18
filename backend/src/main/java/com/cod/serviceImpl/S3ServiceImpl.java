@@ -33,7 +33,7 @@ public class S3ServiceImpl {
     }
 
     // S3로 파일 업로드하기
-    private String upload(File uploadFile, String dirName) {
+    public String upload(File uploadFile, String dirName) {
         String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();   // S3에 저장될 파일 이름
         if(!fileName.endsWith(".png") && !fileName.endsWith(".jpg")){
             fileName = fileName + ".png";
