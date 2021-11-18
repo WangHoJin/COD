@@ -15,6 +15,7 @@ import com.cod.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import java.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -44,8 +44,7 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
         if (createCodiDiaryInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
-        if (!ValidationCheck.isValid(createCodiDiaryInput.getName())
-                || !ValidationCheck.isValid(createCodiDiaryInput.getThumbnail()))
+        if (!ValidationCheck.isValid(createCodiDiaryInput.getThumbnail()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
 
@@ -60,7 +59,7 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
             }
             codiDiary = CodiDiary.builder()
                     .user(loginUser)
-                    .name(createCodiDiaryInput.getName())
+                    .date(LocalDate.now())
                     .thumbnail(createCodiDiaryInput.getThumbnail())
                     .content(createCodiDiaryInput.getContent())
                     .build();
@@ -104,13 +103,9 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
         selectCodiDiaryOutput = SelectCodiDiaryOutput.builder()
                 .codiDiaryId(codiDiary.getId())
                 .userId(codiDiary.getUser().getId())
-                .userNickname(codiDiary.getUser().getNickname())
-                .userProfileImg(codiDiary.getUser().getProfile())
-                .codiDiaryName(codiDiary.getName())
-                .codiDiaryTag(codiDiary.getTag())
                 .codiDiaryThumbnail(codiDiary.getThumbnail())
-                .codiDiaryCoordinate(codiDiary.getCoordinate())
-                .codiDiaryDescription(codiDiary.getDescription())
+                .codiDiaryDate(codiDiary.getDate())
+                .codiDiaryContent(codiDiary.getContent())
                 .codiDiaryCreatedAt(codiDiary.getCreatedAt())
                 .codiDiaryUpdatedAt(codiDiary.getUpdatedAt())
                 .build();
@@ -158,16 +153,8 @@ public class CodiDiaryServiceImpl implements CodiDiaryService {
             if (codiDiary == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(BAD_ID_VALUE));
-            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getName()))
-                codiDiary.setName(updateCodiDiaryInput.getName());
-            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getTag()))
-                codiDiary.setTag(updateCodiDiaryInput.getTag());
-            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getDescription()))
-                codiDiary.setDescription(updateCodiDiaryInput.getDescription());
-            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getThumbnail()))
-                codiDiary.setThumbnail(updateCodiDiaryInput.getThumbnail());
-            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getCoordinate()))
-                codiDiary.setCoordinate(updateCodiDiaryInput.getCoordinate());
+            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getContent()))
+                codiDiary.setContent(updateCodiDiaryInput.getContent());
             codiDiaryRepository.save(codiDiary);
         } catch (Exception e) {
             log.error("[diaries/patch] database error", e);

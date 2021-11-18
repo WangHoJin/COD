@@ -8,5 +8,5 @@ import lombok.*;
 @Getter
 @Setter
 public class UpdateCodiDiaryInput {
-    private int codiDiaryId;
+    private String content;
 }

@@ -1,7 +1,7 @@
 package com.cod.dto.codidiary.selectcodidiary;
 
 import lombok.*;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
