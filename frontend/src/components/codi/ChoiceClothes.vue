@@ -18,14 +18,9 @@
           </v-tabs>
         </v-row>
         <v-row>
-          <v-col class="" cols="4" md="4"
+          <v-col v-for="c in $store.state.clothes.clothesList" :key="c.id" cols="4" md="4"
             ><v-card class="codiImg">
-              <v-img height="100px" src="@/assets/test/상의.jpg" @click="addClothes()"></v-img>
-            </v-card>
-          </v-col>
-          <v-col class="" cols="4" md="4">
-            <v-card class="codiImg">
-              <v-img height="100px" src="@/assets/test/바지.png" @click="addClothes2()"></v-img>
+              <v-img height="100px" :src="c.clothImgUrl" @click="addClothes()"></v-img>
             </v-card>
           </v-col>
         </v-row>
@@ -45,24 +40,23 @@ export default {
     return { idx: 1 };
   },
   computed: {
-    ...mapGetters["usedClothes"],
+    ...mapGetters[["usedClothes", "clothesList"]],
+  },
+  created() {
+    this.setClothesList();
   },
   methods: {
-    ...mapActions["getUsedClothes"],
+    ...mapActions(["getUsedClothes", "getClothesList"]),
+    setClothesList() {
+      let userId = this.$store.state.auth.loginUser.userId;
+      let payload = { userId: userId, page: 1, size: 100 };
+      this.getClothesList(payload);
+    },
     addClothes() {
       console.log("추가");
       let payload = {
         clothesId: this.idx++,
         path: "https://cod-bucket.s3.ap-northeast-2.amazonaws.com/static/9fb4d3c0-bb13-4044-8689-1806c90c661cyaleHood.png",
-      };
-      this.$store.dispatch("getUsedClothes", payload);
-      // this.getClothes(payload);
-    },
-    addClothes2() {
-      console.log("추가");
-      let payload = {
-        clothesId: this.idx++,
-        path: require("@/assets/test/바지.png"),
       };
       this.$store.dispatch("getUsedClothes", payload);
       // this.getClothes(payload);

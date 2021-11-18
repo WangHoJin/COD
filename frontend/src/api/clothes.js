@@ -1,11 +1,16 @@
 import axios from "@/utils/axios";
+import store from "@/store";
 
 // 옷 리스트 조회 API
 async function getClothesList(condition) {
   var url = `/clothes?page=${condition.page}&size=${condition.size}`;
   if (condition.userId) url += `&userId=${condition.userId}`;
   try {
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, {
+      headers: {
+        "X-ACCESS-TOKEN": store.state.auth.accessToken,
+      },
+    });
     return data.result;
   } catch (error) {
     console.error(error);
