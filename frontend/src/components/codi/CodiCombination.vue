@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <v-container class="codiImgBox" fluid>
-      <v-row>
+      <!-- <v-row>
         <v-col cols="12" sm="12" md="12" lg="12"
           ><v-card class="codiImg">
             <div id="codiCombi">
@@ -10,7 +10,7 @@
             <v-button @click="copyImg()">click</v-button>
           </v-card>
         </v-col>
-      </v-row>
+      </v-row> -->
 
       <!-- 옷 고르기 start -->
       <ChoiceClothes />
@@ -20,12 +20,12 @@
 </template>
 <script>
 import ChoiceClothes from "@/components/codi/ChoiceClothes.vue";
-import ClothesImg from "@/components/codi/ClothesImg.vue";
+// import ClothesImg from "@/components/codi/ClothesImg.vue";
 import { mapGetters } from "vuex";
 import html2canvas from "html2canvas";
 import axios from "@/utils/axios";
 export default {
-  data: function() {
+  data: function () {
     return {
       width: 0,
       height: 0,
@@ -40,7 +40,7 @@ export default {
   },
   components: {
     ChoiceClothes,
-    ClothesImg,
+    // ClothesImg,
   },
   methods: {
     copyImg() {

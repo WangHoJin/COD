@@ -8,7 +8,7 @@
     <template v-slot:default="dialog">
       <v-container class="openClothes">
         <v-row>
-          <v-tabs>
+          <v-tabs show-arrows>
             <v-tab>전체</v-tab>
             <v-tab>상의</v-tab>
             <v-tab>하의</v-tab>
@@ -41,7 +41,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  data: function() {
+  data: function () {
     return { idx: 1 };
   },
   computed: {
@@ -53,8 +53,7 @@ export default {
       console.log("추가");
       let payload = {
         clothesId: this.idx++,
-        path:
-          "https://cod-bucket.s3.ap-northeast-2.amazonaws.com/static/9fb4d3c0-bb13-4044-8689-1806c90c661cyaleHood.png",
+        path: "https://cod-bucket.s3.ap-northeast-2.amazonaws.com/static/9fb4d3c0-bb13-4044-8689-1806c90c661cyaleHood.png",
       };
       this.$store.dispatch("getUsedClothes", payload);
       // this.getClothes(payload);
