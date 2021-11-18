@@ -26,7 +26,7 @@ export default {
       require("@/assets/icon/menu/codi.png"),
       require("@/assets/icon/menu/mypage.png"),
     ],
-    urls: ["main", "feed", "closet", "codi", "mypage"],
+    urls: ["main", "feed", "clothes", "codi", "mypage"],
   }),
   methods: {
     selectMenu(i) {
