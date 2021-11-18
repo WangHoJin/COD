@@ -4,11 +4,7 @@
       <v-row>
         <v-col class="codiList" v-for="(c, i) in codies" :key="i" cols="4" sm="3" md="3" lg="3">
           <v-card outlined>
-            <v-img
-              class="codiImg"
-              src="@/assets/img/feedsample.png"
-              @click="codiClick(c.codiId)"
-            ></v-img>
+            <v-img class="codiImg" :src="c.codiThumbnail" @click="codiClick(c.codiId)"></v-img>
           </v-card>
         </v-col>
       </v-row>
@@ -17,20 +13,20 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 export default {
   data() {
     return {};
   },
   computed: {
-    ...mapGetters(["codies"]),
+    ...mapGetters(['codies']),
   },
   watch: {
     codies: function () {},
   },
   created() {},
   methods: {
-    ...mapActions(["getCodies"]),
+    ...mapActions(['getCodies']),
     search() {
       let payload = { nickname: this.input, tag: this.input, page: 1, size: 10 };
       this.getCodies(payload);
@@ -43,7 +39,7 @@ export default {
     codiClick(codiId) {
       // console.log("코디 클릭" + codiId);
       this.$router.push({
-        path: `../codi/detail/` + codiId,
+        path: `/codi/detail/` + codiId,
       });
     },
   },

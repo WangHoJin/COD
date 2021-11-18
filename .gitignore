@@ -43,3 +43,5 @@ out/
 ### Mac Os ###
 .DS_Store
 /application.pid
+backend/src/main/generated/com/cod/dto/cloth/selectcloth/*.java
+!**/generated/**/Q*.java

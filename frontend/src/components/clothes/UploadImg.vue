@@ -1,19 +1,21 @@
 <template>
   <div>
     <v-container class="clothesImgBox" fluid>
-      <v-row class="img">
-        <v-col cols="12" sm="12" md="12" lg="12"
-          ><v-card class="clothesImg">
-            <v-img class="" height="400px" :src="uploadImg" contain>
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-icon>mdi-package-variant</v-icon>
-                </v-row>
-              </template>
-            </v-img>
-          </v-card>
-        </v-col>
-      </v-row>
+      <!-- <v-row class="img"> -->
+      <!-- <v-col cols="12" sm="12" md="12" lg="12"> -->
+      <div class="img">
+        <v-card class="clothesImg">
+          <!-- <v-img class="" :src="uploadImg" contain>
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-icon>mdi-package-variant</v-icon>
+              </v-row>
+            </template>
+          </v-img> -->
+        </v-card>
+      </div>
+      <!-- </v-col> -->
+      <!-- </v-row> -->
       <v-file-input
         class="upload"
         v-model="file"
@@ -63,36 +65,36 @@
   </div>
 </template>
 <script>
-import axios from "@/utils/axios";
-import { createClothes } from "@/api/clothes";
+import axios from '@/utils/axios';
+import { createClothes } from '@/api/clothes';
 export default {
   data() {
     return {
       file: null,
-      uploadImg: "",
-      category: ["상의", "하의", "아우터", "잡화"],
+      uploadImg: '',
+      category: ['상의', '하의', '아우터', '악세서리'],
       colors: [
-        "빨간색",
-        "노란색",
-        "주황색",
-        "파랑색",
-        "보라색",
-        "회색",
-        "흰색",
-        "검은색",
-        "분홍색",
-        "초록색",
+        '빨간색',
+        '노란색',
+        '주황색',
+        '파랑색',
+        '보라색',
+        '회색',
+        '흰색',
+        '검은색',
+        '분홍색',
+        '초록색',
       ],
-      seasons: ["봄", "여름", "가을", "겨울"],
-      name: "",
-      type: "",
+      seasons: ['봄', '여름', '가을', '겨울'],
+      name: '',
+      type: '',
       isOwned: true,
-      season: "",
-      measure: "",
-      color: "",
-      tag: "",
-      price: "",
-      brand: "",
+      season: '',
+      measure: '',
+      color: '',
+      tag: '',
+      price: '',
+      brand: '',
     };
   },
   methods: {
@@ -102,11 +104,11 @@ export default {
       let ext = file.type.toLowerCase(); //확장자
       // //배열에 추출한 확장자가 존재하는지 체크
       if (
-        !(ext == "image/gif" || ext == "image/png" || ext == "image/jpg" || ext == "image/jpeg")
+        !(ext == 'image/gif' || ext == 'image/png' || ext == 'image/jpg' || ext == 'image/jpeg')
       ) {
         // resetFormElement($(this)); //폼 초기화
         this.file == null;
-        window.alert("이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)");
+        window.alert('이미지 파일이 아닙니다! (gif, png, jpg, jpeg 만 업로드 가능)');
       } else {
         // file = $("#img").prop("files")[0];
         // blobURL = window.URL.createObjectURL(file);
@@ -115,12 +117,12 @@ export default {
         // $(this).slideUp(); //파일 양식 감춤
         let accessToken = this.$store.state.auth.accessToken;
         var fd = new FormData();
-        fd.append("images", this.file);
+        fd.append('images', this.file);
         axios
-          .post("/rembg", fd, {
+          .post('/rembg', fd, {
             headers: {
-              "X-ACCESS-TOKEN": accessToken,
-              "Content-Type": "multipart/form-data",
+              'X-ACCESS-TOKEN': accessToken,
+              'Content-Type': 'multipart/form-data',
             },
           })
           .then((res) => {
@@ -146,7 +148,7 @@ export default {
 
       createClothes(clothes).then(() => {
         this.$router.push({
-          name: "clothesList",
+          name: 'clothesList',
         });
       });
     },
@@ -162,8 +164,14 @@ export default {
 }
 .clothesImg {
   width: 100%;
-  height: 100%;
 }
+
+.clothesImg:before {
+  content: '';
+  display: block;
+  padding-top: 100%; /* 1:1 비율 */
+}
+
 .upload {
   align-items: center;
   align-items: center;
