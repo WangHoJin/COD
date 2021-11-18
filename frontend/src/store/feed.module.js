@@ -1,6 +1,7 @@
 import { getFollowingCodiList, getPopularCodiList } from "@/api/feed";
 import { getFollowList } from "@/api/follow";
 import { getCodiLikedList } from "../api/codiLiked";
+import { getUserList } from "@/api/user";
 
 export default {
   state: {
@@ -8,6 +9,7 @@ export default {
     popularCodies: [],
     followList: [],
     codiLikedList: [],
+    userList: [],
     followerList: [],
     followingList: [],
   },
@@ -23,6 +25,9 @@ export default {
     },
     codiLikedList(state) {
       return state.codiLikedList;
+    },
+    userList(state) {
+      return state.userList;
     },
     followerList(state) {
       return state.followerList;
@@ -43,11 +48,14 @@ export default {
     setFollowList(state, payload) {
       console.log("follow mutation");
       state.followList = payload;
-      console.log(state.followList);
     },
     setCodiLikedList(state, payload) {
       console.log("like mutation");
       state.codiLikedList = payload;
+    },
+    setUserList(state, payload) {
+      console.log("user mutation");
+      state.userList = payload;
     },
     setFollowerList(state, payload) {
       state.followerList = payload;
@@ -91,9 +99,22 @@ export default {
     },
     getCodiLiked(context, payload) {
       let payload2 = { page: payload.page, size: payload.size };
-      getCodiLikedList(payload2, payload.accessToken).then((res) => {
-        context.commit("setCodiLikedList", res);
-      });
+      getCodiLikedList(payload2, payload.accessToken)
+        .then((res) => {
+          context.commit("setCodiLikedList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    getUsers(context, payload) {
+      getUserList(payload)
+        .then((res) => {
+          context.commit("setUserList", res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
     getFollower(context, payload) {
       getFollowList(payload)

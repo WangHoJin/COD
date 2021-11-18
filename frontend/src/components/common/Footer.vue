@@ -16,17 +16,17 @@
 
 <script>
 export default {
-  name: 'Footer',
+  name: "Footer",
   components: {},
   data: () => ({
     icons: [
-      require('@/assets/icon/menu/home.png'),
-      require('@/assets/icon/menu/feed.png'),
-      require('@/assets/icon/menu/closet.png'),
-      require('@/assets/icon/menu/codi.png'),
-      require('@/assets/icon/menu/mypage.png'),
+      require("@/assets/icon/menu/home.png"),
+      require("@/assets/icon/menu/feed.png"),
+      require("@/assets/icon/menu/closet.png"),
+      require("@/assets/icon/menu/codi.png"),
+      require("@/assets/icon/menu/mypage.png"),
     ],
-    urls: ['main', 'feed', 'clothes', 'codi', 'mypage'],
+    urls: ["main", "feed", "closet", "codi", "mypage"],
   }),
   methods: {
     selectMenu(i) {
