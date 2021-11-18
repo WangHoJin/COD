@@ -50,7 +50,6 @@
           <v-spacer></v-spacer>
           <!-- 등록일 -->
           <v-col class="createAt" cols="7" sm="12" md="12" lg="12" align="right">
-            <v-icon class="grayText">mdi-bookmark-outline</v-icon>
             <h5 class="grayText"></h5
           ></v-col>
         </v-row>
@@ -69,6 +68,7 @@
             cols="auto"
             v-for="(tag, index) in splitTag(codi.codiTag)"
             :key="tag"
+            class="mt-1 mb-1"
             style="padding: 0 0 12px 5px"
           >
             <h5 v-if="index >= 1" class="tag">#{{ tag }}</h5>
@@ -83,10 +83,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { createCodiLiked, deleteCodiLiked } from "@/api/codiLiked";
+import { mapActions, mapGetters } from 'vuex';
+import { createCodiLiked, deleteCodiLiked } from '@/api/codiLiked';
 export default {
-  props: ["codi"],
+  props: ['codi'],
   data() {
     return {
       codiList: [],
@@ -95,11 +95,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["followingCodies", "codiLikedList"]),
+    ...mapGetters(['followingCodies', 'codiLikedList']),
   },
   watch: {
     followingCodies: function () {
-      console.log("팔로탭 코디 watch : ", this.followingCodies);
+      console.log('팔로탭 코디 watch : ', this.followingCodies);
       this.codiList = this.followingCodies;
     },
     codiLikedList: function () {
@@ -114,7 +114,7 @@ export default {
     this.setCodiLikedList();
   },
   methods: {
-    ...mapActions(["getFollowingCodies", "getCodiLiked", "getPopularCodies"]),
+    ...mapActions(['getFollowingCodies', 'getCodiLiked', 'getPopularCodies']),
     setFollowingCodies() {
       let accessToken = this.$store.state.auth.accessToken;
       let payload = { page: 1, size: 10, accessToken: accessToken };
@@ -122,11 +122,11 @@ export default {
       this.codiList = this.followingCodies;
     },
     setPopularCodies() {
-      let payload = { startDate: "2021-10-23", endDate: "2021-11-15", page: 1, size: 10 };
+      let payload = { startDate: '2021-10-23', endDate: '2021-11-15', page: 1, size: 10 };
       this.getPopularCodies(payload);
     },
     splitTag(text) {
-      return text.split(",");
+      return text.split(',');
     },
     isLiked(codiId) {
       // console.log(this.$store.state.feed.codiLikedList.codiId);
@@ -152,7 +152,7 @@ export default {
       createCodiLiked(payload, accessToken).then(() => {
         this.setCodiLikedList();
         this.setFollowingCodies();
-        console.log("좋아요 성공");
+        console.log('좋아요 성공');
       });
     },
     deleteCodiLiked(codiId) {
@@ -160,18 +160,18 @@ export default {
       deleteCodiLiked(codiId, accessToken).then(() => {
         this.setCodiLikedList();
         this.setFollowingCodies();
-        console.log("좋아요 취소");
+        console.log('좋아요 취소');
       });
       this.setCodiLikedList();
     },
     comment(codiId) {
       this.$router.push({
-        path: "comment/" + codiId,
+        path: 'comment/' + codiId,
       });
     },
     userClick(userId) {
       this.$router.push({
-        path: "../mypage/" + userId,
+        path: '../mypage/' + userId,
       });
     },
   },

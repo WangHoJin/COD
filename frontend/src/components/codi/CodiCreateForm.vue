@@ -102,6 +102,7 @@ export default {
       };
       let token = this.$store.state.auth.accessToken;
       createCodi(codi, token).then(() => {
+        console.log("등록 성공");
         this.$router.push({
           name: "clothesList",
         });

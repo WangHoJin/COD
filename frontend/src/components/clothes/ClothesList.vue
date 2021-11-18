@@ -1,7 +1,7 @@
 <template lang="">
   <v-item-group class="">
     <!-- 옷 목록 탭 start -->
-    <v-tabs v-model="tab" fixed-tabs show-arrows color="#857DB1">
+    <v-tabs @change="selectClothes()" v-model="tab" fixed-tabs show-arrows color="#857DB1">
       <v-tab class="tabs" v-for="item in items" :key="item.tab">
         {{ item.tab }}
       </v-tab>
@@ -13,14 +13,12 @@
         <v-container>
           <v-row>
             <v-col v-for="(c, i) in clothesList" :key="i" cols="4" sm="3" md="2" lg="1">
-              <v-card v-if="isTab(c, item.tab)" class="">
-                <v-img
-                  contain
-                  height="100px"
-                  :src="c.clothImgUrl"
-                  @click="clothesClick(c.clothId)"
-                ></v-img>
-              </v-card>
+              <v-img
+                contain
+                height="100px"
+                :src="c.clothImgUrl"
+                @click="clothesClick(c.clothId)"
+              ></v-img>
             </v-col>
           </v-row>
         </v-container>
@@ -45,7 +43,7 @@ export default {
     return {
       limit: 0,
       page: 1,
-      tab: null,
+      tab: 0,
       items: [
         { tab: "전체" },
         { tab: "상의" },
@@ -53,6 +51,7 @@ export default {
         { tab: "아우터" },
         { tab: "잡화" },
       ],
+      // type:"",
     };
   },
   components: {},
@@ -66,8 +65,16 @@ export default {
     ...mapActions(["getClothesList"]),
     selectClothes() {
       let userId = this.$store.state.auth.loginUser.userId;
-      let payload = { userId: userId, page: 1, size: 100 };
-      this.getClothesList(payload);
+      let type = this.items[this.tab].tab;
+      console.log(type);
+      if (type === "전체") {
+        let payload = { userId: userId, page: 1, size: 100 };
+        this.getClothesList(payload);
+      } else {
+        let payload = { userId: userId, type: type, page: 1, size: 100 };
+        this.getClothesList(payload);
+      }
+      console.log(this.clothesList);
     },
     isTab(clothes, tab) {
       if (tab === "전체") return true;

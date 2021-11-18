@@ -1,23 +1,23 @@
 <template lang="">
   <div>
-    <Header title="Closet of Days" />
-    <div class="content mb-8">
-      <Weather />
+    <!-- <Header title="Closet of Days" /> -->
+    <div class="content">
+      <!-- <Weather /> -->
       <CodiDiary />
       <ColorChart />
     </div>
   </div>
 </template>
 <script>
-import Header from '@/components/common/Header.vue';
-import Weather from '@/components/main/Weather';
+// import Header from '@/components/common/Header.vue';
+// import Weather from '@/components/main/Weather';
 import CodiDiary from '@/components/main/CodiDiary';
 import ColorChart from '@/components/main/ColorChart/ColorChart';
 
 export default {
   components: {
-    Header,
-    Weather,
+    // Header,
+    // Weather,
     CodiDiary,
     ColorChart,
   },
@@ -25,6 +25,6 @@ export default {
 </script>
 <style scoped>
 .content {
-  padding: 25px;
+  padding: 0px 10px;
 }
 </style>
