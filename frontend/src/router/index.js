@@ -87,6 +87,11 @@ const router = new Router({
           name: "search",
           component: () => import("@/pages/feed/FeedSearch.vue"),
         },
+        {
+          path: "comment/:no",
+          name: "feedComment",
+          component: () => import("@/pages/feed/FeedComment.vue"),
+        },
       ],
     },
 

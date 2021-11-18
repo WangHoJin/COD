@@ -54,7 +54,7 @@
           </v-col>
           <!-- 댓글 -->
           <v-col cols="auto" sm="12" md="12" lg="12">
-            <v-icon color="#CCBEE3">mdi-comment</v-icon>
+            <v-icon @click="comment(codi.codiId)" color="#CCBEE3">mdi-comment</v-icon>
             <h5 class="purpleText">{{ codi.comment }}</h5>
           </v-col>
           <!-- 공백 -->
@@ -87,19 +87,17 @@
           </v-col>
         </v-row>
       </v-flex>
-      <feed-comment v-bind:codi="codi" />
+      <!-- <feed-comment v-bind:codi="codi" /> -->
     </div>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import FeedComment from "./FeedComment.vue";
 import { createFollow, deleteFollow } from "@/api/follow";
 import { createCodiLiked, deleteCodiLiked } from "@/api/codiLiked";
 export default {
   props: ["codi"],
-  components: { FeedComment },
   data() {
     return {
       codiList: [],
@@ -132,7 +130,7 @@ export default {
   methods: {
     ...mapActions(["getPopularCodies", "getFollows", "getFollowingCodies", "getCodiLiked"]),
     setPopularCodies() {
-      let payload = { startDate: "2021-10-23", endDate: "2021-11-15", page: 1, size: 10 };
+      let payload = { startDate: "2021-10-23", endDate: "2021-11-18", page: 1, size: 10 };
       this.getPopularCodies(payload);
       this.codiList = this.popularCodies;
     },
@@ -150,13 +148,11 @@ export default {
       // this.followingList = this.followList;
       // this.$store.dispatch("getFollows", payload).then(() => {
       // });
-      this.followingList = this.followList.map((a) => a.userId);
+      // this.followingList = this.followList.map((a) => a.userId);
     },
     isFollow(userId) {
       for (var i = 0; i < this.$store.state.feed.followList.length; i++) {
-        // console.log("팔로우 리스트 : " + this.$store.state.feed.followList[i].userId);
         if (this.$store.state.feed.followList[i].userId === userId) {
-          // console.log("있는 놈임" + this.$store.state.feed.followList[i].userId);
           return false;
         }
       }
@@ -165,7 +161,6 @@ export default {
     createFollow(toUserId) {
       let accessToken = this.$store.state.auth.accessToken;
       let payload = { toUserId: toUserId };
-      console.log("크리에이트" + JSON.stringify(payload));
       createFollow(toUserId, accessToken).then(() => {
         this.setFollowList();
         console.log("팔로우 성공");
@@ -181,17 +176,12 @@ export default {
     },
     setFollowingCodies() {
       let accessToken = this.$store.state.auth.accessToken;
-
       let payload = { page: 1, size: 10, accessToken: accessToken };
-      console.log(payload.accessToken);
       this.getFollowingCodies(payload);
     },
     isLiked(codiId) {
-      // console.log(this.$store.state.feed.codiLikedList.codiId);
       for (var i = 0; i < this.$store.state.feed.codiLikedList.length; i++) {
-        // console.log("좋아요 리스트: " + this.$store.state.feed.codiLikedList[i].codiId);
         if (this.$store.state.feed.codiLikedList[i].codiId === codiId) {
-          // console.log("있음" + this.$store.state.feed.codiLikedList[i].codiId);
           return true;
         }
       }
@@ -220,6 +210,11 @@ export default {
         console.log("좋아요 취소");
       });
       this.setCodiLikedList();
+    },
+    comment(codiId) {
+      this.$router.push({
+        path: "comment/" + codiId,
+      });
     },
   },
 };

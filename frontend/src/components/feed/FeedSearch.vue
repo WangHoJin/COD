@@ -9,6 +9,7 @@
         dense
         hide-details=""
         @click:append="search()"
+        v-on:keyup.enter="search()"
       >
       </v-text-field>
     </v-container>

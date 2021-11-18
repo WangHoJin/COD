@@ -40,7 +40,6 @@ export default {
     setFollowList(state, payload) {
       console.log("follow mutation");
       state.followList = payload;
-      console.log(state.followList);
     },
     setCodiLikedList(state, payload) {
       console.log("like mutation");
@@ -49,7 +48,6 @@ export default {
     setUserList(state, payload) {
       console.log("user mutation");
       state.userList = payload;
-      console.log(state.userList);
     },
   },
   actions: {

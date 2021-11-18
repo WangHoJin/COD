@@ -38,7 +38,7 @@
           </v-col>
           <!-- 댓글 -->
           <v-col cols="auto" sm="12" md="12" lg="12">
-            <v-icon color="#CCBEE3">mdi-comment</v-icon>
+            <v-icon @click="comment(codi.codiId)" color="#CCBEE3">mdi-comment</v-icon>
             <h5 class="purpleText">{{ codi.comment }}</h5>
           </v-col>
           <!-- 공백 -->
@@ -72,23 +72,21 @@
         </v-row>
       </v-flex>
       <!-- <feed-comment /> -->
-      <feed-comment v-bind:codi="codi" />
+      <!-- <feed-comment v-bind:codi="codi" /> -->
     </div>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import FeedComment from "./FeedComment.vue";
 import { createCodiLiked, deleteCodiLiked } from "@/api/codiLiked";
 export default {
   props: ["codi"],
-  components: { FeedComment },
   data() {
     return {
       codiList: [],
       likedList: [],
-      like: "false",
+      // like: "false",
     };
   },
   computed: {
@@ -115,14 +113,12 @@ export default {
     setFollowingCodies() {
       let accessToken = this.$store.state.auth.accessToken;
       let payload = { page: 1, size: 10, accessToken: accessToken };
-      console.log(payload.accessToken);
       this.getFollowingCodies(payload);
       this.codiList = this.followingCodies;
     },
     setPopularCodies() {
       let payload = { startDate: "2021-10-23", endDate: "2021-11-15", page: 1, size: 10 };
       this.getPopularCodies(payload);
-      this.codiList = this.popularCodies;
     },
     splitTag(text) {
       return text.split(",");
@@ -162,6 +158,11 @@ export default {
         console.log("좋아요 취소");
       });
       this.setCodiLikedList();
+    },
+    comment(codiId) {
+      this.$router.push({
+        path: "comment/" + codiId,
+      });
     },
   },
 };
