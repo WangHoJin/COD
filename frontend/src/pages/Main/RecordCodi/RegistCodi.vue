@@ -1,13 +1,31 @@
 <template lang="">
   <div>
-    <!-- <Header /> -->
+    <v-btn
+      v-if="recordInfo"
+      @click="deleteRecord"
+      id="floating-btn"
+      fab
+      color="rgba(133, 125, 177, 0.8)"
+      dark
+      small
+    >
+      <v-icon> mdi-delete </v-icon>
+    </v-btn>
     <div class="content">
       <span class="ma-3 date">{{ date }} {{ days[new Date(date).getDay()] }}</span>
       <div class="box ma-3 pa-2">
         <v-img class="img-thumbnail" contain :src="codiImg" />
       </div>
-      <v-textarea class="mx-3 my-5" solo label="메모를 입력해보세요 (최대 200자)" v-model="content">
-      </v-textarea>
+      <v-form ref="form" v-model="valid">
+        <v-textarea
+          :rules="[(v) => !!v || '설명을 입력해주세요']"
+          class="mx-3 my-5"
+          solo
+          label="메모를 입력해보세요 (최대 200자)"
+          v-model="content"
+        >
+        </v-textarea>
+      </v-form>
       <SBtn class="mx-3" :click="registCodiRecord" msg="코디 기록하기" />
     </div>
   </div>
@@ -16,7 +34,7 @@
 // import Header from '@/components/common/BackTitleHeader.vue';
 import SBtn from '@/components/common/SquareButton.vue';
 import { mapGetters, mapActions } from 'vuex';
-import { createDirary, updateDirary, getDirary, getDiraryList } from '@/api/diaries.js';
+import { createDirary, updateDirary, getDirary, deleteDirary } from '@/api/diaries.js';
 
 export default {
   data() {
@@ -26,6 +44,7 @@ export default {
       content: null,
       codiImg: null,
       recordInfo: null,
+      valid: true,
     };
   },
   created() {
@@ -39,7 +58,7 @@ export default {
           this.content = this.recordInfo.codiDiaryContent;
           this.codiImg = this.recordInfo.codiDiaryThumbnail;
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error);
     }
     //셀렉트 코디 한 경우
     else {
@@ -47,13 +66,27 @@ export default {
     }
   },
   methods: {
+    deleteRecord() {
+      let accessToken = this.$store.state.auth.accessToken;
+      deleteDirary(this.recordInfo.codiDiaryId, accessToken).then((res) => {
+        console.log(res);
+        this.$router.push({ name: 'main' });
+      });
+    },
     registCodiRecord() {
+      this.validate();
+      if (!this.valid) {
+        return;
+      }
       let accessToken = this.$store.state.auth.accessToken;
       // 수정
       if (this.recordInfo) {
         let record = { content: this.content };
         updateDirary(record, this.recordInfo.codiDiaryId, accessToken).then(() => {
           console.log('수정 완료했습니다!');
+          this.reset();
+          this.resetValidation();
+          this.$router.push({ name: 'main' });
         });
       }
       // 등록
@@ -66,14 +99,25 @@ export default {
         createDirary(record, accessToken)
           .then((res) => {
             console.log(res);
-            alert('등록 완료되었습니다!');
+            console.log('등록 완료되었습니다!');
+            this.reset();
+            this.resetValidation();
+            this.$router.push({ name: 'main' });
           })
           .catch((error) => {
             console.log(error);
             // console.log(error.response.data);
           });
       }
-      this.$router.push({ name: 'main' });
+    },
+    validate() {
+      this.$refs.form.validate();
+    },
+    reset() {
+      this.$refs.form.reset();
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation();
     },
   },
   computed: {
@@ -106,5 +150,11 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+#floating-btn {
+  position: fixed;
+  top: 5px;
+  right: 3%;
+  z-index: 100;
 }
 </style>

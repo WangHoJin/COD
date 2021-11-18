@@ -96,6 +96,8 @@ export default {
       let record = this.recordMap.get(dateInfo.date);
       if(record){
               this.$router.push({ path: `/record-codi/update/${record.codiDiaryId}` });
+      } else{
+              this.$router.push({ path: `/record-codi/select?date=${dateInfo.date}` });
       }
     },
     dateToString(date) {

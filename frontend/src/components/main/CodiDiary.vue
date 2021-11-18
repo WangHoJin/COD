@@ -17,7 +17,7 @@
           </v-row>
           <!-- +버튼 or 이미지 -->
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center img-box">
               <div
                 v-if="recordMap.get(dateToString(week[0]))"
                 @click="click(week[0])"
@@ -30,7 +30,7 @@
                 />
               </div>
               <div v-else>
-                <v-btn text small fab @click="clickPlus(week[0])">
+                <v-btn class="plus" text small fab @click="clickPlus(week[0])">
                   <v-icon> mdi-plus </v-icon>
                 </v-btn>
               </div>
@@ -49,7 +49,7 @@
           </v-row>
           <!-- +버튼 or 이미지 -->
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center img-box">
               <div
                 v-if="recordMap.get(dateToString(week[1]))"
                 @click="click(week[1])"
@@ -62,7 +62,7 @@
                 />
               </div>
               <div v-else>
-                <v-btn text small fab @click="clickPlus(week[1])">
+                <v-btn class="plus" text small fab @click="clickPlus(week[1])">
                   <v-icon> mdi-plus </v-icon>
                 </v-btn>
               </div>
@@ -81,7 +81,7 @@
           </v-row>
           <!-- +버튼 or 이미지 -->
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center img-box">
               <div
                 v-if="recordMap.get(dateToString(week[2]))"
                 @click="click(week[2])"
@@ -94,7 +94,7 @@
                 />
               </div>
               <div v-else>
-                <v-btn text small fab @click="clickPlus(week[2])">
+                <v-btn class="plus" text small fab @click="clickPlus(week[2])">
                   <v-icon> mdi-plus </v-icon>
                 </v-btn>
               </div>
@@ -113,7 +113,7 @@
           </v-row>
           <!-- +버튼 or 이미지 -->
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center img-box">
               <div
                 v-if="recordMap.get(dateToString(week[3]))"
                 @click="click(week[3])"
@@ -126,7 +126,7 @@
                 />
               </div>
               <div v-else>
-                <v-btn text small fab @click="clickPlus(week[3])">
+                <v-btn class="plus" text small fab @click="clickPlus(week[3])">
                   <v-icon> mdi-plus </v-icon>
                 </v-btn>
               </div>
@@ -147,7 +147,7 @@
           </v-row>
           <!-- +버튼 or 이미지 -->
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center img-box">
               <div
                 v-if="recordMap.get(dateToString(week[4]))"
                 @click="click(week[4])"
@@ -160,7 +160,7 @@
                 />
               </div>
               <div v-else>
-                <v-btn text small fab @click="clickPlus(week[4])">
+                <v-btn class="plus" text small fab @click="clickPlus(week[4])">
                   <v-icon> mdi-plus </v-icon>
                 </v-btn>
               </div>
@@ -177,7 +177,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center img-box">
               <div
                 v-if="recordMap.get(dateToString(week[5]))"
                 @click="click(week[5])"
@@ -190,7 +190,7 @@
                 />
               </div>
               <div v-else>
-                <v-btn text small fab @click="clickPlus(week[5])">
+                <v-btn class="plus" text small fab @click="clickPlus(week[5])">
                   <v-icon> mdi-plus </v-icon>
                 </v-btn>
               </div>
@@ -207,7 +207,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center img-box">
               <div
                 v-if="recordMap.get(dateToString(week[6]))"
                 @click="click(week[6])"
@@ -220,7 +220,7 @@
                 />
               </div>
               <div v-else>
-                <v-btn text small fab @click="clickPlus(week[6])">
+                <v-btn class="plus" text small fab @click="clickPlus(week[6])">
                   <v-icon> mdi-plus </v-icon>
                 </v-btn>
               </div>
@@ -317,8 +317,11 @@ export default {
   padding: 10px;
 }
 
+.img-box {
+  padding: 1px !important;
+}
 .cell {
-  padding: 10px;
+  /* padding: 10px; */
   width: 20%;
   margin-bottom: 20px;
 }
@@ -334,5 +337,11 @@ export default {
   /* width: 70px;
   height: 70px;
   object-fit: cover; */
+  margin-top: 10px;
+}
+.plus {
+  /* margin-top: 20%; */
+  margin-top: 15px;
+  margin-bottom: 20px;
 }
 </style>

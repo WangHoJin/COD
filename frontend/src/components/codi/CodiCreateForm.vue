@@ -22,7 +22,7 @@
         <v-col class="" cols="4" md="4" v-for="(c, i) in $store.state.codi.usedClothes" :key="i"
           ><v-card class="codiImg">
             <v-icon class="cancelBtn" @click="removeClothes(c.clothesId)">mdi-close</v-icon>
-            <v-img height="100px" :src="c.path"></v-img>
+            <v-img contain height="100px" :src="c.path"></v-img>
           </v-card>
         </v-col>
       </v-row>
@@ -74,6 +74,9 @@ export default {
       coordinate: [],
     };
   },
+  created() {
+    this.$store.state.codi.usedClothes = '';
+  },
   methods: {
     removeClothes(clothesId) {
       console.log('삭제했다');
@@ -100,6 +103,9 @@ export default {
       let token = this.$store.state.auth.accessToken;
       createCodi(codi, token).then(() => {
         console.log('등록 성공');
+        this.$router.push({
+          name: 'clothesList',
+        });
       });
     },
     clickCreate() {
@@ -130,6 +136,7 @@ export default {
             this.addClothes(res.data);
           })
           .catch((error) => {
+            console.log('에러야?');
             console.log(error.response.data.message);
           });
       });
