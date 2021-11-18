@@ -7,6 +7,7 @@
           <!-- <v-col v-for="no in 20" :key="no" cols="4" sm="3" md="2" lg="1"> -->
           <v-card class="codiImg">
             <v-img
+              contain
               height="100px"
               :src="codi.codiThumbnail"
               oneerror="https://picsum.photos/id/11/500/300"
@@ -33,7 +34,7 @@
 </template>
 <script>
 // import InfiniteLoading from "vue-infinite-loading";
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -45,13 +46,13 @@ export default {
     // InfiniteLoading,
   },
   computed: {
-    ...mapGetters(['codies']),
+    ...mapGetters(["codies"]),
   },
   created() {
     this.selectCodies();
   },
   methods: {
-    ...mapActions(['getCodies']),
+    ...mapActions(["getCodies"]),
     selectCodies() {
       let userId = this.$store.state.auth.loginUser.userId;
       let payload = { userId: userId, page: 1, size: 100 };
@@ -68,7 +69,7 @@ export default {
       });
     },
     codiClick(codiId) {
-      console.log('코디 클릭' + codiId);
+      console.log("코디 클릭" + codiId);
       this.$router.push({
         path: `detail/` + codiId,
       });
