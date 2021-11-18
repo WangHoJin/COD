@@ -4,7 +4,7 @@
       <!-- 프로필 사진 start -->
       <v-col class="profile" cols="3" sm="3" md="3" lg="3">
         <v-avatar size="60">
-          <img src="@/assets/test/profile.jpg" />
+          <img :src="loginUser.profile" />
         </v-avatar>
       </v-col>
       <!-- 프로필 사진 end -->
@@ -21,7 +21,7 @@
     </v-row>
 
     <!-- 챌린지 표시 start -->
-    <v-row>
+    <!-- <v-row>
       <v-col cols="12" sm="3" md="3" lg="3">
         <h4 class="pb-2">옷장속 보거트의 챌린지</h4>
         <v-avatar class="mr-3" size="50">
@@ -30,7 +30,7 @@
           <img src="@/assets/icon/mypage/challenge-ex.png" />
         </v-avatar>
       </v-col>
-    </v-row>
+    </v-row> -->
     <!-- 챌린지 표시 end -->
 
     <!-- 구분선 -->
