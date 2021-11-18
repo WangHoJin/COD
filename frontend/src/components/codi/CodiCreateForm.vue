@@ -74,6 +74,9 @@ export default {
       coordinate: [],
     };
   },
+  created() {
+    this.$store.state.codi.usedClothes = "";
+  },
   methods: {
     removeClothes(clothesId) {
       console.log("삭제했다");
@@ -100,7 +103,7 @@ export default {
       let token = this.$store.state.auth.accessToken;
       createCodi(codi, token).then(() => {
         this.$router.push({
-          name: "codiList",
+          name: "clothesList",
         });
       });
     },
