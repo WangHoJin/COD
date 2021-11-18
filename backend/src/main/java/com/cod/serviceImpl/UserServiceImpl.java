@@ -252,13 +252,13 @@ public class UserServiceImpl implements UserService {
                 if (existUser != null)
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                             .body(new Response<>(EXISTS_NICKNAME));
-                user.setProfile(profileUpdate.getNickname());
+                user.setNickname(profileUpdate.getNickname());
             }
             if(StringUtils.isNoneBlank(profileUpdate.getIntroduction()))
-                user.setProfile(profileUpdate.getIntroduction());
+                user.setIntroduction(profileUpdate.getIntroduction());
             if(StringUtils.isNoneBlank(profileUpdate.getPassword())){
                 String newPassword = new AES128(USER_INFO_PASSWORD_KEY).encrypt(profileUpdate.getPassword());
-                user.setProfile(newPassword);
+                user.setPassword(newPassword);
             }
 
             userRepository.save(user);

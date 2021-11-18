@@ -10,8 +10,11 @@ import com.cod.response.Response;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.cod.response.ResponseStatus.*;
 
 @RestController
 @RequestMapping("/clothes")
@@ -53,8 +56,21 @@ public class ClothController {
     // Params
     @GetMapping
     public ResponseEntity<PageResponse<SelectClothOutput>> getClothList(SelectClothInput selectClothInput) {
-        log.info("[GET] /api/clothes?userId=&...&page=&size=");
-        return clothService.selectClothList(selectClothInput);
+        if(selectClothInput.getUserId()==null && selectClothInput.getType()==null){
+            log.info("[GET] /clothes?NO_VALID_STATUS");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new PageResponse<>(NO_VALUES));
+        }
+        if(selectClothInput.getType()!=null){
+            log.info("[GET] /api/clothes?userId=&page=&size=");
+            return clothService.selectClothList(selectClothInput,false);
+        }
+        else{
+            log.info("[GET] /api/clothes?userId=&type=&page=&size=");
+            return clothService.selectClothList(selectClothInput,true);
+        }
+
+
+
     }
 
     /**
@@ -80,6 +96,9 @@ public class ClothController {
         log.info("[DELETE] /api/clothes/" + id);
         return clothService.deleteCloth(id);
     }
+
+
+
 
 }
 
