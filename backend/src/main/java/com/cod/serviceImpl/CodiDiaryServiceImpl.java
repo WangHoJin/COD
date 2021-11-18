@@ -1,20 +1,16 @@
 package com.cod.serviceImpl;
 
 import com.cod.configuration.ValidationCheck;
-import com.cod.dao.CodiLikedRepository;
-import com.cod.dao.CodiRepository;
-import com.cod.dao.CommentRepository;
-import com.cod.dto.codi.createcodi.CreateCodiInput;
-import com.cod.dto.codi.getfollowingusercodi.GetFollowingUserCodiInput;
-import com.cod.dto.codi.getpopularcodi.GetPopularCodiInput;
-import com.cod.dto.codi.selectcodi.SelectCodiInput;
-import com.cod.dto.codi.selectcodi.SelectCodiOutput;
-import com.cod.dto.codi.updatecodi.UpdateCodiInput;
-import com.cod.entity.Codi;
+import com.cod.dao.CodiDiaryRepository;
+import com.cod.dto.codidiary.createcodidiary.CreateCodiDiaryInput;
+import com.cod.dto.codidiary.selectcodidiary.SelectCodiDiaryInput;
+import com.cod.dto.codidiary.selectcodidiary.SelectCodiDiaryOutput;
+import com.cod.dto.codidiary.updatecodidiary.UpdateCodiDiaryInput;
+import com.cod.entity.CodiDiary;
 import com.cod.entity.User;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
-import com.cod.service.CodiService;
+import com.cod.service.CodiDiaryService;
 import com.cod.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,51 +29,49 @@ import java.time.format.DateTimeFormatter;
 
 import static com.cod.response.ResponseStatus.*;
 
-@Service("CodiService")
+@Service("CodiDiaryService")
 @RequiredArgsConstructor
 @Slf4j
-public class CodiServiceImpl implements CodiService {
+public class CodiDiaryServiceImpl implements CodiDiaryService {
 
-    private final CodiRepository codiRepository;
-    private final CodiLikedRepository codiLikedRepository;
-    private final CommentRepository commentRepository;
+    private final CodiDiaryRepository codiDiaryRepository;
     private final JwtService jwtService;
 
     @Override
     @Transactional
-    public ResponseEntity<Response<Object>> createCodi(CreateCodiInput createCodiInput) {
+    public ResponseEntity<Response<Object>> createCodiDiary(CreateCodiDiaryInput createCodiDiaryInput) {
         // 1. 값 형식 체크
-        if (createCodiInput == null)
+        if (createCodiDiaryInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
-        if (!ValidationCheck.isValid(createCodiInput.getName())
-                || !ValidationCheck.isValid(createCodiInput.getCoordinate())
-                || !ValidationCheck.isValid(createCodiInput.getThumbnail()))
+        if (!ValidationCheck.isValid(createCodiDiaryInput.getName())
+                || !ValidationCheck.isValid(createCodiDiaryInput.getCoordinate())
+                || !ValidationCheck.isValid(createCodiDiaryInput.getThumbnail()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
 
         // 2. 코디 생성
-        Codi codi;
+        CodiDiary codiDiary;
         try {
             User loginUser = jwtService.getUser();
             if (loginUser == null)  {
-                log.error("[GET]/codies NOT FOUND LOGIN USER error");
+                log.error("[GET]/diaries NOT FOUND LOGIN USER error");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(NOT_FOUND_USER));
             }
-            codi = Codi.builder()
+            codiDiary = CodiDiary.builder()
                     .user(loginUser)
-                    .name(createCodiInput.getName())
-                    .thumbnail(createCodiInput.getThumbnail())
-                    .coordinate(createCodiInput.getCoordinate())
-                    .description(createCodiInput.getDescription())
-                    .tag(createCodiInput.getTag())
+                    .name(createCodiDiaryInput.getName())
+                    .thumbnail(createCodiDiaryInput.getThumbnail())
+                    .coordinate(createCodiDiaryInput.getCoordinate())
+                    .description(createCodiDiaryInput.getDescription())
+                    .tag(createCodiDiaryInput.getTag())
                     .build();
 
-            codiRepository.save(codi);
+            codiDiaryRepository.save(codiDiary);
 
         } catch (Exception e) {
-            log.error("[codies/post] database error", e);
+            log.error("[diaries/post] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new Response<>(DATABASE_ERROR));
         }
@@ -89,99 +83,97 @@ public class CodiServiceImpl implements CodiService {
 
 
     @Override
-    public ResponseEntity<Response<SelectCodiOutput>> selectCodi(int codiId) {
+    public ResponseEntity<Response<SelectCodiDiaryOutput>> selectCodiDiary(int codiDiaryId) {
         // 1. 값 형식 체크
-        if (!ValidationCheck.isValidId(codiId)) {
+        if (!ValidationCheck.isValidId(codiDiaryId)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(BAD_ID_VALUE));
         }
         // 2. 코디 조회
-        Codi codi;
-        SelectCodiOutput selectCodiOutput;
+        CodiDiary codiDiary;
+        SelectCodiDiaryOutput selectCodiDiaryOutput;
         try {
-            codi = codiRepository.findById(codiId).orElse(null);
-            if(codi==null)
+            codiDiary = codiDiaryRepository.findById(codiDiaryId).orElse(null);
+            if(codiDiary==null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(NOT_FOUND_CODI));
         } catch (Exception e) {
-            log.error("[codies/get] database error", e);
+            log.error("[diaries/get] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new Response<>(DATABASE_ERROR));
         }
 
         // 최종 출력값 정리
-        selectCodiOutput = SelectCodiOutput.builder()
-                .codiId(codi.getId())
-                .userId(codi.getUser().getId())
-                .userNickname(codi.getUser().getNickname())
-                .userProfileImg(codi.getUser().getProfile())
-                .codiName(codi.getName())
-                .codiTag(codi.getTag())
-                .codiThumbnail(codi.getThumbnail())
-                .codiCoordinate(codi.getCoordinate())
-                .codiDescription(codi.getDescription())
-                .codiCreatedAt(codi.getCreatedAt())
-                .codiUpdatedAt(codi.getUpdatedAt())
-                .liked(codiLikedRepository.countByCodi(codi))
-                .comment(commentRepository.countByCodi(codi))
+        selectCodiDiaryOutput = SelectCodiDiaryOutput.builder()
+                .codiDiaryId(codiDiary.getId())
+                .userId(codiDiary.getUser().getId())
+                .userNickname(codiDiary.getUser().getNickname())
+                .userProfileImg(codiDiary.getUser().getProfile())
+                .codiDiaryName(codiDiary.getName())
+                .codiDiaryTag(codiDiary.getTag())
+                .codiDiaryThumbnail(codiDiary.getThumbnail())
+                .codiDiaryCoordinate(codiDiary.getCoordinate())
+                .codiDiaryDescription(codiDiary.getDescription())
+                .codiDiaryCreatedAt(codiDiary.getCreatedAt())
+                .codiDiaryUpdatedAt(codiDiary.getUpdatedAt())
                 .build();
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new Response<>(selectCodiOutput, SUCCESS_SELECT_CODI));
+                .body(new Response<>(selectCodiDiaryOutput, SUCCESS_SELECT_CODI));
     }
 
     @Override
-    public ResponseEntity<PageResponse<SelectCodiOutput>> selectCodiList(SelectCodiInput selectCodiInput) {
+    public ResponseEntity<PageResponse<SelectCodiDiaryOutput>> selectCodiDiaryList(SelectCodiDiaryInput selectCodiDiaryInput) {
         // 1. 값 형식 체크
-        if (selectCodiInput == null)
+        if (selectCodiDiaryInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new PageResponse<>(NO_VALUES));
-        if (!ValidationCheck.isValidPage(selectCodiInput.getPage())
-                || !ValidationCheck.isValidId(selectCodiInput.getSize()))
+        if (!ValidationCheck.isValidPage(selectCodiDiaryInput.getPage())
+                || !ValidationCheck.isValidId(selectCodiDiaryInput.getSize()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new PageResponse<>(NO_VALUES));
 
         // 2. 코디 조회
-        Pageable pageable = PageRequest.of(selectCodiInput.getPage() - 1, selectCodiInput.getSize());
-        Page<SelectCodiOutput> selectCodiOutputs;
+        Pageable pageable = PageRequest.of(selectCodiDiaryInput.getPage() - 1, selectCodiDiaryInput.getSize());
+        Page<SelectCodiDiaryOutput> selectCodiDiaryOutputs;
         try {
-            selectCodiOutputs = codiRepository.findByDynamicQuery(selectCodiInput, pageable);
+            selectCodiDiaryOutputs = codiDiaryRepository.findByDynamicQuery(selectCodiDiaryInput, pageable);
         } catch (Exception e) {
-            log.error("[codies/get] database error", e);
+            log.error("[diaries/get] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new PageResponse<>(DATABASE_ERROR));
         }
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new PageResponse<>(selectCodiOutputs, SUCCESS_SELECT_CODI));
+                .body(new PageResponse<>(selectCodiDiaryOutputs, SUCCESS_SELECT_CODI));
     }
 
     @Override
     @Transactional
-    public ResponseEntity<Response<Object>> updateCodi(UpdateCodiInput updateCodiInput, int codiId) {
+    public ResponseEntity<Response<Object>> updateCodiDiary(UpdateCodiDiaryInput updateCodiDiaryInput, int codiDiaryId) {
         try {
             // 1. 코디 조회
-            Codi codi = codiRepository.findById(codiId).orElse(null);
+            CodiDiary codiDiary = codiDiaryRepository.findById(codiDiaryId).orElse(null);
 
             // 2. 코디 수정
-            if (codi == null)
+            if (codiDiary == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(BAD_ID_VALUE));
-            if (StringUtils.isNoneBlank(updateCodiInput.getName()))
-                codi.setName(updateCodiInput.getName());
-            if (StringUtils.isNoneBlank(updateCodiInput.getTag()))
-                codi.setTag(updateCodiInput.getTag());
-            if (StringUtils.isNoneBlank(updateCodiInput.getDescription()))
-                codi.setDescription(updateCodiInput.getDescription());
-            if (StringUtils.isNoneBlank(updateCodiInput.getThumbnail()))
-                codi.setThumbnail(updateCodiInput.getThumbnail());
-            if (StringUtils.isNoneBlank(updateCodiInput.getCoordinate()))
-                codi.setCoordinate(updateCodiInput.getCoordinate());
-            codiRepository.save(codi);
+            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getName()))
+                codiDiary.setName(updateCodiDiaryInput.getName());
+            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getTag()))
+                codiDiary.setTag(updateCodiDiaryInput.getTag());
+            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getDescription()))
+                codiDiary.setDescription(updateCodiDiaryInput.getDescription());
+            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getThumbnail()))
+                codiDiary.setThumbnail(updateCodiDiaryInput.getThumbnail());
+            if (StringUtils.isNoneBlank(updateCodiDiaryInput.getCoordinate()))
+                codiDiary.setCoordinate(updateCodiDiaryInput.getCoordinate());
+            codiDiaryRepository.save(codiDiary);
         } catch (Exception e) {
-            log.error("[codies/patch] database error", e);
+            log.error("[diaries/patch] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new Response<>(DATABASE_ERROR));
         }
@@ -192,20 +184,20 @@ public class CodiServiceImpl implements CodiService {
 
     @Override
     @Transactional
-    public ResponseEntity<Response<Object>> deleteCodi(int codiId) {
+    public ResponseEntity<Response<Object>> deleteCodiDiary(int codiDiaryId) {
         try {
             // 1. 코디 조회
-            Codi codi = codiRepository.findById(codiId).orElse(null);
+            CodiDiary codiDiary = codiDiaryRepository.findById(codiDiaryId).orElse(null);
 
             // 2. 코디 삭제
-            if (codi == null)
+            if (codiDiary == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new Response<>(BAD_ID_VALUE));
 
-            codiRepository.delete(codi);
+            codiDiaryRepository.delete(codiDiary);
 
         } catch (Exception e) {
-            log.error("[codies/delete] database error", e);
+            log.error("[diaries/delete] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new Response<>(DATABASE_ERROR));
         }
@@ -215,73 +207,4 @@ public class CodiServiceImpl implements CodiService {
                 .body(new Response<>(null, SUCCESS_DELETE_CODI));
     }
 
-    @Override
-    public ResponseEntity<PageResponse<SelectCodiOutput>> getPopularCodi(GetPopularCodiInput getPopularCodiInput) {
-        // 포맷터
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        // 문자열 -> Date
-        LocalDateTime start = LocalDate.parse(getPopularCodiInput.getStartDate(), formatter).atStartOfDay();
-        LocalDateTime end = LocalDate.parse(getPopularCodiInput.getEndDate(), formatter)
-                .atStartOfDay()
-                .plusDays(1)
-                .minusSeconds(1);
-        System.out.println(start+"\n"+end);
-
-        // 1. 값 형식 체크
-        if (getPopularCodiInput == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new PageResponse<>(NO_VALUES));
-        if (!ValidationCheck.isValidPage(getPopularCodiInput.getPage())
-                || !ValidationCheck.isValidId(getPopularCodiInput.getSize()))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new PageResponse<>(NO_VALUES));
-
-        // 2. 코디 조회
-        Pageable pageable = PageRequest.of(getPopularCodiInput.getPage() - 1, getPopularCodiInput.getSize());
-        Page<SelectCodiOutput> selectCodiOutputs;
-        try {
-            selectCodiOutputs = codiRepository.getPopularCodi(start, end, pageable);
-        } catch (Exception e) {
-            log.error("[codies/get] database error", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new PageResponse<>(DATABASE_ERROR));
-        }
-
-        // 3. 결과 return
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new PageResponse<>(selectCodiOutputs, SUCCESS_SELECT_CODI));
-    }
-
-    @Override
-    public ResponseEntity<PageResponse<SelectCodiOutput>> getFollowingUserCodi(GetFollowingUserCodiInput getFollowingUserCodiInput) {
-        // 1. 값 형식 체크
-        if (getFollowingUserCodiInput == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new PageResponse<>(NO_VALUES));
-        if (!ValidationCheck.isValidPage(getFollowingUserCodiInput.getPage())
-                || !ValidationCheck.isValidId(getFollowingUserCodiInput.getSize()))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new PageResponse<>(NO_VALUES));
-
-        // 2. 코디 조회
-        Pageable pageable = PageRequest.of(getFollowingUserCodiInput.getPage() - 1, getFollowingUserCodiInput.getSize());
-        Page<SelectCodiOutput> selectCodiOutputs;
-        try {
-            User loginUser = jwtService.getUser();
-            if (loginUser == null)  {
-                log.error("[GET]/codies NOT FOUND LOGIN USER error");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(new PageResponse<>(NOT_FOUND_USER));
-            }
-            selectCodiOutputs = codiRepository.getFollowingUserCodi(loginUser.getId(), pageable);
-        } catch (Exception e) {
-            log.error("[codies/get] database error", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new PageResponse<>(DATABASE_ERROR));
-        }
-
-        // 3. 결과 return
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new PageResponse<>(selectCodiOutputs, SUCCESS_SELECT_CODI));
-    }
 }

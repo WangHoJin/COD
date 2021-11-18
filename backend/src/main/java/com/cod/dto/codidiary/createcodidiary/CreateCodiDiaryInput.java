@@ -1,2 +1,16 @@
-package com.cod.dto.codidiary.createcodidiary;public class CreateCodiDiaryInput {
+package com.cod.dto.codidiary.createcodidiary;
+
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+public class CreateCodiDiaryInput {
+    private int codiDiaryId;
+//    private String date;
+    private String thumbnail;
+    private String content;
+
 }

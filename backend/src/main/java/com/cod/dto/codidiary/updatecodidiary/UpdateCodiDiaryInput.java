@@ -1,4 +1,4 @@
-package com.cod.dto.codi.updatecodi;
+package com.cod.dto.codidiary.updatecodidiary;
 
 import lombok.*;
 
@@ -7,10 +7,6 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class UpdateCodiInput {
-    private String name;
-    private String tag;
-    private String description;
-    private String thumbnail;
-    private String coordinate;
+public class UpdateCodiDiaryInput {
+    private int codiDiaryId;
 }

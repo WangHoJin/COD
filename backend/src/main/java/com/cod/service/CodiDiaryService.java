@@ -8,10 +8,10 @@ import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import org.springframework.http.ResponseEntity;
 
-public interface DiaryService {
-    ResponseEntity<Response<Object>> createCodiDiary(CreateCodiDiaryInput createCodiInput);
-    ResponseEntity<Response<SelectCodiDiaryOutput>> selectCodiDiary(int codiId);
-    ResponseEntity<PageResponse<SelectCodiDiaryOutput>> selectCodiListDiary(SelectCodiDiaryInput selectCodiInput);
-    ResponseEntity<Response<Object>> updateCodiDiary(UpdateCodiDiaryInput updateCodiDiaryInput, int codiId);
-    ResponseEntity<Response<Object>> deleteCodiDiary(int codiId);
+public interface CodiDiaryService {
+    ResponseEntity<Response<Object>> createCodiDiary(CreateCodiDiaryInput createCodiDiaryInput);
+    ResponseEntity<Response<SelectCodiDiaryOutput>> selectCodiDiary(int codiDiaryId);
+    ResponseEntity<PageResponse<SelectCodiDiaryOutput>> selectCodiDiaryList(SelectCodiDiaryInput selectCodiDiaryInput);
+    ResponseEntity<Response<Object>> updateCodiDiary(UpdateCodiDiaryInput updateCodiDiaryInput, int codiDiaryId);
+    ResponseEntity<Response<Object>> deleteCodiDiary(int codiDiaryId);
 }

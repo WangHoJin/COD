@@ -1,9 +1,9 @@
 package com.cod.controller;
 
-import com.cod.dto.codi.createcodi.CreateDiaryInput;
-import com.cod.dto.codi.selectcodi.SelectDiaryInput;
-import com.cod.dto.codi.selectcodi.SelectDiaryOutput;
-import com.cod.dto.codi.updatecodi.UpdateDiaryInput;
+import com.cod.dto.codidiary.createcodidiary.CreateCodiDiaryInput;
+import com.cod.dto.codidiary.selectcodidiary.SelectCodiDiaryInput;
+import com.cod.dto.codidiary.selectcodidiary.SelectCodiDiaryOutput;
+import com.cod.dto.codidiary.updatecodidiary.UpdateCodiDiaryInput;
 import com.cod.response.PageResponse;
 import com.cod.response.Response;
 import com.cod.service.CodiDiaryService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/diaries")
 @RequiredArgsConstructor
 @Slf4j
-public class DiaryController {
+public class CodiDiaryController {
 
     private final CodiDiaryService codiService;
 
@@ -27,33 +27,33 @@ public class DiaryController {
      */
     // Body
     @PostMapping
-    public ResponseEntity<Response<Object>> createDiary(@RequestBody CreateDiaryInput createDiaryInput) {
+    public ResponseEntity<Response<Object>> createCodiDiary(@RequestBody CreateCodiDiaryInput createCodiDiaryInput) {
         log.info("[POST] /api/diaries");
-        return codiService.createDiary(createDiaryInput);
+        return codiService.createCodiDiary(createCodiDiaryInput);
     }
 
     /**
      * 코디일기 상세 조회 API
      * [GET] /api/diaries/{id}
-     * @return ResponseEntity<Response<SelectDiaryOutput>>
+     * @return ResponseEntity<Response<SelectCodiDiaryOutput>>
      */
     // Params
     @GetMapping("/{id}")
-    public ResponseEntity<Response<SelectDiaryOutput>> getDiary(@PathVariable int id) {
+    public ResponseEntity<Response<SelectCodiDiaryOutput>> getCodiDiary(@PathVariable int id) {
         log.info("[GET] /api/diaries/{id}");
-        return codiService.selectDiary(id);
+        return codiService.selectCodiDiary(id);
     }
 
     /**
      * 코디일기 리스트 조회 API
      * [GET] /api/diaries?month=&size=
-     * @return ResponseEntity<PageResponse<SelectDiaryOutput>>
+     * @return ResponseEntity<PageResponse<SelectCodiDiaryOutput>>
      */
     // Params
     @GetMapping
-    public ResponseEntity<PageResponse<SelectDiaryOutput>> getDiaryList(SelectDiaryInput selectDiaryInput) {
+    public ResponseEntity<PageResponse<SelectCodiDiaryOutput>> getCodiDiaryList(SelectCodiDiaryInput selectCodiDiaryInput) {
         log.info("[GET] /api/diaries?month=&...&page=&size=");
-        return codiService.selectDiaryList(selectDiaryInput);
+        return codiService.selectCodiDiaryList(selectCodiDiaryInput);
     }
 
     /**
@@ -63,9 +63,9 @@ public class DiaryController {
      */
     // Body
     @PatchMapping("/{id}")
-    public ResponseEntity<Response<Object>> updateDiary(@PathVariable("id") int id, @RequestBody UpdateDiaryInput updateDiaryInput) {
+    public ResponseEntity<Response<Object>> updateCodiDiary(@PathVariable("id") int id, @RequestBody UpdateCodiDiaryInput updateCodiDiaryInput) {
         log.info("[PATCH] /api/diaries/" + id);
-        return codiService.updateDiary(updateDiaryInput, id);
+        return codiService.updateCodiDiary(updateCodiDiaryInput, id);
     }
 
     /**
@@ -75,9 +75,9 @@ public class DiaryController {
      */
     // Path-Variable
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<Object>> deleteDiary(@PathVariable("id") int id) {
+    public ResponseEntity<Response<Object>> deleteCodiDiary(@PathVariable("id") int id) {
         log.info("[DELETE] /api/diaries/" + id);
-        return codiService.deleteDiary(id);
+        return codiService.deleteCodiDiary(id);
     }
 }
 
