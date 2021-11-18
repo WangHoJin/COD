@@ -1,18 +1,5 @@
 <template lang="">
   <v-container class="clothesDes">
-    <!-- 태그 정보 start -->
-    <v-row class="">
-      <!-- 태그들 -->
-      <v-col cols="12">
-        <v-icon class="mx-2" color="#857DB1" small> mdi-tag </v-icon>
-        <div style="display: inline-block" v-for="(tag, index) in tags" :key="index">
-          <v-chip class="mx-1 my-3" small color="#C4BDDD" style="display: inline-block">
-            <h4 class="tagText">{{ tag }}</h4>
-          </v-chip>
-        </div>
-      </v-col>
-    </v-row>
-    <!-- 태그 정보 end -->
     <!-- 옷 설명 start-->
     <v-row>
       <v-col cols="3" sm="12" md="12" lg="12">
@@ -87,7 +74,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      tags: ["#출근복", "#캐주얼", "#데일리"],
+      tags: [],
     };
   },
   computed: {
@@ -102,6 +89,7 @@ export default {
       let clothesId = this.$route.params.no;
       console.log(this.$route.params.no);
       this.getClothes(clothesId);
+      this.tags = this.clothes.clothesTag;
     },
   },
 };
