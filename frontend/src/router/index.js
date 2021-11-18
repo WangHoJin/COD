@@ -22,18 +22,23 @@ const router = new Router({
           component: () => import('@/pages/Main/RecordCodi/SelectCodi.vue'),
         },
         {
-          path: '/record-coid/coordination',
+          path: '/record-codi/coordination',
           name: 'coordination',
           component: () => import('@/pages/Main/RecordCodi/Coordination.vue'),
         },
         {
-          path: '/record-coid/regist',
-          name: 'record-coid-regist',
+          path: '/record-codi/regist',
+          name: 'record-codi-regist',
           component: () => import('@/pages/Main/RecordCodi/RegistCodi.vue'),
         },
         {
-          path: '/record-coid/detail',
-          name: 'record-coid-detail',
+          path: '/record-codi/update/:id',
+          name: 'record-codi-update',
+          component: () => import('@/pages/Main/RecordCodi/RegistCodi.vue'),
+        },
+        {
+          path: '/record-codi/detail',
+          name: 'record-codi-detail',
           component: () => import('@/pages/Main/RecordCodi/CalendarDetail.vue'),
         },
       ],

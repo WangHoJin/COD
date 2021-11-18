@@ -1,16 +1,12 @@
 <template>
-  <v-footer class="footer" absolute>
-    <v-card flat width="100%" class="text-center px-3">
-      <v-card-text>
-        <v-row>
-          <v-col v-for="(icon, i) in icons" :key="i">
-            <v-btn class="menuBtn" @click="selectMenu(i)" icon>
-              <v-img width="25px" :src="icon" />
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
+  <v-footer class="footer" app>
+    <v-row class="px-6" style="background-color: white">
+      <v-col class="text-center" v-for="(icon, i) in icons" :key="i">
+        <v-btn class="menuBtn" @click="selectMenu(i)" icon>
+          <v-img width="15px" :src="icon" />
+        </v-btn>
+      </v-col>
+    </v-row>
   </v-footer>
 </template>
 

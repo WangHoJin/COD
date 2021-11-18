@@ -1,5 +1,4 @@
 import { getCodi, getCodiList } from '@/api/codi';
-
 export default {
   // 현재 상태들
   state: {

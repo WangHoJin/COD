@@ -57,73 +57,73 @@
   </v-form>
 </template>
 <script>
-import ClothesImg from "@/components/codi/ClothesImg.vue";
-import { createCodi } from "@/api/codi";
-import html2canvas from "html2canvas";
-import axios from "@/utils/axios";
+import ClothesImg from '@/components/codi/ClothesImg.vue';
+import { createCodi } from '@/api/codi';
+import html2canvas from 'html2canvas';
+import axios from '@/utils/axios';
 export default {
   components: {
     ClothesImg,
   },
   data: function () {
     return {
-      name: "",
-      tag: "",
-      description: "",
-      thumbnail: "",
+      name: '',
+      tag: '',
+      description: '',
+      thumbnail: '',
       coordinate: [],
     };
   },
   methods: {
     removeClothes(clothesId) {
-      console.log("삭제했다");
+      console.log('삭제했다');
       const temp = this.$store.state.codi.usedClothes;
-      console.log("기존 배열", temp);
+      console.log('기존 배열', temp);
       const newlist = [];
       for (var i = 0; i < temp.length; i++) {
         if (temp[i].clothesId != clothesId) {
           newlist.push(temp[i]);
         }
       }
-      console.log("새로운 배열", newlist);
-      this.$store.dispatch("removeUsedClothes", newlist);
+      console.log('새로운 배열', newlist);
+      this.$store.dispatch('removeUsedClothes', newlist);
     },
     addClothes(path) {
-      console.log("위치", this.thumbnail);
+      console.log('위치', this.thumbnail);
       let codi = {
         name: this.name,
         tag: this.tag,
         description: this.description,
         thumbnail: path,
-        coordinate: "json",
+        coordinate: 'json',
       };
       let token = this.$store.state.auth.accessToken;
       createCodi(codi, token).then(() => {
-        console.log("등록 성공");
+        console.log('등록 성공');
       });
     },
     clickCreate() {
       let myImg;
-      html2canvas(document.querySelector("#codiCombi"), {
+      html2canvas(document.querySelector('.codiCombi'), {
         allowTaint: true,
         useCORS: true,
         logging: true,
       }).then((canvas) => {
-        myImg = canvas.toDataURL("image/png");
-        var blobBin = window.atob(myImg.split(",")[1]); // base64 데이터 디코딩
+        myImg = canvas.toDataURL('image/png');
+        var blobBin = window.atob(myImg.split(',')[1]); // base64 데이터 디코딩
         var array = [];
         for (var i = 0; i < blobBin.length; i++) {
           array.push(blobBin.charCodeAt(i));
         }
-        var file = new Blob([new Uint8Array(array)], { type: "image/png" }); // Blob 생성
+        var file = new Blob([new Uint8Array(array)], { type: 'image/png' }); // Blob 생성
         var formdata = new FormData();
-        formdata.append("images", file);
+        formdata.append('images', file);
         let accessToken = this.$store.state.auth.accessToken;
         axios
-          .post("/images", formdata, {
+          .post('/images', formdata, {
             headers: {
-              "X-ACCESS-TOKEN": accessToken,
-              "Content-Type": "multipart/form-data",
+              'X-ACCESS-TOKEN': accessToken,
+              'Content-Type': 'multipart/form-data',
             },
           })
           .then((res) => {
@@ -171,7 +171,7 @@ export default {
   margin: 0;
 }
 .square:after {
-  content: "";
+  content: '';
   display: block;
   padding-bottom: 100%;
 }

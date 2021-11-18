@@ -1,8 +1,20 @@
 <template lang="">
   <div>
-    <Header title="코디 기록하기" />
+    <!-- <Header title="코디 기록하기" /> -->
     <div class="content">
-      <v-tabs
+      <v-row class="mx-2 pt-4" style="width: 100%">
+        <v-col style="align-self: center">
+          <div style="color: gray">총 {{ codies.length }}개</div>
+        </v-col>
+
+        <v-col class="text-right">
+          <v-btn @click="$router.push({ name: 'codiCreate' })" class="mb-1" color="#857db1" text>
+            <v-icon smal>mdi-plus</v-icon>
+            새로운 코디 등록하기
+          </v-btn>
+        </v-col>
+      </v-row>
+      <!-- <v-tabs
         :centered="true"
         color="#857DB1"
         style="margin-top: 20px; width: 100%"
@@ -12,7 +24,8 @@
       >
         <v-tab class="ma-0"> 코디에서 고르기 </v-tab>
         <v-tab class="ma-0"> 옷장에서 조합하기 </v-tab>
-      </v-tabs>
+      </v-tabs> -->
+
       <!-- 코디에서 고르기 -->
       <div v-if="super_tab == 0">
         <!-- <v-row class="px-2">
@@ -49,10 +62,8 @@
         </div>
       </div>
       <!-- 옷장에서 조합하기 -->
-      <div v-else>
-        <!-- 중간 서브바 -->
+      <!-- <div v-else>
         <v-row class="py-1 px-2">
-          <!-- 태그들 -->
           <v-col>
             <v-tabs
               id="clthes-category-tabs"
@@ -69,7 +80,6 @@
               <v-tab class="px-1" style="font-size: 0.75rem; min-width: 0px"> 악세서리 </v-tab>
             </v-tabs>
           </v-col>
-          <!-- 계절 셀렉트 -->
           <v-col cols="3">
             <v-select
               class="mr-2"
@@ -85,7 +95,6 @@
             ></v-select>
           </v-col>
         </v-row>
-        <!-- 옷 그리드 -->
         <div class="clothes-content py-7">
           <div class="clothes-holder text-center">
             <div class="box"></div>
@@ -107,13 +116,13 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 <script>
-import Header from '@/components/common/BackTitleHeader.vue';
-import SBtn from '@/components/common/SquareButton.vue';
+// import Header from '@/components/common/BackTitleHeader.vue';
+// import SBtn from '@/components/common/SquareButton.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -145,20 +154,22 @@ export default {
       console.log(item);
       this.setCodi(item);
       let date = this.$route.query.date;
-      this.$router.push({ path: `/record-coid/regist?date=${date}` });
+      this.$router.push({ path: `/record-codi/regist?date=${date}` });
     },
   },
-  components: { Header, SBtn },
+  components: {
+    // Header,
+    // SBtn,
+  },
 };
 </script>
 <style scoped>
 .content {
-  /* padding: 20px; */
 }
 .codi-content {
   background-color: #e5e5e5;
   padding: 0 2%;
-  min-height: 130vw;
+  min-height: 80vh;
 }
 .codi-holder {
   display: inline-block;

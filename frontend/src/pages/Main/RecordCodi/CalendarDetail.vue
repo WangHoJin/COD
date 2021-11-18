@@ -1,10 +1,9 @@
 <template lang="">
   <div>
-    <Header />
     <div class="content">
-      <v-row class="fill-height">
+      <v-row style="height:100%">
         <v-col>
-          <v-sheet height="64">
+          <v-sheet height="60">
             <v-toolbar flat>
               <v-btn outlined small class="mr-4" color="grey darken-2" @click="setToday">
                 Today
@@ -20,28 +19,24 @@
               </v-btn>
             </v-toolbar>
           </v-sheet>
-          <v-sheet height="600">
-            <v-calendar
+          <v-sheet height="75vh">
+            <v-calendar 
+              @click:date="click"
+              height="100%"
               ref="calendar"
               v-model="focus"
               color="rgb(133 125 177 / 80%)"
               type="month"
             >
-            
-            <template v-slot:day="{ date }">
-            <v-row
-            >
-              <template v-if="tracked[date]">
+            <template v-slot:day="{ date }" >
+              <template v-if="recordMap.get(date)"  >
                 <v-sheet
                   tile
-                  class="ml-3"
-                >
-                <div class="mt-4">
-                  <v-img contain class="img-thumbnail" :src="tracked[date]"/>
-                </div>
+                  style="text-align: -webkit-center;"
+               >
+                  <v-img @click="click({date:date})" class="mt-2" contain width="100%" height="100%" :src="recordMap.get(date).codiDiaryThumbnail"/>
                 </v-sheet>
               </template>
-            </v-row>
           </template>
             </v-calendar>
           </v-sheet>
@@ -51,7 +46,8 @@
   </div>
 </template>
 <script>
-import Header from '@/components/common/BackTitleHeader.vue';
+import { mapGetters } from 'vuex';
+import { getDirary, getDiraryList } from '@/api/diaries.js';
 export default {
   data() {
     return {
@@ -59,15 +55,24 @@ export default {
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
-      tracked: {
-        '2021-11-10': "https://mblogthumb-phinf.pstatic.net/20160510_32/mkhjsk_14628892954266DY4i_PNG/1.png?type=w2",
-        '2021-11-08': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY4emgdTEJmNK72ydRTyzds0y4WWx09BdN5fid5oUaDo-kSkhadoMK3k1Dkwnu-HwuPIg&usqp=CAU",
-        '2021-11-07': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUzlBJLjR-RMcFJ4lP-Y-QzvfpXcqh3zrzwYoaMDCDoo0WDXh7M0kMlnkj8tnxasdzRPY&usqp=CAU",
-        '2021-11-06': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkM1WYcuIZYNpaq63j2zJLPVVOJM5z6c6TpVLhpKXUHEU5ypHaveekmWZtqpbdwwT0R94&usqp=CAU",
-      },
+      recordMap: new Map(),
       colors: ['#1867c0', '#fb8c00', '#000000'],
       isLoadingCalendar:false
     };
+  },
+  created(){
+    // 달력 기록 가져오기
+    let map = new Map();
+    let userId = this.loginUser.userId;
+    let accessToken = this.$store.state.auth.accessToken;
+    getDiraryList({ userId: userId, page: 1, size: 1000 }, accessToken).then((res) => {
+      for (let record of res) map.set(record.codiDiaryDate, record);
+      this.recordMap = map;
+      console.log(this.recordMap);
+    });
+  },
+  computed: {
+    ...mapGetters(['loginUser']),
   },
   mounted() {
     this.$refs.calendar.checkChange();
@@ -86,19 +91,30 @@ export default {
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
+    click(dateInfo){
+      console.log(dateInfo);
+      let record = this.recordMap.get(dateInfo.date);
+      if(record){
+              this.$router.push({ path: `/record-codi/update/${record.codiDiaryId}` });
+      }
+    },
+    dateToString(date) {
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    },
   },
   components: {
-    Header,
+    // Header,
   },
 };
 </script>
 <style scoped>
 .content {
-  margin: 10px 5px;
+  /* padding: 10px 12px; */
+  padding: 10px 0px;
 }
 .img-thumbnail {
-  /* width: 20%; */
-  height: 50%;
+  /* width: 10vw; */
+  /* height: 100%; */
   object-fit: cover;
 }
 </style>
