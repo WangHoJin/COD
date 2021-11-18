@@ -1,15 +1,15 @@
 <template>
   <div>
     <UploadImg />
-    <ClothesCreateForm />
+    <!-- <ClothesCreateForm /> -->
   </div>
 </template>
 <script>
 import UploadImg from "../../components/clothes/UploadImg.vue";
-import ClothesCreateForm from "../../components/clothes/ClothesCreateForm.vue";
+// import ClothesCreateForm from "../../components/clothes/ClothesCreateForm.vue";
 export default {
   components: {
-    ClothesCreateForm,
+    // ClothesCreateForm,
     UploadImg,
   },
 };

@@ -19,7 +19,7 @@
         <h5 class="kindText">카테고리</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">상의</h5>
+        <h5 class="contentText">{{ clothes.clothType }}</h5>
       </v-col>
     </v-row>
     <v-row>
@@ -27,7 +27,7 @@
         <h5 class="kindText">색상</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">하양</h5>
+        <h5 class="contentText">{{ clothes.clothColor }}</h5>
       </v-col>
     </v-row>
     <v-row>
@@ -35,7 +35,7 @@
         <h5 class="kindText">계절</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">여름</h5>
+        <h5 class="contentText">{{ clothes.clothSeason }}</h5>
       </v-col>
     </v-row>
     <v-row>
@@ -43,7 +43,7 @@
         <h5 class="kindText">보유</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">O</h5>
+        <h5 class="contentText">{{ clothes.clothIsOwned }}</h5>
       </v-col>
     </v-row>
     <v-row>
@@ -51,7 +51,7 @@
         <h5 class="kindText">가격</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">18,000원</h5>
+        <h5 class="contentText">{{ clothes.clothPrice }}</h5>
       </v-col>
     </v-row>
     <v-row>
@@ -59,7 +59,7 @@
         <h5 class="kindText">브랜드</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">나이키</h5>
+        <h5 class="contentText">{{ clothes.clothBrand }}</h5>
       </v-col>
     </v-row>
     <v-row>
@@ -67,7 +67,7 @@
         <h5 class="kindText">상품명</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">고성능 흰티</h5>
+        <h5 class="contentText">{{ clothes.clothName }}</h5>
       </v-col>
     </v-row>
     <v-row>
@@ -75,7 +75,7 @@
         <h5 class="kindText">사이즈</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">M</h5>
+        <h5 class="contentText">{{ clothes.clothMeasure }}</h5>
       </v-col>
     </v-row>
     <!-- 옷 설명 end-->
@@ -100,6 +100,7 @@ export default {
     ...mapActions(["getClothes"]),
     selectClothes() {
       let clothesId = this.$route.params.no;
+      console.log(this.$route.params.no);
       this.getClothes(clothesId);
     },
   },

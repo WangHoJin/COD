@@ -10,11 +10,13 @@
     class="dragImg"
   >
     <v-img
+      contain
       crossOrigin="true"
       class=""
       lazy-src="https://picsum.photos/id/11/10/6"
       :src="path"
     ></v-img>
+    <!-- 선택한 이미지 -->
   </vue-draggable-resizable>
 </template>
 <script>
@@ -25,14 +27,14 @@ export default {
     console.log(this.path);
   },
   methods: {
-    onResize: function(x, y, width, height) {
+    onResize: function (x, y, width, height) {
       this.x = x;
       this.y = y;
       this.width = width;
       this.height = height;
       // console.log("x좌표 : " + x + " " + "y좌표 : " + y);
     },
-    onDrag: function(x, y) {
+    onDrag: function (x, y) {
       this.x = x;
       this.y = y;
     },
