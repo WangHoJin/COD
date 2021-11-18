@@ -10,11 +10,11 @@
         ><h3 class="settingText" @click="clickProfile()">프로필 편집</h3>
       </v-col>
     </v-row>
-    <v-row class="divider">
+    <!-- <v-row class="divider">
       <v-col cols="12" sm="3" md="2" lg="1"
         ><h3 class="settingText" @click="clickPassword()">비밀번호 변경</h3>
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row class="divider">
       <v-col cols="12" sm="3" md="2" lg="1"
         ><h3 class="settingText" @click="clickLogout()">로그아웃</h3>
@@ -28,25 +28,46 @@
   </v-container>
 </template>
 <script>
+import { deleteUser } from "@/api/user";
+import { mapActions } from "vuex";
 export default {
   methods: {
+    ...mapActions(["logout"]),
     clickLiked() {
       this.$router.push({
-        path: `setting/likedCodi`,
+        name: `settingLikedCodi`,
       });
     },
     clickProfile() {
       this.$router.push({
-        path: `setting/upadateProfile`,
+        name: `settingUpadateProfile`,
       });
     },
     clickPassword() {
       this.$router.push({
-        path: `setting/changePassword`,
+        name: `settingChangePassword`,
       });
     },
-    clickLogout() {},
-    clickDelete() {},
+    clickLogout() {
+      this.logout().then(() => {
+        this.$router.push({
+          name: "sign-in",
+        });
+      });
+    },
+    clickDelete() {
+      let accessToken = this.$store.state.auth.accessToken;
+      console.log(accessToken);
+      deleteUser(accessToken)
+        .then(() => {
+          this.$router.push({
+            name: "sign-in",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

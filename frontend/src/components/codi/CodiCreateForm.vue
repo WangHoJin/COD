@@ -125,7 +125,7 @@ export default {
         formdata.append("images", file);
         let accessToken = this.$store.state.auth.accessToken;
         axios
-          .post("/images", formdata, {
+          .post("/rembg", formdata, {
             headers: {
               "X-ACCESS-TOKEN": accessToken,
               "Content-Type": "multipart/form-data",

@@ -23,7 +23,7 @@ async function signUp(info) {
 }
 
 async function getProfile(accessToken) {
-  console.log("get login user Profile API");
+  console.log("get get user Profile API");
   try {
     const { data } = await axios.get("/users/profile", {
       headers: {
@@ -47,4 +47,36 @@ async function getUserList(condition) {
     console.error(error.response.data.message);
   }
 }
-export { signIn, getProfile, signUp, getUserList };
+
+async function updateUser(payload, accessToken) {
+  console.log("get update user Profile API");
+  try {
+    const { data } = await axios.patch("/users/profile", payload, {
+      headers: {
+        "X-ACCESS-TOKEN": accessToken,
+      },
+    });
+    return data;
+  } catch (error) {
+    // console.error('user.js', error.response.data.message);
+    throw error;
+  }
+}
+
+async function deleteUser(accessToken) {
+  console.log("get delete user Profile API");
+  try {
+    console.log("ㄹ탈뢰");
+    const { data } = await axios.delete("/users/deactivate", {
+      headers: {
+        "X-ACCESS-TOKEN": accessToken,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("user.js", error.response.data.message);
+    throw error;
+  }
+}
+
+export { signIn, getProfile, signUp, getUserList, updateUser, deleteUser };

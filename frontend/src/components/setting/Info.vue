@@ -6,25 +6,25 @@
         <h5 class="kindText">이름</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">왕호진</h5>
+        <h5 class="contentText">{{ loginUser.name }}</h5>
       </v-col>
       <v-col cols="3" sm="12" md="12" lg="12">
         <h5 class="kindText">이메일</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">이메일</h5>
+        <h5 class="contentText">{{ loginUser.email }}</h5>
       </v-col>
       <v-col cols="3" sm="12" md="12" lg="12">
         <h5 class="kindText">성별</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">남</h5>
+        <h5 class="contentText">{{ loginUser.gender }}</h5>
       </v-col>
       <v-col cols="3" sm="12" md="12" lg="12">
         <h5 class="kindText">생년월일</h5>
       </v-col>
       <v-col cols="9" sm="12" md="12" lg="12">
-        <h5 class="contentText">1995.08.25</h5>
+        <h5 class="contentText">{{ loginUser.birth }}</h5>
       </v-col>
     </v-row>
 
@@ -32,7 +32,11 @@
   </v-container>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters(["loginUser"]),
+  },
   methods: {
     clickInfo() {},
     clickUpdate() {},

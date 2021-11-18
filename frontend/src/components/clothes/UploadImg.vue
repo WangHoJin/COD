@@ -7,7 +7,7 @@
             <v-img class="" height="400px" :src="uploadImg" contain>
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="black lighten-5"> </v-progress-circular>
+                  <v-icon>mdi-package-variant</v-icon>
                 </v-row>
               </template>
             </v-img>
@@ -117,7 +117,7 @@ export default {
         var fd = new FormData();
         fd.append("images", this.file);
         axios
-          .post("/images", fd, {
+          .post("/rembg", fd, {
             headers: {
               "X-ACCESS-TOKEN": accessToken,
               "Content-Type": "multipart/form-data",
