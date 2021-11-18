@@ -16,7 +16,7 @@ import SBtn from '@/components/common/SquareButton.vue';
 export default {
   methods: {
     mvRegist() {
-      this.$router.push({ name: 'record-coid-regist' });
+      this.$router.push({ name: 'record-codi-regist' });
     },
   },
   components: {

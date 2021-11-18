@@ -2,7 +2,7 @@ import axios from "@/utils/axios";
 import store from "@/store";
 
 // 옷 리스트 조회 API
-async function getClothesList(condition, accessToken) {
+async function getClothesList(condition) {
   var url = `/clothes?page=${condition.page}&size=${condition.size}`;
   if (condition.userId) url += `&userId=${condition.userId}`;
   if (condition.type) url += `&type=${condition.type}`;

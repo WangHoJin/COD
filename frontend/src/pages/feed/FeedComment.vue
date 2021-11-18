@@ -1,5 +1,10 @@
 <template>
   <v-container style="padding-top: 25px">
+    <div v-if="comments.length == 0" class="mt-16 text-center">
+      <v-icon x-large class="mt-16 mb-3">mdi-package-variant</v-icon>
+
+      <h4>아직 댓글이 없습니다!</h4>
+    </div>
     <v-row v-for="comment in comments" :key="comment.commentId">
       <v-col cols="auto" style="padding-right: 0">
         <v-img class="profileImg" src="../../assets/logo/login.png"> </v-img>
@@ -14,8 +19,10 @@
             <v-text-field
               v-model="selectCommentContent"
               append-icon="mdi-pencil"
+              hide-details="true"
               v-if="isModify && comment.commentId == commentId"
               type="text"
+              class="mb-1"
               style="display: inline-block"
               dense
               color="#857db1"
@@ -35,12 +42,13 @@
             style="padding: 0 0 0 12px"
           >
             <h6
+              v-if="!isModify"
               @click="selectComment(comment.commentId, comment.commentContent)"
               class="modiAndDel"
             >
               수정
-            </h6></v-col
-          >
+            </h6>
+          </v-col>
           <v-col
             v-if="isWriter(comment.userId)"
             cols="auto"
@@ -97,8 +105,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { createComment, updateComment, deleteComment } from "@/api/comment";
+import { mapActions, mapGetters } from 'vuex';
+import { createComment, updateComment, deleteComment } from '@/api/comment';
 
 export default {
   data() {
@@ -106,14 +114,14 @@ export default {
       codiId: this.$route.no,
       commentList: [],
       isModify: false,
-      commentId: "",
-      content: "",
-      selectCommentContent: "",
-      updateCommentContent: "",
+      commentId: '',
+      content: '',
+      selectCommentContent: '',
+      updateCommentContent: '',
     };
   },
   computed: {
-    ...mapGetters(["comments"]),
+    ...mapGetters(['comments']),
   },
   watch: {
     comments: function () {
@@ -124,11 +132,11 @@ export default {
     this.getCommentList();
   },
   methods: {
-    ...mapActions(["getComments"]),
+    ...mapActions(['getComments']),
     getCommentList() {
       let codiId = this.$route.params.no;
       let payload = { codiId: codiId, page: 1, size: 1000 };
-      this.$store.dispatch("getComments", payload);
+      this.$store.dispatch('getComments', payload);
     },
     isWriter(userId) {
       if (userId === this.$store.state.auth.loginUser.userId) {
@@ -140,11 +148,11 @@ export default {
     selectComment(commentId, content) {
       this.isModify = true;
       this.commentId = commentId;
-      console.log(this.isModify + " " + this.commentId);
+      console.log(this.isModify + ' ' + this.commentId);
       this.selectCommentContent = content;
     },
     deleteComment(commentId) {
-      console.log("댓삭");
+      console.log('댓삭');
       let accessToken = this.$store.state.auth.accessToken;
       deleteComment(commentId, accessToken).then(() => {
         this.getCommentList();
@@ -155,8 +163,9 @@ export default {
       let payload = { content: this.selectCommentContent };
       updateComment(payload, commentId, accessToken).then(() => {
         this.getCommentList();
+        this.isModify = false;
       });
-      this.updateCommentContent = "";
+      this.updateCommentContent = '';
     },
     createComment() {
       let accessToken = this.$store.state.auth.accessToken;
@@ -164,7 +173,7 @@ export default {
       createComment(payload, accessToken).then(() => {
         this.getCommentList();
       });
-      this.content = "";
+      this.content = '';
     },
     cancelUpdate() {
       this.isModify = false;

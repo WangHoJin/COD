@@ -7,8 +7,10 @@
     <v-col class="codiList" v-for="(c, i) in codies" :key="i" cols="4" sm="3" md="3" lg="3">
       <v-card outlined>
         <v-img
+          contain
+          height="120px"
           class="codiImg"
-          src="@/assets/test/codisample.png"
+          :src="c.codiThumbnail"
           @click="codiClick(c.codiId)"
         ></v-img>
       </v-card>
@@ -23,17 +25,18 @@ export default {
     ...mapGetters(["codies"]),
   },
   created() {
+    console.log("생성");
     this.selectCodies();
   },
   methods: {
     ...mapActions(["getCodies"]),
     selectCodies() {
+      console.log();
       let userId = this.$route.params.no;
       let payload = { userId: userId, page: 1, size: 9 };
       this.getCodies(payload);
     },
     codiClick(codiId) {
-      // console.log("코디 클릭" + codiId);
       this.$router.push({
         path: `../codi/detail/` + codiId,
       });
