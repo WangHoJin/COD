@@ -2,7 +2,7 @@ import axios from "@/utils/axios";
 import store from "@/store";
 
 // 옷 리스트 조회 API
-async function getClothesList(condition) {
+async function getClothesList(condition, accessToken) {
   var url = `/clothes?page=${condition.page}&size=${condition.size}`;
   if (condition.userId) url += `&userId=${condition.userId}`;
   try {
@@ -13,7 +13,8 @@ async function getClothesList(condition) {
     });
     return data.result;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    console.error(error.response.data.message);
   }
 }
 // 옷 상세 조회 API
@@ -31,7 +32,7 @@ async function getClothes(clothesId) {
 async function createClothes(clothes) {
   // console.log("createClothes API", clothes);
   try {
-    return axios.post("/clothes", clothes);
+    return axios.post('/clothes', clothes);
   } catch (error) {
     console.error(error.response.data.message);
   }
