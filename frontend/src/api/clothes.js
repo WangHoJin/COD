@@ -1,4 +1,5 @@
-import axios from '@/utils/axios';
+import axios from "@/utils/axios";
+import store from "@/store";
 
 // 옷 리스트 조회 API
 async function getClothesList(condition, accessToken) {
@@ -7,7 +8,7 @@ async function getClothesList(condition, accessToken) {
   try {
     const { data } = await axios.get(url, {
       headers: {
-        'X-ACCESS-TOKEN': accessToken,
+        "X-ACCESS-TOKEN": store.state.auth.accessToken,
       },
     });
     return data.result;

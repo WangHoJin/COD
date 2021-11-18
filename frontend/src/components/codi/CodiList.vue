@@ -21,7 +21,7 @@
     <!-- 코디 리스트 end -->
 
     <!-- 코디 페이지 start -->
-    <v-pagination id="listPage" v-model="page" :length="4" circle></v-pagination>
+    <!-- <v-pagination id="listPage" v-model="page" :length="4" circle></v-pagination> -->
     <!-- 코디 페이지 end -->
 
     <!-- 코디 추가 버튼 start -->
@@ -54,7 +54,7 @@ export default {
     ...mapActions(['getCodies']),
     selectCodies() {
       let userId = this.$store.state.auth.loginUser.userId;
-      let payload = { userId: userId, page: 1, size: 10 };
+      let payload = { userId: userId, page: 1, size: 100 };
       this.getCodies(payload);
     },
     infiniteHandler($state) {

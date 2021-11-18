@@ -1,15 +1,15 @@
 <template>
   <div>
-    <CodiCombination />
     <CodiCreateForm />
+    <ChoiceClothes />
   </div>
 </template>
 <script>
-import CodiCombination from "../../components/codi/CodiCombination.vue";
+import ChoiceClothes from "../../components/codi/ChoiceClothes.vue";
 import CodiCreateForm from "../../components/codi/CodiCreateForm.vue";
 export default {
   components: {
-    CodiCombination,
+    ChoiceClothes,
     CodiCreateForm,
   },
 };
