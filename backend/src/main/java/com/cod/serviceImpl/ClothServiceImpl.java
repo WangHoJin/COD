@@ -2,6 +2,7 @@ package com.cod.serviceImpl;
 
 import com.cod.configuration.ValidationCheck;
 import com.cod.dao.ClothRepository;
+import com.cod.dao.UserRepository;
 import com.cod.dto.cloth.createcloth.CreateClothInput;
 import com.cod.dto.cloth.selectcloth.SelectClothInput;
 import com.cod.dto.cloth.selectcloth.SelectClothOutput;
@@ -35,6 +36,7 @@ import static com.cod.response.ResponseStatus.*;
 public class ClothServiceImpl implements ClothService {
 
     private final ClothRepository clothRepository;
+    private final UserRepository userRepository;
     private final JwtService jwtService;
 
     @Override
@@ -81,7 +83,7 @@ public class ClothServiceImpl implements ClothService {
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new Response<>(null, CREATED_CODI));
+                .body(new Response<>(null, CREATED_CLOTH));
     }
 
 
@@ -127,11 +129,11 @@ public class ClothServiceImpl implements ClothService {
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new Response<>(selectClothOutput, SUCCESS_SELECT_CODI));
+                .body(new Response<>(selectClothOutput, SUCCESS_SELECT_CLOTH));
     }
 
     @Override
-    public ResponseEntity<PageResponse<SelectClothOutput>> selectClothList(SelectClothInput selectClothInput) {
+    public ResponseEntity<PageResponse<SelectClothOutput>> selectClothList(SelectClothInput selectClothInput, boolean isSearchByType) {
         // 1. 값 형식 체크
         if (selectClothInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -144,8 +146,33 @@ public class ClothServiceImpl implements ClothService {
         // 2. 옷 조회
         Pageable pageable = PageRequest.of(selectClothInput.getPage() - 1, selectClothInput.getSize());
         Page<SelectClothOutput> selectClothOutputs;
+        User user = userRepository.findById(selectClothInput.getUserId()).orElse(null);
         try {
-            selectClothOutputs = clothRepository.findByDynamicQuery(selectClothInput, pageable);
+            Page<Cloth> clothList;
+            if(isSearchByType){
+                clothList=clothRepository.findByUserAndType(user,selectClothInput.getType(),pageable);
+            }
+            else{
+                clothList=clothRepository.findByUser(user,pageable);
+            }
+            selectClothOutputs=clothList.map(cloth->{
+                return SelectClothOutput.builder()
+                        .clothId(cloth.getId())
+                        .userId(cloth.getUser().getId())
+                        .clothName(cloth.getName())
+                        .clothTag(cloth.getTag())
+                        .clothImgUrl(cloth.getImgUrl())
+                        .clothType(cloth.getType())
+                        .clothColor(cloth.getColor())
+                        .clothSeason(cloth.getSeason())
+                        .clothIsOwned(cloth.getIsOwned())
+                        .clothBrand(cloth.getBrand())
+                        .clothPrice(cloth.getPrice())
+                        .clothMeasure(cloth.getMeasure())
+                        .clothCreatedAt(cloth.getCreatedAt())
+                        .clothUpdatedAt(cloth.getUpdatedAt())
+                        .build();
+            });
         } catch (Exception e) {
             log.error("[clothes/get] database error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -154,7 +181,7 @@ public class ClothServiceImpl implements ClothService {
 
         // 3. 결과 return
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new PageResponse<>(selectClothOutputs, SUCCESS_SELECT_CODI));
+                .body(new PageResponse<>(selectClothOutputs, SUCCESS_SELECT_CLOTH));
     }
 
     @Override
