@@ -55,6 +55,7 @@ export default {
         { tab: '아우터' },
         { tab: '신발' },
         { tab: '가방' },
+        { tab: '모자' },
         { tab: '악세서리' },
       ],
       // type:"",
@@ -107,7 +108,7 @@ export default {
   width: 52px;
   height: 52px;
   left: 80%;
-  top: 77%;
+  top: 82%;
 }
 .tabs {
   position: relative;

@@ -150,6 +150,7 @@ export default {
     addClothes() {
       if (!this.type || !this.color || !this.seasons) {
         this.valid = false;
+        console.log(this.valid);
         return;
       }
 
