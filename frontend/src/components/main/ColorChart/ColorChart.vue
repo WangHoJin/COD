@@ -1,7 +1,6 @@
 <template lang="">
   <div>
     <h3 class="mt-7">내 옷장 색 비율</h3>
-    {{ size }}
     <v-divider class="mt-2"> </v-divider>
     <div v-if="loading">
       <div v-if="size > 0" class="chart">
