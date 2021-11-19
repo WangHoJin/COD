@@ -14,14 +14,17 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-file-input
-        class="upload"
-        v-model="file"
-        hide-input
-        filled
-        prepend-icon="mdi-camera"
-        @change="change"
-      ></v-file-input>
+      <v-btn fab style="margin-top: -100px; margin-left: 10px">
+        <v-file-input
+          class="upload ml-4"
+          style="margin-bottom: 9px"
+          v-model="file"
+          hide-input
+          filled
+          prepend-icon="mdi-camera"
+          @change="change"
+        ></v-file-input>
+      </v-btn>
     </v-container>
     <v-form>
       <v-container class="inputForm">
@@ -40,7 +43,7 @@
             <v-switch
               inset
               label="공개"
-              hide-details
+              style="margin-top: -5px; margin-left: 3px"
               color="rgb(133, 125, 177)"
               v-model="isOwned"
             ></v-switch>
@@ -63,8 +66,8 @@
       </v-container>
 
       <!-- 등록 버튼 start -->
-      <v-btn icon id="addBtn" @click="addClothes()">
-        <v-icon large color="#857DB1" left> mdi-checkbox-marked-circle </v-icon>
+      <v-btn icon class="add-click-btn" @click="addClothes()">
+        <v-icon class="ml-2" large color="#857DB1" left> mdi-checkbox-marked-circle </v-icon>
       </v-btn>
       <!-- 등록 버튼 end -->
     </v-form>
@@ -78,7 +81,7 @@ export default {
     return {
       file: null,
       uploadImg: '',
-      category: ['상의', '하의', '아우터', '악세서리'],
+      category: ['전체', '상의', '하의', '아우터', '신발', '가방', '모자', '악세서리'],
       colors: [
         '빨간색',
         '노란색',
@@ -186,10 +189,10 @@ export default {
   padding-top: 0px;
   padding-bottom: 0px;
 }
-#addBtn {
+.add-click-btn {
   position: absolute;
-  top: -3.8%;
-  right: 1%;
+  top: -4.1%;
+  right: 4%;
   z-index: 1;
 }
 </style>

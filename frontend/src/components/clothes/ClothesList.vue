@@ -53,6 +53,8 @@ export default {
         { tab: '상의' },
         { tab: '하의' },
         { tab: '아우터' },
+        { tab: '신발' },
+        { tab: '가방' },
         { tab: '악세서리' },
       ],
       // type:"",
