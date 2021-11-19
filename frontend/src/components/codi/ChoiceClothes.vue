@@ -8,7 +8,7 @@
     <template v-slot:default="dialog">
       <v-container class="openClothes">
         <v-row>
-          <v-tabs show-arrows>
+          <v-tabs @change="setClothesList()" v-model="tab" show-arrows color="#857DB1">
             <v-tab>전체</v-tab>
             <v-tab>상의</v-tab>
             <v-tab>하의</v-tab>
@@ -30,9 +30,15 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-card-actions class="justify-end">
-            <v-btn text @click="dialog.value = false">Close</v-btn>
-          </v-card-actions>
+          <!-- <v-card-actions class="justify-end"> -->
+          <v-btn
+            color="#857db1"
+            outlined
+            style="margin: 15px auto; text-align: center"
+            @click="dialog.value = false"
+            >close</v-btn
+          >
+          <!-- </v-card-actions> -->
         </v-row>
       </v-container>
     </template>
@@ -42,7 +48,11 @@
 import { mapActions, mapGetters } from "vuex";
 export default {
   data: function () {
-    return { idx: 1 };
+    return {
+      idx: 1,
+      tab: "",
+      items: ["전체", "상의", "하의", "아우터", "신발", "가방", "악세서리"],
+    };
   },
   computed: {
     ...mapGetters[["usedClothes", "clothesList"]],
@@ -54,8 +64,15 @@ export default {
     ...mapActions(["getUsedClothes", "getClothesList"]),
     setClothesList() {
       let userId = this.$store.state.auth.loginUser.userId;
-      let payload = { userId: userId, page: 1, size: 100 };
-      this.getClothesList(payload);
+      console.log(this.items[this.tab]);
+      let type = this.items[this.tab];
+      if (type === "전체") {
+        let payload = { userId: userId, page: 1, size: 100 };
+        this.getClothesList(payload);
+      } else {
+        let payload = { userId: userId, type: type, page: 1, size: 100 };
+        this.getClothesList(payload);
+      }
     },
     addClothes(src) {
       console.log("추가");
@@ -80,11 +97,11 @@ export default {
   border-bottom-color: #ffff;
 }
 .openClothes {
-  background-color: #d6d6d6;
+  background-color: #e5eaef;
 }
 .codiImg {
   margin: auto;
-  border: 2px solid #a9a9a9;
+  /* border: 2px solid #a9a9a9; */
   width: 100%;
   height: 100%;
 }
