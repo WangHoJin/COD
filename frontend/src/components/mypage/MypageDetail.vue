@@ -4,7 +4,8 @@
       <!-- 프로필 사진 start -->
       <v-col class="profile" cols="3" sm="3" md="3" lg="3">
         <v-avatar size="70">
-          <img :src="loginUser.profile" />
+          <img v-if="this.loginUser.profile" :src="loginUser.profile" />
+          <img v-if="!this.loginUser.profile" src="@/assets/test/profile.jpg" />
         </v-avatar>
       </v-col>
       <!-- 프로필 사진 end -->
@@ -14,24 +15,28 @@
         <h5 class="grayText" @click="clickFollower()">팔로워 {{ followerList.length }}</h5>
         &nbsp;
         <h5 class="grayText" @click="clickFollowing()">팔로잉 {{ followingList.length }}</h5>
-        <v-img class="grade" width="15px" src="@/assets/icon/mypage/medal.png" />
+        <!-- <v-img class="grade" width="15px" src="@/assets/icon/mypage/medal.png" /> -->
         <h5 class="blackText">{{ loginUser.introduction }}</h5>
       </v-col>
       <!-- 팔로우 및 소개글 end -->
-    </v-row>
 
-    <!-- 챌린지 표시 start -->
-    <!-- <v-row>
-      <v-col cols="12" sm="3" md="3" lg="3">
-        <h4 class="pb-2">옷장속 보거트의 챌린지</h4>
-        <v-avatar class="mr-3" size="50">
-          <img src="@/assets/icon/mypage/challenge-add.png" /> </v-avatar
-        ><v-avatar class="mr-3" v-for="i in 4" :key="i" size="50">
-          <img src="@/assets/icon/mypage/challenge-ex.png" />
-        </v-avatar>
+      <v-col class="" cols="4" v-if="!this.$route.params.no == loginUser.userId">
+        <v-icon
+          v-if="isFollow(this.$route.params.no)"
+          @click="deleteCodiLiked(this.$route.params.no)"
+          large
+          color="#CCBEE3"
+          >mdi-star</v-icon
+        >
+        <v-icon
+          v-if="!isFollow(this.$route.params.no)"
+          @click="createFollow(this.$route.params.no)"
+          large
+          color="#9e9e9e"
+          >mdi-star-outline</v-icon
+        >
       </v-col>
-    </v-row> -->
-    <!-- 챌린지 표시 end -->
+    </v-row>
 
     <!-- 구분선 -->
     <v-row class="divideArea">
@@ -42,7 +47,11 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { createFollow, deleteFollow } from "@/api/follow";
 export default {
+  data() {
+    return {};
+  },
   computed: {
     ...mapGetters(["loginUser", "followerList", "followingList"]),
   },
@@ -59,10 +68,34 @@ export default {
     },
     countFollow() {
       let userId = this.$route.params.no;
-      let payload1 = { page: 1, size: 10, toUserId: userId };
+      let payload1 = { page: 1, size: 1000, toUserId: userId };
       this.getFollower(payload1);
-      let payload2 = { page: 1, size: 10, fromUserId: userId };
+      let payload2 = { page: 1, size: 1000, fromUserId: userId };
       this.getFollowing(payload2);
+    },
+    isFollow(userId) {
+      for (var i = 0; i < this.$store.state.feed.followList.length; i++) {
+        if (this.$store.state.feed.followList[i].userId === userId) {
+          return false;
+        }
+      }
+      return true;
+    },
+    createFollow(toUserId) {
+      let accessToken = this.$store.state.auth.accessToken;
+      let payload = { toUserId: toUserId };
+      createFollow(toUserId, accessToken).then(() => {
+        this.setFollowList();
+        console.log("팔로우 성공");
+      });
+    },
+    deleteFollow(toUserId) {
+      let accessToken = this.$store.state.auth.accessToken;
+      deleteFollow(toUserId, accessToken).then(() => {
+        this.setFollowList();
+        console.log("팔로우 취소");
+      });
+      this.setFollowList();
     },
   },
 };
