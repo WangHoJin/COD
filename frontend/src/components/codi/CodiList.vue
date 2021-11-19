@@ -1,6 +1,10 @@
 <template lang="">
   <v-item-group class="imgList">
     <!-- 코디 리스트 start -->
+    <div v-if="codies.length == 0" class="mt-16 pt-16 text-center">
+      <v-icon x-large class="mt-16 mb-3">mdi-hanger</v-icon>
+      <h4>코디가 없어요. 텅!</h4>
+    </div>
     <v-container>
       <v-row>
         <v-col v-for="codi in codies" :key="codi.codiId" cols="4" sm="3" md="2" lg="1">

@@ -4,7 +4,9 @@
       <img src="@/assets/icon/back.png" style="margin-left: 20px; height: 20px; width: 20px" />
       <v-icon>mdi-chevron-lef</v-icon>
     </v-btn>
-    <v-app-bar-title v-if="title" class="app-title ml-2">{{ title }}</v-app-bar-title>
+    <v-app-bar-title v-if="title" class="app-title ml-2" style="padding-top: 3px">{{
+      title
+    }}</v-app-bar-title>
   </v-app-bar>
 </template>
 

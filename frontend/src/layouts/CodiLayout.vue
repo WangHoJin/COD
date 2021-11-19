@@ -37,6 +37,7 @@ export default {
     };
   },
   created() {
+    let name = this.$route.name;
     console.log("this.$route.name", name);
     if (name == "codiList") {
       this.headerHasBack = true;
@@ -48,7 +49,7 @@ export default {
       this.listFlag = false;
     } else if (name == "codiDetail") {
       this.headerHasBack = true;
-      this.headerTitle = this.$route.params.no + "번 코디 상세 정보";
+      this.headerTitle = "코디 상세 정보";
       this.listFlag = true;
     }
   },
