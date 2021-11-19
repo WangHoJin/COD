@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <CodiHeader :title="title" :listFlag="listFlag" />
+    <Header
+      :hasBack="headerHasBack"
+      :title="headerTitle"
+      :color="headerColor"
+      :isDark="headerIsDark"
+    />
     <v-main>
       <!-- <v-container> -->
       <router-view :key="$route.fullPath" />
@@ -11,43 +16,40 @@
 </template>
 
 <script>
-import CodiHeader from "../components/common/CodiHeader.vue";
+import Header from "../components/common/BackTitleHeader.vue";
 import Footer from "../components/common/Footer.vue";
 
 export default {
   name: "MypageLayout",
   data() {
     return {
-      title: "",
-      listFlag: false,
+      headerTitle: null,
+      headerHasBack: null,
+      headerIsDark: null,
+      headerColor: "white",
     };
   },
   components: {
-    CodiHeader,
+    Header,
     Footer,
   },
   created() {
-    this.selectHeader();
-  },
-  watch: {
-    title: function () {
-      this.selectHeader();
-    },
-  },
-  methods: {
-    selectHeader() {
-      if (this.$route.name == "settingMain") {
-        this.title = "설정";
-      } else if (this.$route.name == "settingLikedCodi") {
-        this.title = "좋아요 누른 코디";
-      } else if (this.$route.name == "settingUpadateProfile") {
-        this.title = "프로필 편집";
-      } else if (this.$route.name == "settingInfo") {
-        this.title = "개인 정보 조회";
-      } else if (this.$route.name == "settingChangePassword") {
-        this.title = "비밀번호 변경";
-      }
-    },
+    if (this.$route.name == "settingMain") {
+      this.headerTitle = "설정";
+      this.headerHasBack = true;
+    } else if (this.$route.name == "settingLikedCodi") {
+      this.headerTitle = "좋아요 누른 코디";
+      this.headerHasBack = true;
+    } else if (this.$route.name == "settingUpadateProfile") {
+      this.headerTitle = "프로필 편집";
+      this.headerHasBack = true;
+    } else if (this.$route.name == "settingInfo") {
+      this.headerTitle = "개인 정보 조회";
+      this.headerHasBack = true;
+    } else if (this.$route.name == "settingChangePassword") {
+      this.headerTitle = "비밀번호 변경";
+      this.headerHasBack = true;
+    }
   },
 };
 </script>

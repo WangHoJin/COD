@@ -1,6 +1,12 @@
 <template>
   <v-app>
-    <CodiHeader :title="title" :listFlag="listFlag" />
+    <Header
+      :hasBack="headerHasBack"
+      :title="headerTitle"
+      :color="headerColor"
+      :isDark="headerIsDark"
+      :listFlag="listFlag"
+    />
     <v-main>
       <!-- <v-container> -->
       <router-view :key="$route.fullPath" />
@@ -11,42 +17,40 @@
 </template>
 
 <script>
-import CodiHeader from "../components/common/CodiHeader.vue";
+// import CodiHeader from "../components/common/CodiHeader.vue";
 import Footer from "../components/common/Footer.vue";
+import Header from "../components/common/BackTitleHeader.vue";
 
 export default {
   name: "CodiLayout",
+  components: {
+    Footer,
+    Header,
+  },
   data() {
     return {
-      title: "",
+      headerTitle: null,
+      headerHasBack: null,
+      headerIsDark: null,
+      headerColor: "white",
       listFlag: false,
     };
   },
-  components: {
-    CodiHeader,
-    Footer,
-  },
   created() {
-    this.selectHeader();
-  },
-  watch: {
-    title: function () {
-      this.selectHeader();
-    },
-  },
-  methods: {
-    selectHeader() {
-      if (this.$route.name == "codiList") {
-        this.title = "코디";
-        this.listFlag = false;
-      } else if (this.$route.name == "codiCreate") {
-        this.title = "코디 등록";
-        this.listFlag = false;
-      } else if (this.$route.name == "codiDetail") {
-        this.title = this.$route.params.no + "번 코디 상세 정보";
-        this.listFlag = true;
-      }
-    },
+    console.log("this.$route.name", name);
+    if (name == "codiList") {
+      this.headerHasBack = true;
+      this.headerTitle = "코디";
+      this.listFlag = false;
+    } else if (name == "codiCreate") {
+      this.headerHasBack = true;
+      this.headerTitle = "코디 등록";
+      this.listFlag = false;
+    } else if (name == "codiDetail") {
+      this.headerHasBack = true;
+      this.headerTitle = this.$route.params.no + "번 코디 상세 정보";
+      this.listFlag = true;
+    }
   },
 };
 </script>

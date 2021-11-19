@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <CodiHeader :title="title" />
+    <Header
+      :hasBack="headerHasBack"
+      :title="headerTitle"
+      :color="headerColor"
+      :isDark="headerIsDark"
+    />
     <v-main>
       <!-- <v-container> -->
       <router-view :key="$route.fullPath" />
@@ -11,38 +16,34 @@
 </template>
 
 <script>
-import CodiHeader from "../components/common/CodiHeader.vue";
+import Header from "../components/common/BackTitleHeader.vue";
 import Footer from "../components/common/Footer.vue";
 
 export default {
   name: "ClothesLayout",
   data() {
     return {
-      title: "",
+      headerTitle: null,
+      headerHasBack: null,
+      headerIsDark: null,
+      headerColor: "white",
     };
   },
   components: {
-    CodiHeader,
+    Header,
     Footer,
   },
   created() {
-    this.selectHeader();
-  },
-  watch: {
-    title: function () {
-      this.selectHeader();
-    },
-  },
-  methods: {
-    selectHeader() {
-      if (this.$route.name == "clothesList") {
-        this.title = "옷장";
-      } else if (this.$route.name == "clothesCreate") {
-        this.title = "옷 등록";
-      } else if (this.$route.name == "clothesDetail") {
-        this.title = this.$route.params.no + "번 옷 상세 정보";
-      }
-    },
+    if (this.$route.name == "clothesList") {
+      this.headerTitle = "옷장";
+      this.headerHasBack = true;
+    } else if (this.$route.name == "clothesCreate") {
+      this.headerHasBack = true;
+      this.headerTitle = "옷 등록";
+    } else if (this.$route.name == "clothesDetail") {
+      this.headerHasBack = true;
+      this.headerTitle = "옷 상세 정보";
+    }
   },
 };
 </script>
