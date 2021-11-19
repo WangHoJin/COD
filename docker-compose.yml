@@ -21,7 +21,7 @@ services:
     restart: always
     container_name: frontend
     ports:
-      - 80:80
+      - 3000:3000
     environment:
       TZ: Asia/Seoul
       server.address: 0.0.0.0
