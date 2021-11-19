@@ -29,7 +29,11 @@
     <v-form>
       <v-container class="inputForm">
         <v-row>
-          <v-col cols="12" md="4"> <h5>필수사항</h5></v-col>
+          <v-col cols="12" md="4">
+            <h5 v-if="!valid" color="red">필수사항</h5>
+            <h5 v-else>필수사항</h5>
+          </v-col>
+
           <v-col class="input" cols="12" md="4">
             <v-select :items="category" label="카테고리" v-model="type" solo dens></v-select>
           </v-col>
@@ -79,6 +83,7 @@ import { createClothes } from '@/api/clothes';
 export default {
   data() {
     return {
+      valid: true,
       file: null,
       uploadImg: '',
       category: ['전체', '상의', '하의', '아우터', '신발', '가방', '모자', '악세서리'],
@@ -86,7 +91,7 @@ export default {
         '빨간색',
         '노란색',
         '주황색',
-        '파랑색',
+        '파란색',
         '보라색',
         '회색',
         '흰색',
@@ -143,6 +148,11 @@ export default {
       }
     },
     addClothes() {
+      if (!this.type || !this.color || !this.seasons) {
+        this.valid = false;
+        return;
+      }
+
       let clothes = {
         type: this.type,
         color: this.color,
