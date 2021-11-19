@@ -66,7 +66,7 @@
       </v-container>
 
       <!-- 등록 버튼 start -->
-      <v-btn icon class="add-click-btn" @click="addClothes()">
+      <v-btn icon id="add-click-btn" @click="addClothes()">
         <v-icon class="ml-2" large color="#857DB1" left> mdi-checkbox-marked-circle </v-icon>
       </v-btn>
       <!-- 등록 버튼 end -->
@@ -189,10 +189,10 @@ export default {
   padding-top: 0px;
   padding-bottom: 0px;
 }
-.add-click-btn {
-  position: absolute;
-  top: -4.1%;
+#add-click-btn {
+  position: fixed;
+  top: 0.9%;
   right: 4%;
-  z-index: 1;
+  z-index: 100;
 }
 </style>
