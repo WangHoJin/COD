@@ -49,7 +49,7 @@ public class ClothServiceImpl implements ClothService {
         if (!ValidationCheck.isValid(createClothInput.getType())
                 || !ValidationCheck.isValid(createClothInput.getColor())
                 || !ValidationCheck.isValid(createClothInput.getSeason())
-                ||createClothInput.getIsOwned()==null
+                ||  createClothInput.getIsOwned()==null
         )
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
@@ -71,7 +71,7 @@ public class ClothServiceImpl implements ClothService {
                     .season(createClothInput.getSeason())
                     .isOwned(createClothInput.getIsOwned())
                     .tag(createClothInput.getTag())
-                    .price(createClothInput.getPrice())
+                    .price(createClothInput.getPrice()==null?0:createClothInput.getPrice())
                     .brand(createClothInput.getBrand())
                     .measure(createClothInput.getMeasure())
                     .imgUrl(createClothInput.getImgUrl())
