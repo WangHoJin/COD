@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <CodiHeader :title="title" :listFlag="listFlag" />
+    <Header
+      :hasBack="headerHasBack"
+      :title="headerTitle"
+      :color="headerColor"
+      :isDark="headerIsDark"
+    />
     <v-main>
       <!-- <v-container> -->
       <router-view :key="$route.fullPath" />
@@ -11,39 +16,31 @@
 </template>
 
 <script>
-import CodiHeader from "../components/common/CodiHeader.vue";
 import Footer from "../components/common/Footer.vue";
+import Header from "../components/common/BackTitleHeader.vue";
 
 export default {
   name: "MypageLayout",
   data() {
     return {
-      title: "",
-      listFlag: false,
+      headerTitle: null,
+      headerHasBack: null,
+      headerIsDark: null,
+      headerColor: "white",
     };
   },
   components: {
-    CodiHeader,
+    Header,
     Footer,
   },
   created() {
-    this.selectHeader();
-  },
-  watch: {
-    title: function () {
-      this.selectHeader();
-    },
-  },
-  methods: {
-    selectHeader() {
-      if (this.$route.name == "mypageMain") {
-        this.title = this.$store.state.auth.loginUser.nickname;
-        this.listFlag = false;
-      } else if (this.$route.name == "mypageFollow") {
-        this.title = this.$store.state.auth.loginUser.nickname + "의 친구들";
-        this.listFlag = false;
-      }
-    },
+    if (this.$route.name == "mypageMain") {
+      this.headerTitle = this.$store.state.auth.loginUser.nickname;
+      this.headerHasBack = true;
+    } else if (this.$route.name == "mypageFollow") {
+      this.headerTitle = this.$store.state.auth.loginUser.nickname + "의 친구들";
+      this.headerHasBack = true;
+    }
   },
 };
 </script>

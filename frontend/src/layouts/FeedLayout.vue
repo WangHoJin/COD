@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <FeedHeader :title="title" />
+    <Header
+      :hasBack="headerHasBack"
+      :title="headerTitle"
+      :color="headerColor"
+      :isDark="headerIsDark"
+    />
     <v-main>
       <router-view :key="$route.fullPath" />
     </v-main>
@@ -9,39 +14,36 @@
 </template>
 
 <script>
-import FeedHeader from "../components/common/FeedHeader.vue";
+import Header from "../components/common/BackTitleHeader.vue";
 import Footer from "../components/common/Footer.vue";
 
 export default {
   name: "FeedLayout",
   components: {
-    FeedHeader,
+    Header,
     Footer,
   },
   data() {
     return {
-      title: "",
+      headerTitle: null,
+      headerHasBack: null,
+      headerIsDark: null,
+      headerColor: "white",
     };
   },
   created() {
-    console.log("Created FeedLayout");
-    this.selectHeader();
-  },
-  watch: {
-    title: function () {
-      this.selectHeader();
-    },
-  },
-  methods: {
-    selectHeader() {
-      if (this.$route.name == "feedMain") {
-        this.title = "기웃기옷";
-      } else if (this.$route.name == "feedSearch") {
-        this.title = "검색";
-      } else if (this.$route.name == "feedComment") {
-        this.title = "댓글";
-      }
-    },
+    let name = this.$route.name;
+    console.log("this.$route.name", name);
+    if (name == "feedMain") {
+      this.headerHasBack = true;
+      this.headerTitle = "기웃기옷";
+    } else if (name == "feedSearch") {
+      this.headerHasBack = true;
+      this.headerTitle = "검색";
+    } else if (name == "feedComment") {
+      this.headerHasBack = true;
+      this.headerTitle = "댓글";
+    }
   },
 };
 </script>
