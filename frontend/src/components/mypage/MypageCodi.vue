@@ -37,17 +37,17 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 export default {
   computed: {
-    ...mapGetters(["codies"]),
+    ...mapGetters(['codies']),
   },
   created() {
-    console.log("생성");
+    console.log('생성');
     this.selectCodies();
   },
   methods: {
-    ...mapActions(["getCodies"]),
+    ...mapActions(['getCodies']),
     selectCodies() {
       console.log();
       let userId = this.$route.params.no;
@@ -61,7 +61,7 @@ export default {
     },
     moveSetting() {
       this.$router.push({
-        name: "settingMain",
+        name: 'settingMain',
       });
     },
   },
@@ -76,9 +76,9 @@ export default {
   height: 100%;
 }
 .settingBtn {
-  position: absolute;
-  top: -5.6%;
+  position: fixed;
+  top: 1%;
   right: 1%;
-  z-index: 1;
+  z-index: 100;
 }
 </style>

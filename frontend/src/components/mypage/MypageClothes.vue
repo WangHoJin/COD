@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -38,14 +38,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["clothesList"]),
+    ...mapGetters(['clothesList']),
   },
   created() {
     this.select3Clothes();
   },
 
   methods: {
-    ...mapActions(["getClothesList"]),
+    ...mapActions(['getClothesList']),
     select3Clothes() {
       let userId = this.$store.state.auth.loginUser.userId;
       let payload = { userId: userId, page: 1, size: 3 };
@@ -61,4 +61,7 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.clothesImg {
+}
+</style>

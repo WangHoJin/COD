@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <!-- 프로필 사진 start -->
-      <v-col class="profile" cols="3" sm="3" md="3" lg="3">
+      <v-col class="profile ml-3 mt-2" cols="3" sm="3" md="3" lg="3">
         <v-avatar size="70">
           <img v-if="this.loginUser.profile" :src="loginUser.profile" />
           <img v-if="!this.loginUser.profile" src="@/assets/test/profile.jpg" />
@@ -11,7 +11,7 @@
       <!-- 프로필 사진 end -->
 
       <!-- 팔로우 및 소개글 start -->
-      <v-col class="follow" cols="5">
+      <v-col class="follow mt-2 ml-1" cols="5">
         <h5 class="grayText" @click="clickFollower()">팔로워 {{ followerList.length }}</h5>
         &nbsp;
         <h5 class="grayText" @click="clickFollowing()">팔로잉 {{ followingList.length }}</h5>
@@ -46,25 +46,25 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { createFollow, deleteFollow } from "@/api/follow";
+import { mapActions, mapGetters } from 'vuex';
+import { createFollow, deleteFollow } from '@/api/follow';
 export default {
   data() {
     return {};
   },
   computed: {
-    ...mapGetters(["loginUser", "followerList", "followingList"]),
+    ...mapGetters(['loginUser', 'followerList', 'followingList']),
   },
   created() {
     this.countFollow();
   },
   methods: {
-    ...mapActions(["getFollower", "getFollowing"]),
+    ...mapActions(['getFollower', 'getFollowing']),
     clickFollowing() {
       this.$router.push({ name: `mypageFollow` });
     },
     clickFollower() {
-      this.$router.push({ name: "mypageFollow" });
+      this.$router.push({ name: 'mypageFollow' });
     },
     countFollow() {
       let userId = this.$route.params.no;
@@ -86,14 +86,14 @@ export default {
       let payload = { toUserId: toUserId };
       createFollow(toUserId, accessToken).then(() => {
         this.setFollowList();
-        console.log("팔로우 성공");
+        console.log('팔로우 성공');
       });
     },
     deleteFollow(toUserId) {
       let accessToken = this.$store.state.auth.accessToken;
       deleteFollow(toUserId, accessToken).then(() => {
         this.setFollowList();
-        console.log("팔로우 취소");
+        console.log('팔로우 취소');
       });
       this.setFollowList();
     },
