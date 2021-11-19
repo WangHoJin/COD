@@ -35,10 +35,10 @@ export default {
   },
   created() {
     if (this.$route.name == "mypageMain") {
-      this.headerTitle = this.$store.state.auth.loginUser.nickname;
+      this.headerTitle = this.$store.state.auth.userInfo.nickname;
       this.headerHasBack = true;
     } else if (this.$route.name == "mypageFollow") {
-      this.headerTitle = this.$store.state.auth.loginUser.nickname + "의 친구들";
+      this.headerTitle = this.$store.state.auth.userInfo.nickname + "의 친구들";
       this.headerHasBack = true;
     }
   },

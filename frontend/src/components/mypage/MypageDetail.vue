@@ -4,8 +4,8 @@
       <!-- 프로필 사진 start -->
       <v-col class="profile" cols="3" sm="3" md="3" lg="3">
         <v-avatar size="70">
-          <img v-if="this.loginUser.profile" :src="loginUser.profile" />
-          <img v-if="!this.loginUser.profile" src="@/assets/test/profile.jpg" />
+          <img v-if="userInfo.profile" :src="userInfo.profile" />
+          <img v-if="!userInfo.profile" src="@/assets/test/profile.jpg" />
         </v-avatar>
       </v-col>
       <!-- 프로필 사진 end -->
@@ -16,11 +16,11 @@
         &nbsp;
         <h5 class="grayText" @click="clickFollowing()">팔로잉 {{ followingList.length }}</h5>
         <!-- <v-img class="grade" width="15px" src="@/assets/icon/mypage/medal.png" /> -->
-        <h5 class="blackText">{{ loginUser.introduction }}</h5>
+        <h5 class="blackText">{{ userInfo.introduction }}</h5>
       </v-col>
       <!-- 팔로우 및 소개글 end -->
 
-      <v-col class="" cols="4" v-if="!this.$route.params.no == loginUser.userId">
+      <v-col class="" cols="4">
         <v-icon
           v-if="isFollow(this.$route.params.no)"
           @click="deleteCodiLiked(this.$route.params.no)"
@@ -52,14 +52,18 @@ export default {
   data() {
     return {};
   },
+  props: {
+    userInfo: Object,
+  },
   computed: {
-    ...mapGetters(["loginUser", "followerList", "followingList"]),
+    ...mapGetters(["followerList", "followingList"]),
   },
   created() {
+    // this.setUserInfo();
     this.countFollow();
   },
   methods: {
-    ...mapActions(["getFollower", "getFollowing"]),
+    ...mapActions(["getFollower", "getFollowing", "getInfo"]),
     clickFollowing() {
       this.$router.push({ name: `mypageFollow` });
     },
@@ -96,6 +100,12 @@ export default {
         console.log("팔로우 취소");
       });
       this.setFollowList();
+    },
+    setUserInfo() {
+      let userId = this.$route.params.no;
+      this.getInfo(userId).then((res) => {
+        this.countFollow();
+      });
     },
   },
 };
