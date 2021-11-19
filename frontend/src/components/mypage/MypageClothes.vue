@@ -30,30 +30,32 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       flag: false,
     };
   },
+  props: {
+    userInfo: Object,
+  },
   computed: {
-    ...mapGetters(['clothesList']),
+    ...mapGetters(["clothesList"]),
   },
   created() {
     this.select3Clothes();
   },
-
   methods: {
-    ...mapActions(['getClothesList']),
+    ...mapActions(["getClothesList", "getInfo"]),
     select3Clothes() {
-      let userId = this.$store.state.auth.loginUser.userId;
+      let userId = this.userInfo.userId;
       let payload = { userId: userId, page: 1, size: 3 };
       this.flag = !this.flag;
       this.getClothesList(payload);
     },
     selectAllClothes() {
-      let userId = this.$store.state.auth.loginUser.userId;
+      let userId = this.userInfo.userId;
       let payload = { userId: userId, page: 1, size: 100 };
       this.flag = !this.flag;
       this.getClothesList(payload);

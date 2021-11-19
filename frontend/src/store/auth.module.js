@@ -1,10 +1,11 @@
-import { signIn, getProfile } from "@/api/user.js";
+import { signIn, getProfile, getUserInfo } from "@/api/user.js";
 
 export default {
   // 현재 상태들
   state: {
     loginUser: null,
     accessToken: null,
+    userInfo: null,
   },
   getters: {
     loginUser(state) {
@@ -13,6 +14,9 @@ export default {
     accessToken(state) {
       return state.accessToken;
     },
+    userInfo(state) {
+      return state.userInfo;
+    },
   },
   mutations: {
     setLoginUser(state, payload) {
@@ -20,6 +24,9 @@ export default {
     },
     setAccessToken(state, payload) {
       state.accessToken = payload;
+    },
+    setUserInfo(state, payload) {
+      state.userInfo = payload;
     },
   },
   actions: {
@@ -52,6 +59,16 @@ export default {
       getProfile(payload)
         .then((res) => {
           commit("setLoginUser", res.result);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    getInfo: ({ commit }, payload) => {
+      getUserInfo(payload)
+        .then((res) => {
+          console.log("res", res);
+          commit("setUserInfo", res.result);
         })
         .catch(function (err) {
           console.log(err);

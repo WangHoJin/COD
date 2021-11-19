@@ -128,11 +128,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { createFollow, deleteFollow } from '@/api/follow';
-import { createCodiLiked, deleteCodiLiked } from '@/api/codiLiked';
+import { mapActions, mapGetters } from "vuex";
+import { createFollow, deleteFollow } from "@/api/follow";
+import { createCodiLiked, deleteCodiLiked } from "@/api/codiLiked";
 export default {
-  props: ['codi'],
+  props: ["codi"],
   data() {
     return {
       loading: true,
@@ -142,11 +142,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['popularCodies', 'followList', 'codiLikedList']),
+    ...mapGetters(["popularCodies", "followList", "codiLikedList"]),
   },
   watch: {
     followList: function () {
-      console.log('watch');
+      console.log("watch");
       console.log(this.followList);
       this.followingList = this.followList;
       this.setFollowingCodies();
@@ -168,22 +168,22 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getPopularCodies', 'getFollows', 'getFollowingCodies', 'getCodiLiked']),
+    ...mapActions(["getPopularCodies", "getFollows", "getFollowingCodies", "getCodiLiked"]),
     setPopularCodies() {
-      let payload = { startDate: '1900-01-01', endDate: '2100-12-31', page: 1, size: 1000 };
+      let payload = { startDate: "1900-01-01", endDate: "2100-12-31", page: 1, size: 1000 };
       this.getPopularCodies(payload).then(() => {
         this.codiList = this.popularCodies;
         this.loading = false;
-        console.log('@@@@@@@@@@@@@popularCodies', this.popularCodies);
+        console.log("@@@@@@@@@@@@@popularCodies", this.popularCodies);
       });
     },
     splitTag(text) {
-      return text.split(',');
+      return text.split(",");
     },
     setFollowList() {
       let payload = {
         fromUserId: this.$store.state.auth.loginUser.userId,
-        toUserId: '',
+        toUserId: "",
         page: 1,
         size: 10,
       };
@@ -206,14 +206,14 @@ export default {
       let payload = { toUserId: toUserId };
       createFollow(toUserId, accessToken).then(() => {
         this.setFollowList();
-        console.log('팔로우 성공');
+        console.log("팔로우 성공");
       });
     },
     deleteFollow(toUserId) {
       let accessToken = this.$store.state.auth.accessToken;
       deleteFollow(toUserId, accessToken).then(() => {
         this.setFollowList();
-        console.log('팔로우 취소');
+        console.log("팔로우 취소");
       });
       this.setFollowList();
     },
@@ -242,7 +242,7 @@ export default {
       createCodiLiked(payload, accessToken).then(() => {
         this.setCodiLikedList();
         this.setPopularCodies();
-        console.log('좋아요 성공');
+        console.log("좋아요 성공");
       });
     },
     deleteCodiLiked(codiId) {
@@ -250,18 +250,18 @@ export default {
       deleteCodiLiked(codiId, accessToken).then(() => {
         this.setCodiLikedList();
         this.setPopularCodies();
-        console.log('좋아요 취소');
+        console.log("좋아요 취소");
       });
       this.setCodiLikedList();
     },
     comment(codiId) {
       this.$router.push({
-        path: 'comment/' + codiId,
+        path: "comment/" + codiId,
       });
     },
     userClick(userId) {
       this.$router.push({
-        path: '../mypage/' + userId,
+        path: "../mypage/" + userId,
       });
     },
   },
@@ -303,7 +303,7 @@ export default {
   /* padding-right: 5px; */
 }
 [v-cloak]::before {
-  content: '로딩중...';
+  content: "로딩중...";
 }
 [v-cloak] > * {
   display: none;

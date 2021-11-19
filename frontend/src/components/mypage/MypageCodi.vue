@@ -37,20 +37,22 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
+  props: {
+    userInfo: Object,
+  },
   computed: {
-    ...mapGetters(['codies']),
+    ...mapGetters(["codies"]),
   },
   created() {
-    console.log('생성');
     this.selectCodies();
   },
   methods: {
-    ...mapActions(['getCodies']),
+    ...mapActions(["getCodies", "getInfo"]),
     selectCodies() {
-      console.log();
-      let userId = this.$route.params.no;
+      console.log("this.userInfo.userId", this.userInfo.userId);
+      let userId = this.userInfo.userId;
       let payload = { userId: userId, page: 1, size: 9 };
       this.getCodies(payload);
     },
@@ -61,7 +63,7 @@ export default {
     },
     moveSetting() {
       this.$router.push({
-        name: 'settingMain',
+        name: "settingMain",
       });
     },
   },
