@@ -62,5 +62,7 @@ export default {
   width: 100%;
   color: #000;
   display: inline-block;
+  font-family: EliceDigitalBaeum_Bold !important;
+  font-size: 1.1rem;
 }
 </style>

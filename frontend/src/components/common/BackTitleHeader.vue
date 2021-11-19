@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'Header',
+  name: "Header",
   props: {
     title: String,
     hasBack: Boolean,
@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
 .app-title {
-  font-family: BMHANNAPro !important;
+  font-family: EliceDigitalBaeum_Bold !important;
   font-size: 1.1rem;
 }
 </style>
