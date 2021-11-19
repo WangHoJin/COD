@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
 .app-title {
-  font-family: EliceDigitalBaeum_Bold !important;
+  font-family: GongGothicMedium !important;
   font-size: 1.1rem;
 }
 </style>
