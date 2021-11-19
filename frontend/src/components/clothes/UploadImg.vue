@@ -1,21 +1,19 @@
 <template>
   <div>
     <v-container class="clothesImgBox" fluid>
-      <!-- <v-row class="img"> -->
-      <!-- <v-col cols="12" sm="12" md="12" lg="12"> -->
-      <div class="img">
-        <v-card class="clothesImg">
-          <!-- <v-img class="" :src="uploadImg" contain>
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-icon>mdi-package-variant</v-icon>
-              </v-row>
-            </template>
-          </v-img> -->
-        </v-card>
-      </div>
-      <!-- </v-col> -->
-      <!-- </v-row> -->
+      <v-row class="img">
+        <v-col cols="12" sm="12" md="12" lg="12">
+          <v-card class="clothesImg">
+            <v-img height="100%" :src="uploadImg" contain>
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-icon x-large>mdi-package-variant</v-icon>
+                </v-row>
+              </template>
+            </v-img>
+          </v-card>
+        </v-col>
+      </v-row>
       <v-file-input
         class="upload"
         v-model="file"
@@ -28,7 +26,7 @@
     <v-form>
       <v-container class="inputForm">
         <v-row>
-          <v-col cols="12" md="4"> <h5>입력하시오</h5></v-col>
+          <v-col cols="12" md="4"> <h5>필수사항</h5></v-col>
           <v-col class="input" cols="12" md="4">
             <v-select :items="category" label="카테고리" v-model="type" solo dens></v-select>
           </v-col>
@@ -39,19 +37,27 @@
             <v-select :items="seasons" label="계절" v-model="season" solo dens></v-select>
           </v-col>
           <v-col class="input" cols="12" md="4">
-            <v-switch inset label="공개" v-model="isOwned"></v-switch>
+            <v-switch
+              inset
+              label="공개"
+              hide-details
+              color="rgb(133, 125, 177)"
+              v-model="isOwned"
+            ></v-switch>
+          </v-col>
+          <v-divider></v-divider>
+          <v-col cols="12" md="4"> <h5>선택사항</h5></v-col>
+          <v-col class="input" cols="12" md="4">
+            <v-text-field label="가격" solo v-model="price"></v-text-field>
           </v-col>
           <v-col class="input" cols="12" md="4">
-            <v-text-field label="가격" v-model="price"></v-text-field>
+            <v-text-field label="브랜드" solo v-model="brand"></v-text-field>
           </v-col>
           <v-col class="input" cols="12" md="4">
-            <v-text-field label="브랜드" v-model="brand"></v-text-field>
+            <v-text-field label="상품명" solo v-model="name"></v-text-field>
           </v-col>
           <v-col class="input" cols="12" md="4">
-            <v-text-field label="상품명" v-model="name"></v-text-field>
-          </v-col>
-          <v-col class="input" cols="12" md="4">
-            <v-text-field label="사이즈" v-model="measure"></v-text-field>
+            <v-text-field label="사이즈" solo v-model="measure"></v-text-field>
           </v-col>
         </v-row>
       </v-container>
@@ -163,13 +169,8 @@ export default {
   height: 414px; */
 }
 .clothesImg {
-  width: 100%;
-}
-
-.clothesImg:before {
-  content: '';
-  display: block;
-  padding-top: 100%; /* 1:1 비율 */
+  width: 90vw;
+  height: 90vw;
 }
 
 .upload {
@@ -178,7 +179,8 @@ export default {
   text-align: center;
 }
 .inputForm {
-  padding-bottom: 100px;
+  padding: 24px;
+  margin-bottom: 10px;
 }
 .input {
   padding-top: 0px;

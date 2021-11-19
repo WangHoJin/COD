@@ -10,7 +10,7 @@
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item.tab">
         <!-- 옷 리스트 start -->
-        <div v-if="clothesList.length == 0" class="mt-16 pt-14 text-center">
+        <div v-if="clothesList.length == 0" class="mt-16 pt-16 text-center">
           <v-icon x-large class="mt-16 mb-3">mdi-hanger</v-icon>
           <h4>옷이 없어요. 텅!</h4>
         </div>
