@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 옷 목록 start -->
-    <v-row style="">
+    <v-row v-if="clothesList != null" style="">
       <v-col cols="8" sm="3" md="3" lg="3">
         <h4 class="pl-4" style="display: inline-block">옷</h4>
       </v-col>
@@ -11,6 +11,14 @@
       </v-col>
     </v-row>
 
+    <v-row v-if="clothesList == 0" style="height: 200px">
+      <v-col>
+        <div class="text-center">
+          <v-icon x-large class="mt-11 mb-3">mdi-hanger</v-icon>
+          <h4>아직 옷장에 옷이 없습니다!</h4>
+        </div>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col v-for="(c, i) in clothesList" :key="i" cols="4" sm="3" md="3" lg="3">
         <v-card class="clothesImg">

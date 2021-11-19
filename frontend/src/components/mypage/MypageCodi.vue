@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 코디 목록 start -->
-    <v-row style="">
+    <v-row v-if="codies != null" style="">
       <v-col cols="9" sm="3" md="3" lg="3">
         <h4 class="pl-4" style="display: inline-block">코디</h4>
       </v-col>
@@ -17,6 +17,14 @@
             @click="codiClick(c.codiId)"
           ></v-img>
         </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-if="codies == 0" style="height: 200px">
+      <v-col>
+        <div class="text-center">
+          <v-icon x-large class="mt-11 mb-3">mdi-package-variant</v-icon>
+          <h4>아직 코디에 코디가 없습니다!</h4>
+        </div>
       </v-col>
     </v-row>
     <!-- 코디 목록 end -->
