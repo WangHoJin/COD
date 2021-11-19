@@ -46,7 +46,11 @@ public class ClothServiceImpl implements ClothService {
         if (createClothInput == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
-        if (!ValidationCheck.isValid(createClothInput.getName()))
+        if (!ValidationCheck.isValid(createClothInput.getType())
+                || !ValidationCheck.isValid(createClothInput.getColor())
+                || !ValidationCheck.isValid(createClothInput.getSeason())
+                ||createClothInput.getIsOwned()==null
+        )
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Response<>(NO_VALUES));
 
