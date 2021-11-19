@@ -44,7 +44,7 @@
               <v-col cols="auto" style="padding: 20px 0px 18px 12px">
                 <h4 @click="userClick(codi.userId)">{{ codi.userNickname }}</h4>
               </v-col>
-              <v-col style="padding: 23px 0px 18px 6px">
+              <v-col style="padding: 23px 0px 18px 6px; width: 45px">
                 <h5
                   v-if="isFollow(codi.userId)"
                   @click="createFollow(codi.userId)"
