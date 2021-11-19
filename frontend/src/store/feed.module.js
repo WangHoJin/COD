@@ -80,7 +80,7 @@ export default {
     getPopularCodies(context, payload) {
       getPopularCodiList(payload)
         .then((res) => {
-          console.log('popularCodiList axios');
+          console.log('popularCodiList axios', res);
           context.commit('setPopularCodies', res);
         })
         .catch(function (err) {
