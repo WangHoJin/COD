@@ -63,4 +63,7 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.clothesImg {
+}
+</style>

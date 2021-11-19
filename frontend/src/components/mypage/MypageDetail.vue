@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <!-- 프로필 사진 start -->
-      <v-col class="profile" cols="3" sm="3" md="3" lg="3">
+      <v-col class="profile ml-3 mt-2" cols="3" sm="3" md="3" lg="3">
         <v-avatar size="70">
           <img v-if="userInfo.profile" :src="userInfo.profile" />
           <img v-if="!userInfo.profile" src="@/assets/test/profile.jpg" />
@@ -11,7 +11,7 @@
       <!-- 프로필 사진 end -->
 
       <!-- 팔로우 및 소개글 start -->
-      <v-col class="follow" cols="5">
+      <v-col class="follow mt-2 ml-1" cols="5">
         <h5 class="grayText" @click="clickFollower()">팔로워 {{ followerList.length }}</h5>
         &nbsp;
         <h5 class="grayText" @click="clickFollowing()">팔로잉 {{ followingList.length }}</h5>

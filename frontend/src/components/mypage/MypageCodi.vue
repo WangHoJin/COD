@@ -78,9 +78,9 @@ export default {
   height: 100%;
 }
 .settingBtn {
-  position: absolute;
-  top: -5.6%;
+  position: fixed;
+  top: 1%;
   right: 1%;
-  z-index: 1;
+  z-index: 100;
 }
 </style>

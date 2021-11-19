@@ -1,13 +1,16 @@
 <template lang="">
   <div>
     <h3 class="mt-7">내 옷장 색 비율</h3>
+    {{ size }}
     <v-divider class="mt-2"> </v-divider>
-    <div v-if="loading" class="chart">
-      <DoughnutChart :chartData="chartData" :options="chartOptions" />
-    </div>
-    <div v-else class="mt-6 text-center">
-      <v-icon x-large class="mt-16 mb-3">mdi-hanger</v-icon>
-      <h4>아직 옷장에 옷이 없습니다!</h4>
+    <div v-if="loading">
+      <div v-if="size > 0" class="chart">
+        <DoughnutChart :chartData="chartData" :options="chartOptions" />
+      </div>
+      <div v-else class="mt-6 text-center">
+        <v-icon x-large class="mt-16 mb-3">mdi-hanger</v-icon>
+        <h4>아직 옷장에 옷이 없습니다!</h4>
+      </div>
     </div>
   </div>
 </template>
@@ -20,6 +23,7 @@ export default {
   data() {
     return {
       loading: false,
+      size: null,
       chartOptions: {
         // maintainAspectRatio: false,
         hoverBorderWidth: 20,
@@ -93,8 +97,10 @@ export default {
         }
       }
       this.chartOptions.plugins.doughnutlabel.labels[1].text = maxColor.color;
-      if (map.size > 0) this.loading = true;
-      console.log(this.chartData);
+      this.loading = true;
+      this.size = map.size;
+      console.log('도넛 사이즈', this.size);
+      console.log('this.chartData', this.chartData);
     });
 
     let firstColor = '검정';
