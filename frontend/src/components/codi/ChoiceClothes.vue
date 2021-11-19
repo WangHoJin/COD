@@ -34,7 +34,7 @@
           <v-btn
             color="#857db1"
             outlined
-            style="margin: 0 auto; text-align: center; padding: 10px"
+            style="margin: 15px auto; text-align: center"
             @click="dialog.value = false"
             >close</v-btn
           >
