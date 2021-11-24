@@ -18,7 +18,7 @@
 <script>
 import Footer from "../components/common/Footer.vue";
 import Header from "../components/common/BackTitleHeader.vue";
-
+import { mapGetters } from "vuex";
 export default {
   name: "MypageLayout",
   data() {
@@ -32,6 +32,14 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  computed: {
+    ...mapGetters(["userInfo"]),
+  },
+  watch: {
+    userInfo: function () {
+      this.headerTitle = this.userInfo.nickname;
+    },
   },
   created() {
     if (this.$route.name == "mypageMain") {

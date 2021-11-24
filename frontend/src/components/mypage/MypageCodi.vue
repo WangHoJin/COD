@@ -45,6 +45,11 @@ export default {
   computed: {
     ...mapGetters(["codies"]),
   },
+  watch: {
+    userInfo: function () {
+      this.selectCodies();
+    },
+  },
   created() {
     this.selectCodies();
   },

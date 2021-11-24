@@ -24,12 +24,7 @@ export default {
       no: this.$route.params.no,
     };
   },
-  watch: {
-    // userInfo: function () {
-    //   console.log("와치");
-    //   this.setUserInfo();
-    // },
-  },
+
   created() {
     this.no = this.$route.params.no;
     this.setUserInfo();

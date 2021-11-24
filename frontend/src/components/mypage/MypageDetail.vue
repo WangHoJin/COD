@@ -20,7 +20,7 @@
       </v-col>
       <!-- 팔로우 및 소개글 end -->
 
-      <v-col class="" cols="4">
+      <!-- <v-col class="" cols="4">
         <v-icon
           v-if="isFollow(this.$route.params.no)"
           @click="deleteCodiLiked(this.$route.params.no)"
@@ -35,7 +35,7 @@
           color="#9e9e9e"
           >mdi-star-outline</v-icon
         >
-      </v-col>
+      </v-col> -->
     </v-row>
 
     <!-- 구분선 -->
@@ -57,6 +57,11 @@ export default {
   },
   computed: {
     ...mapGetters(["followerList", "followingList"]),
+  },
+  watch: {
+    userInfo: function () {
+      this.countFollow();
+    },
   },
   created() {
     // this.setUserInfo();

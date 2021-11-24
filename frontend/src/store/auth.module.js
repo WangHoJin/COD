@@ -26,7 +26,9 @@ export default {
       state.accessToken = payload;
     },
     setUserInfo(state, payload) {
+      console.log("바뀌전", payload);
       state.userInfo = payload;
+      console.log("바뀌나?", payload);
     },
   },
   actions: {

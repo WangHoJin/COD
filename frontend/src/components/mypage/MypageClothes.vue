@@ -22,7 +22,12 @@
     <v-row>
       <v-col v-for="(c, i) in clothesList" :key="i" cols="4" sm="3" md="3" lg="3">
         <v-card class="clothesImg">
-          <v-img class="" height="100px" :src="c.clothImgUrl"></v-img>
+          <v-img
+            class=""
+            height="100px"
+            :src="c.clothImgUrl"
+            @click="clothesClick(c.clothId)"
+          ></v-img>
         </v-card>
       </v-col>
     </v-row>
@@ -39,6 +44,11 @@ export default {
   },
   props: {
     userInfo: Object,
+  },
+  watch: {
+    userInfo: function () {
+      this.select3Clothes();
+    },
   },
   computed: {
     ...mapGetters(["clothesList"]),
@@ -59,6 +69,11 @@ export default {
       let payload = { userId: userId, page: 1, size: 100 };
       this.flag = !this.flag;
       this.getClothesList(payload);
+    },
+    clothesClick(clothId) {
+      this.$router.push({
+        path: `../clothes/detail/` + clothId,
+      });
     },
   },
 };
