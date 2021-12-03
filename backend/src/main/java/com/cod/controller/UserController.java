@@ -90,9 +90,22 @@ public class UserController {
      */
     // Body
     @GetMapping("/profile")
-    public ResponseEntity<Response<ProfileOutput>   > getProfile() {
+    public ResponseEntity<Response<ProfileOutput>> getProfile() {
         log.info("[POST] /users/profile");
         return userService.getProfile();
+    }
+
+    /**
+     * 프로필 조회 API
+     * [POST] /users/profile
+     *
+     * @return Response<ProfileOutput>
+     */
+    // Body
+    @GetMapping("/{id}")
+    public ResponseEntity<Response<ProfileOutput>> getUser(@PathVariable int id)  {
+        log.info("[POST] /users/{id}}");
+        return userService.getUser(id);
     }
 
     /**

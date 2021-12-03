@@ -28,6 +28,7 @@ public class Comment {
      * 댓글 달린 코디
      */
     @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name="codi_id", nullable = false)
     private Codi codi;
 

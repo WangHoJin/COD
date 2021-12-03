@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 public interface ClothService {
     ResponseEntity<Response<Object>> createCloth(CreateClothInput createClothInput);
     ResponseEntity<Response<SelectClothOutput>> selectCloth(int clothId);
-    ResponseEntity<PageResponse<SelectClothOutput>> selectClothList(SelectClothInput selectClothInput);
+    ResponseEntity<PageResponse<SelectClothOutput>> selectClothList(SelectClothInput selectClothInput,boolean isSearchByType);
     ResponseEntity<Response<Object>> updateCloth(UpdateClothInput updateClothInput, int clothId);
     ResponseEntity<Response<Object>> deleteCloth(int clothId);
 }
