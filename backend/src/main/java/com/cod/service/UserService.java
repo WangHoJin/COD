@@ -19,6 +19,7 @@ public interface UserService {
     ResponseEntity<Response<SignUpOutput>> signUp(SignUpInput signUpInput);
     ResponseEntity<Response<Object>> deactivate();
     ResponseEntity<Response<ProfileOutput>> getProfile();
+    ResponseEntity<Response<ProfileOutput>> getUser(int id);
     ResponseEntity<Response<Object>> updateProfile(@RequestBody ProfileUpdate profileUpdate);
     ResponseEntity<PageResponse<UserSearchOutput>> findUserByNickname(UserSearchInput userSearchInput);
 }

@@ -236,6 +236,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<Response<ProfileOutput>> getUser(int userId) {
+        ProfileOutput profileOutput;
+        try {
+            User user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                log.error("[users/get] NOT FOUND USER error");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new Response<>(NOT_FOUND_USER));
+            }
+
+            profileOutput = ProfileOutput.builder()
+                    .userId(user.getId())
+                    .email(user.getEmail())
+                    .name(user.getName())
+                    .nickname(user.getNickname())
+                    .birth(user.getBirth())
+                    .gender(user.getGender())
+                    .profile(user.getProfile())
+                    .introduction(user.getIntroduction())
+                    .build();
+
+        } catch (Exception e){
+            log.error("[users/profile] database error",e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Response<>(DATABASE_ERROR));
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Response<>(profileOutput,SUCCESS_GET_PROFILE));
+    }
+
+    @Override
     public ResponseEntity<Response<Object>> updateProfile(ProfileUpdate profileUpdate) {
         try {
             User user = jwtService.getUser();
@@ -252,13 +283,13 @@ public class UserServiceImpl implements UserService {
                 if (existUser != null)
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                             .body(new Response<>(EXISTS_NICKNAME));
-                user.setProfile(profileUpdate.getNickname());
+                user.setNickname(profileUpdate.getNickname());
             }
             if(StringUtils.isNoneBlank(profileUpdate.getIntroduction()))
-                user.setProfile(profileUpdate.getIntroduction());
+                user.setIntroduction(profileUpdate.getIntroduction());
             if(StringUtils.isNoneBlank(profileUpdate.getPassword())){
                 String newPassword = new AES128(USER_INFO_PASSWORD_KEY).encrypt(profileUpdate.getPassword());
-                user.setProfile(newPassword);
+                user.setPassword(newPassword);
             }
 
             userRepository.save(user);
