@@ -1,25 +1,20 @@
-// import Vue from 'vue';
-// import App from './App.vue';
-// import router from './utils/routes';
-// import { VueAxios, axios } from './utils/axios';
-// import store from './utils/store';
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import vuetify from "./plugins/vuetify";
+import axios from "./utils/axios";
+import store from "./store";
+import VueDraggableResizable from "vue-draggable-resizable";
+import "vue-draggable-resizable/dist/VueDraggableResizable.css";
+Vue.config.productionTip = false;
+Vue.prototype.$axios = axios;
+Vue.component("vue-draggable-resizable", VueDraggableResizable);
 
-// Vue.use(router);
-// Vue.use(VueAxios, axios);
-// Vue.use(store);
+new Vue({
+  axios,
+  vuetify,
+  router,
+  store,
 
-// Vue.config.productionTip = false;
-
-// new Vue({
-  //   render: (h) => h(App),
-  // }).$mount('#app');
-  
-  import { createApp } from 'vue';
-  import App from './App.vue';
-  import router from './utils/routes';
-  import { VueAxios, axios } from './utils/axios';
-  import store from './utils/store';
-  createApp(App).mount('#app');
-  App.use(router);
-  App.use(VueAxios, axios);
-  App.use(store);
+  render: (h) => h(App),
+}).$mount("#app");

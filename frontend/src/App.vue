@@ -1,28 +1,20 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <MainLayout />
-  </div>
+  <v-app>
+    <router-view :key="$route.fullPath"></router-view>
+  </v-app>
 </template>
 
 <script>
-import MainLayout from './layouts/MainLayout.vue';
-
 export default {
   name: 'App',
-  components: {
-    MainLayout,
-  },
+
+  components: {},
+
+  data: () => ({
+    //
+  }),
 };
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import 'assets/css/font.css';
 </style>
